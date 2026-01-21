@@ -143,15 +143,26 @@
                return html || '<p style="font-size:12px; color:#94a3b8; padding:20px; text-align:center;">Nenhum candidato cadastrado.</p>';
             };
     
-            document.getElementById('tab-senado').innerHTML = '<div class="secao-titulo">Pré-Senador</div>' + filtrar('senador');
-            document.getElementById('tab-federal').innerHTML = '<div class="secao-titulo">Pré-Deputado Federal</div>' + filtrar('federal');
-            document.getElementById('tab-estadual').innerHTML = '<div class="secao-titulo">Pré-Deputado Estadual</div>' + filtrar('estadual');
+            document.getElementById('tab-senado').innerHTML = '<div class="secao-titulo">Pré-candidatos à Senador</div>' + filtrar('senador');
+            document.getElementById('tab-federal').innerHTML = '<div class="secao-titulo">Pré-candidatos à Deputado Federal</div>' + filtrar('federal');
+            document.getElementById('tab-estadual').innerHTML = '<div class="secao-titulo">Pré-candidatos à Deputado Estadual</div>' + filtrar('estadual');
         }
 
         function aplicarEstilo(f) {
             const s = f.properties.sigla || f.properties.UF || f.id;
-            if (s === estadoSelecionado) return { fillColor: '#EEBB00', fillOpacity: 1, color: '#ffffff', weight: 3 };
-            return { fillColor: '#1e293b', fillOpacity: 0.8, color: '#334155', weight: 1 };
+
+            if (s === estadoSelecionado) 
+                return { 
+                    fillColor: '#EEBB00', 
+                    fillOpacity: 1, 
+                    color: '#ffffff', 
+                    weight: 3 
+                };
+            return { 
+                fillColor: '#1e293b', 
+                fillOpacity: 1.0, 
+                color: '#334155', 
+                weight: 1 };
         }
 
         function resetMapa() {
