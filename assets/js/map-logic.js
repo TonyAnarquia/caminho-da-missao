@@ -180,11 +180,15 @@
         function gerarCard(c) {
             return `
             <div class="card-candidato">
-                <img src="${c.foto || 'https://via.placeholder.com/64'}" class="cand-foto" alt="${c.nome}"/>
-                <div class="cand-info">
-                    <span class="cand-nome">${c.nome}</span>
-                    <span class="cand-partido">${c.partido}</span>
-                    <a href="${c.instagram}" target="_blank" class="btn-instagram">Ver Instagram</a>
+              <img src="${c.foto}" class="cand-foto" alt="${c.nome}"/>
+              <div class="cand-info">
+                   <span class="cand-nome">${c.nome}</span>
+                   <span class="cand-partido">${c.partido}</span>
+                    <div class="card-actions">
+                     <a href="${c.instagram}" target="_blank" class="btn-instagram">Instagram</a>
+                      <!-- NOVO BOTÃO -->
+                       <button onclick="abrirPerfil('${c.id}')" class="btn-perfil">+ Info</button>
+                    </div>
                 </div>
             </div>`;
         }
@@ -216,3 +220,68 @@
                 }
             });
         }
+
+        async function abrirPerfil(id) {
+            const modal = document.getElementById('modal-candidato');
+            const container = document.getElementById('conteudo-detalhado');
+    
+            modal.style.display = "block";
+            container.innerHTML = "<p>Buscando informações oficiais...</p>";
+
+            try {
+                // Busca o arquivo JSON ou HTML gerado pelo CMS
+                const response = await fetch(`assets/content/candidates/${id}.json`);
+                const dados = await response.json();
+        
+                container.innerHTML = `
+                    <h2>${dados.nome_completo}</h2>
+                    <div class="biografia">${dados.texto_jornalista}</div>
+                    <div class="video-container">${dados.embed_video}</div>
+                    <div class="links-uteis">${dados.links_adicionais}</div>
+                `;
+            } catch (err) {
+                container.innerHTML = "<p>Este candidato ainda não possui perfil detalhado publicado.</p>";
+            }
+        }   
+
+
+
+
+        async function abrirPerfil(id) {
+    const modal = document.getElementById('modal-candidato');
+    const content = document.getElementById('modal-body-content');
+    
+    modal.style.display = 'flex';
+    content.innerHTML = '<p style="text-align:center;">Carregando informações oficiais...</p>';
+
+    try {
+        // Busca o arquivo JSON gerado pelo CMS baseado no ID da planilha
+        const response = await fetch(`/assets/content/perfil/${id}.json`);
+        if (!response.ok) throw new Error();
+        const dados = await response.json();
+
+        content.innerHTML = `
+            <h2 style="color:#EEBB00; font-size:28px;">${dados.title}</h2>
+            <div style="line-height:1.8; font-size:16px;">${marked.parse(dados.body)}</div>
+            ${dados.youtube_id ? `
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/${dados.youtube_id}" frameborder="0" allowfullscreen></iframe>
+                </div>
+            ` : ''}
+            <div style="margin-top:20px;">
+                ${dados.links ? dados.links.map(l => `<a href="${l.url}" target="_blank" style="color:#EEBB00; margin-right:15px; text-decoration:none;">🔗 ${l.label}</a>`).join('') : ''}
+            </div>
+        `;
+    } catch (err) {
+        content.innerHTML = `
+            <div style="text-align:center; padding:40px;">
+                <p>O perfil detalhado deste pré-candidato ainda está sendo redigido pela nossa equipe de jornalismo.</p>
+                <button onclick="fecharModal()" style="background:#EEBB00; border:none; padding:10px 20px; border-radius:5px; cursor:pointer;">Voltar ao Mapa</button>
+            </div>`;
+    }
+}
+
+function fecharModal() {
+    document.getElementById('modal-candidato').style.display = 'none';
+    document.getElementById('modal-body-content').innerHTML = '';
+}
