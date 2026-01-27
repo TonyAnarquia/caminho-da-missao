@@ -1,7 +1,8 @@
 backend:
   name: github
-  repo: SEU_USUARIO_GITHUB/NOME_DO_REPOSITORIO
+  repo: TonyAnarquia/caminho-da-missao
   branch: main
+  base_url: https://netlify-cms-github-oauth-provider-tony.vercel.app
 
 media_folder: "assets/img/uploads" # Onde as fotos das notícias ficarão
 public_folder: "/assets/img/uploads"

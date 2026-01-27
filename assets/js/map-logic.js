@@ -178,20 +178,22 @@
         }
 
         function gerarCard(c) {
-            return `
-            <div class="card-candidato">
-              <img src="${c.foto}" class="cand-foto" alt="${c.nome}"/>
-              <div class="cand-info">
-                   <span class="cand-nome">${c.nome}</span>
-                   <span class="cand-partido">${c.partido}</span>
-                    <div class="card-actions">
-                     <a href="${c.instagram}" target="_blank" class="btn-instagram">Instagram</a>
-                      <!-- NOVO BOTÃO -->
-                       <button onclick="abrirPerfil('${c.id}')" class="btn-perfil">+ Info</button>
-                    </div>
-                </div>
-            </div>`;
-        }
+    // Verificamos se c.id existe, se não, usamos o nome do candidato como fallback
+    const idCandidato = c.id || c.nome.toLowerCase().replace(/\s+/g, '-');
+    
+    return `
+    <div class="card-candidato">
+        <img src="${c.foto || 'https://via.placeholder.com/64'}" class="cand-foto" alt="${c.nome}"/>
+        <div class="cand-info">
+            <span class="cand-nome">${c.nome}</span>
+            <span class="cand-partido">${c.partido}</span>
+            <div class="card-buttons-flex">
+                <a href="${c.instagram}" target="_blank" class="btn-instagram">Instagram</a>
+                <button onclick="abrirPerfil('${idCandidato}')" class="btn-perfil">+ Info</button>
+            </div>
+        </div>
+    </div>`;
+}
 
         function gerenciarArrasto() {
             if (map.getZoom() <= 4) {
