@@ -223,33 +223,7 @@
             });
         }
 
-        async function abrirPerfil(id) {
-            const modal = document.getElementById('modal-candidato');
-            const container = document.getElementById('conteudo-detalhado');
-    
-            modal.style.display = "block";
-            container.innerHTML = "<p>Buscando informações oficiais...</p>";
-
-            try {
-                // Busca o arquivo JSON ou HTML gerado pelo CMS
-                const response = await fetch(`assets/content/candidates/${id}.json`);
-                const dados = await response.json();
-        
-                container.innerHTML = `
-                    <h2>${dados.nome_completo}</h2>
-                    <div class="biografia">${dados.texto_jornalista}</div>
-                    <div class="video-container">${dados.embed_video}</div>
-                    <div class="links-uteis">${dados.links_adicionais}</div>
-                `;
-            } catch (err) {
-                container.innerHTML = "<p>Este candidato ainda não possui perfil detalhado publicado.</p>";
-            }
-        }   
-
-
-
-
-        async function abrirPerfil(id) {
+async function abrirPerfil(id) {
     const modal = document.getElementById('modal-candidato');
     const content = document.getElementById('modal-body-content');
     
