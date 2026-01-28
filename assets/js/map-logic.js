@@ -21,11 +21,82 @@
             'RS': '#1e293b', 'RO': '#1e293b', 'RR': '#1e293b', 'SC': '#1e293b',
             'SP': '#1e293b', 'SE': '#1e293b', 'TO': '#1e293b'
         };
+        const PROPOSTAS_CANDIDATOS = {
+            "renan-santos": {
+                nome: "Renan Santos",
+                cargo: "Pr&eacute;-candidato &agrave; Presid&ecirc;ncia",
+                partido: "Miss&atilde;o",
+                instagram: "https://www.instagram.com/p/DRCpUvkkTL1",
+                titulo: "7 propostas da Miss&atilde;o",
+                propostas: [
+                    {
+                        numero: "1",
+                        titulo: "Guerra contra o Crime Organizado",
+                        paragrafos: [
+                            "A Miss&atilde;o reconhece que j&aacute; existe uma guerra acontecendo no Brasil hoje. PCC e Comando Vermelho j&aacute; declaram suas inten&ccedil;&otilde;es de exercer dom&iacute;nio territorial em algumas regi&otilde;es, j&aacute; possuem ex&eacute;rcitos atuando, j&aacute; implementam suas pr&oacute;prias leis e t&ecirc;m at&eacute; suas pr&oacute;prias culturas.",
+                            "O Estado brasileiro finge que n&atilde;o existe, ou que s&atilde;o apenas pequenas gangues em conflito. Est&aacute; na hora de reconhecer que o Brasil n&atilde;o vive um per&iacute;odo de paz. E n&atilde;o vai ser com mais pedidos de 'paz' que vamos parar essa guerra."
+                        ]
+                    },
+                    {
+                        numero: "2",
+                        titulo: "Direito Penal do Inimigo",
+                        paragrafos: [
+                            "Faccionados do Comando Vermelho e Primeiro Comando da Capital n&atilde;o s&atilde;o apenas bandidos comuns; eles exercem poder pol&iacute;tico sobre territ&oacute;rios dominados, amea&ccedil;ando n&atilde;o apenas a popula&ccedil;&atilde;o local, mas a soberania do Estado brasileiro.",
+                            "Portanto eles n&atilde;o devem ter um processo criminal com ampla defesa, diversos ju&iacute;zes, Minist&eacute;rio P&uacute;blico, tr&acirc;nsito em julgado etc.",
+                            "O Estado precisa agir com a maior rapidez poss&iacute;vel. Quebra de sigilos, pris&atilde;o, depoimentos etc, tudo deve ser feito com urg&ecirc;ncia."
+                        ]
+                    },
+                    {
+                        numero: "3",
+                        titulo: "Desfaveliza&ccedil;&atilde;o",
+                        paragrafos: [
+                            "Favelas n&atilde;o s&atilde;o apenas lugares com condi&ccedil;&otilde;es subumanas de vida. Se tornaram QGs de fac&ccedil;&otilde;es, que sequestram os trabalhadores que l&aacute; vivem.",
+                            "Al&eacute;m disso, a cultura que sai desses lugares, os problemas e a falta de perspectiva e de melhora de vida n&atilde;o devem ser romantizados.",
+                            "O Brasil precisa de um gigantesco plano de habita&ccedil;&atilde;o, reurbaniza&ccedil;&atilde;o, educa&ccedil;&atilde;o e emprego para acabar com tudo que a favela representa hoje.",
+                            "E a cadeia de reprodu&ccedil;&atilde;o de desvantagem - fam&iacute;lias sem figura paterna - s&atilde;o o maior alimento para a cria&ccedil;&atilde;o do crime organizado. Isso precisa ser tratado com seriedade para termos menos soldados e uma na&ccedil;&atilde;o menos doente."
+                        ]
+                    },
+                    {
+                        numero: "4",
+                        titulo: "Interiorizar as atividades produtivas",
+                        paragrafos: [
+                            "As regi&otilde;es mais pobres do Brasil s&atilde;o o para&iacute;so de pol&iacute;ticos corruptos, que aproveitam a pobreza das pessoas para comprar votos, desviar recursos e se perpetuarem no poder.",
+                            "Levar atividades produtivas para os interiores, principalmente do Nordeste, e gerar classe m&eacute;dia, quebra o ciclo que alimenta h&aacute; d&eacute;cadas a lideran&ccedil;a dessas pessoas nessa verdadeira escravid&atilde;o moderna."
+                        ]
+                    },
+                    {
+                        numero: "5",
+                        titulo: "Responsabilidade gerencial",
+                        paragrafos: [
+                            "O Brasil precisa mudar o sistema de incentivos que elege seus pol&iacute;ticos. Pol&iacute;ticos que n&atilde;o entregam melhorias claras nos &iacute;ndices de educa&ccedil;&atilde;o, saneamento, sa&uacute;de e seguran&ccedil;a devem perder seus direitos pol&iacute;ticos.",
+                            "O fundo partid&aacute;rio e eleitoral e demais departamentos devem tamb&eacute;m ser destinados apenas a partidos cujos gestores conseguem apresentar melhorias em todos os &iacute;ndices do Brasil."
+                        ]
+                    },
+                    {
+                        numero: "6",
+                        titulo: "Fus&atilde;o de munic&iacute;pios",
+                        paragrafos: [
+                            "Munic&iacute;pios que dependem de verbas federais ou estaduais para pagar suas pr&oacute;prias contas devem deixar de existir e se fundir com outros munic&iacute;pios pr&oacute;ximos. Chega de bancar cidades deficit&aacute;rias.",
+                            "No geral, cidades do Centro-Sul do pa&iacute;s pagam mais do que deveriam em impostos para manter cidades do Centro-Norte e Nordeste vivendo e pedindo mais dinheiro para pagar sal&aacute;rios de pol&iacute;tico. Nada de bom pode vir dessa l&oacute;gica."
+                        ]
+                    },
+                    {
+                        numero: "7",
+                        titulo: "Mutir&atilde;o anti Bolsa-Fam&iacute;lia",
+                        paragrafos: [
+                            "Munic&iacute;pios com mais de 30% da popula&ccedil;&atilde;o recebendo Bolsa-Fam&iacute;lia devem promover mutir&otilde;es de emprego.",
+                            "Pessoas em idade economicamente ativa que se recusarem em trabalhar dever&atilde;o perder o direito de receber Bolsa-Fam&iacute;lia em tr&ecirc;s meses."
+                        ]
+                    }
+                ]
+            }
+        };
 
         // 2. ESTADO DA APLICAÇÃO
         let estadoSelecionado = null;
         let geojsonLayer;
         let dadosCandidatos = {};
+        let candidatosIndex = {};
 
         const map = L.map('mapa-interativo', {
             zoomSnap: 0.5, 
@@ -179,7 +250,8 @@
 
         function gerarCard(c) {
     // Verificamos se c.id existe, se não, usamos o nome do candidato como fallback
-    const idCandidato = c.id || c.nome.toLowerCase().replace(/\s+/g, '-');
+      const idCandidato = c.id || c.nome.toLowerCase().replace(/\s+/g, '-');
+      candidatosIndex[idCandidato] = c;
     
     return `
     <div class="card-candidato">
@@ -223,12 +295,106 @@
             });
         }
 
+function slugify(valor) {
+    return (valor || '')
+        .toString()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+}
+
+function escapeHtml(valor) {
+    return (valor || '')
+        .toString()
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function buscarPropostas(id, candidato) {
+    const keys = [];
+    if (id) {
+        keys.push(id);
+        keys.push(slugify(id));
+    }
+    if (candidato && candidato.nome) {
+        keys.push(slugify(candidato.nome));
+    }
+    for (const key of keys) {
+        if (PROPOSTAS_CANDIDATOS[key]) return PROPOSTAS_CANDIDATOS[key];
+    }
+    return null;
+}
+
+function renderPropostas(proposta, candidato) {
+    const nome = escapeHtml(candidato.nome || proposta.nome || 'Candidato');
+    const cargo = candidato.cargo ? escapeHtml(candidato.cargo) : (proposta.cargo || '');
+    const partido = candidato.partido ? escapeHtml(candidato.partido) : (proposta.partido || '');
+    const foto = candidato.foto || '';
+    const iniciais = nome.split(' ').filter(Boolean).map(p => p[0]).join('').slice(0, 2);
+    const titulo = proposta.titulo || 'Propostas';
+
+    const cabecalho = cargo || partido
+        ? `<p class="proposal-role">${cargo}${cargo && partido ? ' � ' : ''}${partido}</p>`
+        : '';
+
+    const fotoHtml = foto
+        ? `<img src="${foto}" alt="${nome}" class="proposal-photo" />`
+        : `<div class="proposal-photo-fallback">${iniciais || 'RM'}</div>`;
+
+    const lista = proposta.propostas.map((item) => {
+        const paragrafos = item.paragrafos.map(p => `<p>${p}</p>`).join('');
+        return `
+            <div class="proposal-item">
+                <div class="proposal-number">${item.numero}</div>
+                <div class="proposal-body">
+                    <h3>${item.titulo}</h3>
+                    ${paragrafos}
+                </div>
+            </div>`;
+    }).join('');
+
+    const link = proposta.instagram
+        ? `<a class="proposal-link" href="${proposta.instagram}" target="_blank" rel="noopener noreferrer">Ver propostas no Instagram</a>`
+        : '';
+
+    return `
+        <div class="proposal-modal">
+            <div class="proposal-head">
+                <div class="proposal-head-text">
+                    <span class="proposal-kicker">Propostas</span>
+                    <h2 class="proposal-name">${nome}</h2>
+                    ${cabecalho}
+                </div>
+                <div class="proposal-head-photo">
+                    ${fotoHtml}
+                </div>
+            </div>
+            <div class="proposal-title">${titulo}</div>
+            <div class="proposal-list">
+                ${lista}
+            </div>
+            ${link ? `<div class="proposal-footer">${link}</div>` : ''}
+        </div>`;
+}
+
 async function abrirPerfil(id) {
     const modal = document.getElementById('modal-candidato');
     const content = document.getElementById('modal-body-content');
+    const candidato = candidatosIndex[id] || {};
+    const proposta = buscarPropostas(id, candidato);
     
     modal.style.display = 'flex';
-    content.innerHTML = '<p style="text-align:center;">Carregando informações oficiais...</p>';
+    content.innerHTML = '<div class="proposal-loading">Carregando informações oficiais...</div>';
+
+    if (proposta) {
+        content.innerHTML = renderPropostas(proposta, candidato);
+        return;
+    }
 
     try {
         // Busca o arquivo JSON gerado pelo CMS baseado no ID da planilha
@@ -245,7 +411,7 @@ async function abrirPerfil(id) {
                 </div>
             ` : ''}
             <div style="margin-top:20px;">
-                ${dados.links ? dados.links.map(l => `<a href="${l.url}" target="_blank" style="color:#EEBB00; margin-right:15px; text-decoration:none;">🔗 ${l.label}</a>`).join('') : ''}
+                ${dados.links ? dados.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" style="color:#EEBB00; margin-right:15px; text-decoration:none;">Link: ${l.label}</a>`).join('') : ''}
             </div>
         `;
     } catch (err) {
@@ -256,7 +422,6 @@ async function abrirPerfil(id) {
             </div>`;
     }
 }
-
 function fecharModal() {
     document.getElementById('modal-candidato').style.display = 'none';
     document.getElementById('modal-body-content').innerHTML = '';
