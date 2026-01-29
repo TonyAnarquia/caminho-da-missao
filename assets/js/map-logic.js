@@ -109,6 +109,7 @@
         let candidatosIndex = {};
         let layersPorSigla = {};
         let estadosIndex = {};
+        let modalOpen = false;
 
         const map = L.map('mapa-interativo', {
             zoomSnap: 0.5, 
@@ -418,6 +419,11 @@ function configurarModal() {
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') fecharModal();
     });
+    window.addEventListener('popstate', function() {
+        if (modalOpen) {
+            fecharModal();
+        }
+    });
 }
 
 function slugify(valor) {
@@ -541,6 +547,10 @@ async function abrirPerfil(id) {
     
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    if (!modalOpen) {
+        history.pushState({ modal: true }, '', window.location.href);
+    }
+    modalOpen = true;
     content.innerHTML = '<div class="proposal-loading">Carregando informações oficiais...</div>';
 
     if (proposta) {
@@ -578,4 +588,8 @@ function fecharModal() {
     document.getElementById('modal-candidato').style.display = 'none';
     document.body.style.overflow = '';
     document.getElementById('modal-body-content').innerHTML = '';
+    modalOpen = false;
+    if (history.state && history.state.modal) {
+        history.replaceState(null, '', window.location.href);
+    }
 }
