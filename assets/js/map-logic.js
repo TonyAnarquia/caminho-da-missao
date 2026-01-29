@@ -27,6 +27,7 @@
                 cargo: "Pr&eacute;-candidato &agrave; Presid&ecirc;ncia",
                 partido: "Miss&atilde;o",
                 instagram: "https://www.instagram.com/p/DRCpUvkkTL1",
+                foto: "assets/img/candidatos/renan-santos.png",
                 socials: [
                     { label: "Instagram", url: "https://www.instagram.com/renansantosmbl/" },
                     { label: "X", url: "https://x.com/RenanSantosMBL" },
