@@ -437,9 +437,9 @@ function atualizarPainelLateral(cands, nacional) {
         function gerarCard(c) {
     // Verificamos se c.id existe, se não, usamos o nome do candidato como fallback
       const idCandidato = c.id || c.nome.toLowerCase().replace(/\s+/g, '-');
-      candidatosIndex[idCandidato] = c;
-    const fotoCard = (PROPOSTAS_CANDIDATOS[idCandidato] && PROPOSTAS_CANDIDATOS[idCandidato].foto) || c.foto || 'https://via.placeholder.com/64';
-    
+    const proposta = buscarPropostas(idCandidato, c);
+    const fotoCard = (proposta && proposta.foto) || c.foto || (PROPOSTAS_CANDIDATOS[slugify(c.nome)] && PROPOSTAS_CANDIDATOS[slugify(c.nome)].foto) || 'https://via.placeholder.com/64';
+      candidatosIndex[idCandidato] = c;\r\n    
     return `
     <div class="card-candidato">
         <img src="${fotoCard}" class="cand-foto" alt="${c.nome}"/>
