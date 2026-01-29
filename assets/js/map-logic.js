@@ -267,7 +267,7 @@ function renderizarHeroInicial(nacional) {
     const nome = escapeHtml(cand.nome || 'Candidato Nacional');
     const cargo = cand.cargo ? escapeHtml(cand.cargo) : 'Pr&eacute;-candidato &agrave; Presid&ecirc;ncia';
     const id = cand.id || (cand.nome || '').toLowerCase().replace(/\s+/g, '-');
-    const foto = cand.foto || (PROPOSTAS_CANDIDATOS[id] && PROPOSTAS_CANDIDATOS[id].foto) || '';
+    const foto = (PROPOSTAS_CANDIDATOS[id] && PROPOSTAS_CANDIDATOS[id].foto) || cand.foto || '';
     const fotoHtml = foto
         ? `<div class="estado-hero-media" style="background-image:url('${foto}');"></div>`
         : `<div class="estado-hero-media estado-hero-media--empty">Miss&atilde;o</div>`;
@@ -292,7 +292,7 @@ function renderizarVazioEstado(nacional) {
     const cand = nacional && nacional.length ? nacional[0] : null;
     const nome = cand ? escapeHtml(cand.nome || 'Missao') : 'Miss&atilde;o';
     const id = cand ? (cand.id || (cand.nome || '').toLowerCase().replace(/\s+/g, '-')) : '';
-    const foto = cand && cand.foto ? cand.foto : '';
+    const foto = (PROPOSTAS_CANDIDATOS[id] && PROPOSTAS_CANDIDATOS[id].foto) || (cand && cand.foto ? cand.foto : '');
     const media = foto
         ? `<div class="estado-vazio-media" style="background-image:url('${foto}');"></div>`
         : `<div class="estado-vazio-media estado-vazio-media--empty">${nome}</div>`;
@@ -419,7 +419,7 @@ function atualizarPainelLateral(cands, nacional) {
     // Verificamos se c.id existe, se não, usamos o nome do candidato como fallback
       const idCandidato = c.id || c.nome.toLowerCase().replace(/\s+/g, '-');
       candidatosIndex[idCandidato] = c;
-    const fotoCard = c.foto || (PROPOSTAS_CANDIDATOS[idCandidato] && PROPOSTAS_CANDIDATOS[idCandidato].foto) || 'https://via.placeholder.com/64';
+    const fotoCard = (PROPOSTAS_CANDIDATOS[idCandidato] && PROPOSTAS_CANDIDATOS[idCandidato].foto) || c.foto || 'https://via.placeholder.com/64';
     
     return `
     <div class="card-candidato">
@@ -537,7 +537,7 @@ function renderPropostas(proposta, candidato) {
     const nome = escapeHtml(candidato.nome || proposta.nome || 'Candidato');
     const cargo = candidato.cargo ? escapeHtml(candidato.cargo) : (proposta.cargo || '');
     const partido = candidato.partido ? escapeHtml(candidato.partido) : (proposta.partido || '');
-    const foto = candidato.foto || proposta.foto || '';
+    const foto = proposta.foto || candidato.foto || '';
     const iniciais = nome.split(' ').filter(Boolean).map(p => p[0]).join('').slice(0, 2);
     const titulo = proposta.titulo || 'Propostas';
 
