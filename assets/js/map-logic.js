@@ -267,7 +267,7 @@ function renderizarHeroInicial(nacional) {
     const nome = escapeHtml(cand.nome || 'Candidato Nacional');
     const cargo = cand.cargo ? escapeHtml(cand.cargo) : 'Pr&eacute;-candidato &agrave; Presid&ecirc;ncia';
     const id = cand.id || (cand.nome || '').toLowerCase().replace(/\s+/g, '-');
-    const foto = cand.foto || '';
+    const foto = cand.foto || (PROPOSTAS_CANDIDATOS[id] && PROPOSTAS_CANDIDATOS[id].foto) || '';
     const fotoHtml = foto
         ? `<div class="estado-hero-media" style="background-image:url('${foto}');"></div>`
         : `<div class="estado-hero-media estado-hero-media--empty">Miss&atilde;o</div>`;
@@ -419,10 +419,11 @@ function atualizarPainelLateral(cands, nacional) {
     // Verificamos se c.id existe, se não, usamos o nome do candidato como fallback
       const idCandidato = c.id || c.nome.toLowerCase().replace(/\s+/g, '-');
       candidatosIndex[idCandidato] = c;
+    const fotoCard = c.foto || (PROPOSTAS_CANDIDATOS[idCandidato] && PROPOSTAS_CANDIDATOS[idCandidato].foto) || 'https://via.placeholder.com/64';
     
     return `
     <div class="card-candidato">
-        <img src="${c.foto || 'https://via.placeholder.com/64'}" class="cand-foto" alt="${c.nome}"/>
+        <img src="${fotoCard}" class="cand-foto" alt="${c.nome}"/>
         <div class="cand-info">
             <span class="cand-nome">${c.nome}</span>
             <span class="cand-partido">${c.partido}</span>
@@ -536,7 +537,7 @@ function renderPropostas(proposta, candidato) {
     const nome = escapeHtml(candidato.nome || proposta.nome || 'Candidato');
     const cargo = candidato.cargo ? escapeHtml(candidato.cargo) : (proposta.cargo || '');
     const partido = candidato.partido ? escapeHtml(candidato.partido) : (proposta.partido || '');
-    const foto = candidato.foto || '';
+    const foto = candidato.foto || proposta.foto || '';
     const iniciais = nome.split(' ').filter(Boolean).map(p => p[0]).join('').slice(0, 2);
     const titulo = proposta.titulo || 'Propostas';
 
