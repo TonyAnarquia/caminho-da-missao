@@ -111,6 +111,8 @@
         let layersPorSigla = {};
         let estadosIndex = {};
         let modalOpen = false;
+        let contagemLayer = null;
+        let contagemAtiva = false;
 
         const map = L.map('mapa-interativo', {
             zoomSnap: 0.5, 
@@ -149,6 +151,7 @@
                         });
                         renderizarMapa(geo);
                         montarSelectEstados(geo);
+                        configurarMapaView(geo);
                         renderizarPresidenteInicial();
                     }
                 });
@@ -191,6 +194,54 @@
     }).addTo(map);
 }
 
+function configurarMapaView(geo) {
+    const select = document.getElementById('map-view-select');
+    if (!select) return;
+    select.onchange = function() {
+        const mode = this.value;
+        if (mode === 'contagem') {
+            ativarContagem(geo);
+        } else {
+            desativarContagem();
+        }
+    };
+}
+
+function ativarContagem(geo) {
+    contagemAtiva = true;
+    if (contagemLayer) {
+        contagemLayer.clearLayers();
+    } else {
+        contagemLayer = L.layerGroup().addTo(map);
+    }
+    const counts = {};
+    Object.keys(dadosCandidatos).forEach((uf) => {
+        if (uf === 'NACIONAL') return;
+        counts[uf] = (dadosCandidatos[uf] || []).length;
+    });
+    if (!geo || !geo.features) return;
+    geo.features.forEach((f) => {
+        const s = f.properties.sigla || f.properties.UF || f.id;
+        if (!s) return;
+        const total = counts[s] || 0;
+        const pos = AJUSTE_SIGLAS[s] || L.geoJSON(f).getBounds().getCenter();
+        const marker = L.marker(pos, {
+            icon: L.divIcon({
+                className: 'count-badge',
+                html: `${total}`,
+                iconSize: [26, 26],
+                iconAnchor: [13, 13]
+            }),
+            interactive: false
+        });
+        marker.addTo(contagemLayer);
+    });
+}
+
+function desativarContagem() {
+    contagemAtiva = false;
+    if (contagemLayer) contagemLayer.clearLayers();
+}
 function renderizarPresidenteInicial() {
     const nacional = dadosCandidatos["NACIONAL"] || [];
     if (nacional.length > 0) {
