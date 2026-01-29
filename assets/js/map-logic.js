@@ -439,7 +439,7 @@ function atualizarPainelLateral(cands, nacional) {
       const idCandidato = c.id || c.nome.toLowerCase().replace(/\s+/g, '-');
     const proposta = buscarPropostas(idCandidato, c);
     const fotoCard = (proposta && proposta.foto) || c.foto || (PROPOSTAS_CANDIDATOS[slugify(c.nome)] && PROPOSTAS_CANDIDATOS[slugify(c.nome)].foto) || 'https://via.placeholder.com/64';
-      candidatosIndex[idCandidato] = c;\r\n    
+      candidatosIndex[idCandidato] = c;    
     return `
     <div class="card-candidato">
         <img src="${fotoCard}" class="cand-foto" alt="${c.nome}"/>
