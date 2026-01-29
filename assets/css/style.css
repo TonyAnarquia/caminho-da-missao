@@ -173,6 +173,50 @@
             font-size: 12px;
             color: #94a3b8;
         }
+        .estado-hero-card {
+            margin-top: 16px;
+            background: #141414;
+            border: 1px solid #2f2f2f;
+            border-left: 4px solid #EEBB00;
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            background-image: url('../img/texture.png');
+            background-size: 180px;
+        }
+        .estado-hero-content { display: flex; flex-direction: column; gap: 6px; }
+        .estado-hero-kicker { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #EEBB00; font-weight: 800; }
+        .estado-hero-name { margin: 0; font-size: 20px; color: #ffffff; }
+        .estado-hero-role { margin: 0; font-size: 12px; color: #b6b6b6; }
+        .estado-hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+        .estado-hero-btn { background: #EEBB00; border: none; color: #111; padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; }
+        .estado-hero-link { color: #EEBB00; font-size: 12px; text-decoration: none; border-bottom: 1px solid rgba(238,187,0,0.4); padding-bottom: 2px; }
+        .estado-hero-link:hover { color: #ffd45a; border-color: rgba(238,187,0,0.7); }
+        .estado-hero-media { width: 96px; height: 96px; border-radius: 50%; background-position: center; background-size: cover; border: 2px solid #EEBB00; }
+        .estado-hero-media--empty { background: #1b1b1b; color: #EEBB00; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; border-style: dashed; }
+
+        .estado-vazio-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 16px;
+            margin-top: 12px;
+            background: #171717;
+            border: 1px solid #2f2f2f;
+            border-radius: 14px;
+        }
+        .estado-vazio-content h4 { margin: 0 0 6px 0; color: #ffffff; font-size: 14px; }
+        .estado-vazio-content p { margin: 0; color: #cbd5e1; font-size: 12px; line-height: 1.6; }
+        .estado-vazio-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+        .estado-vazio-btn { background: #EEBB00; border: none; color: #111; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; }
+        .estado-vazio-link { color: #EEBB00; font-size: 12px; text-decoration: none; border-bottom: 1px solid rgba(238,187,0,0.4); padding-bottom: 2px; }
+        .estado-vazio-link:hover { color: #ffd45a; border-color: rgba(238,187,0,0.7); }
+        .estado-vazio-media { width: 88px; height: 88px; border-radius: 12px; background-position: center; background-size: cover; border: 1px solid #2f2f2f; }
+        .estado-vazio-media--empty { background: #1b1b1b; color: #EEBB00; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; }
 
         /* Estilos dos Cards */
         .secao-titulo {
@@ -340,4 +384,6 @@
             .proposal-head { flex-direction: column; align-items: flex-start; }
             .proposal-name { font-size: 24px; }
             .proposal-item { grid-template-columns: 28px 1fr; }
+            .estado-hero-card, .estado-vazio-card { flex-direction: column; align-items: flex-start; }
+            .estado-hero-media, .estado-vazio-media { width: 100%; height: 140px; border-radius: 12px; }
         }

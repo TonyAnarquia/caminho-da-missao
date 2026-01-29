@@ -187,9 +187,68 @@ function renderizarPresidenteInicial() {
             ${nacional.map(gerarCard).join('')}
         `;
         document.getElementById('secao-presidente-inicial').innerHTML = html;
+    } else {
+        document.getElementById('secao-presidente-inicial').innerHTML = '';
     }
+    renderizarHeroInicial(nacional);
 }
 
+function renderizarHeroInicial(nacional) {
+    const container = document.getElementById('estado-hero');
+    if (!container) return;
+    if (!nacional || !nacional.length) {
+        container.innerHTML = '';
+        return;
+    }
+    const cand = nacional[0];
+    const nome = escapeHtml(cand.nome || 'Candidato Nacional');
+    const cargo = cand.cargo ? escapeHtml(cand.cargo) : 'Pr&eacute;-candidato &agrave; Presid&ecirc;ncia';
+    const id = cand.id || (cand.nome || '').toLowerCase().replace(/\s+/g, '-');
+    const foto = cand.foto || '';
+    const fotoHtml = foto
+        ? `<div class="estado-hero-media" style="background-image:url('${foto}');"></div>`
+        : `<div class="estado-hero-media estado-hero-media--empty">Miss&atilde;o</div>`;
+
+    container.innerHTML = `
+        <div class="estado-hero-card">
+            <div class="estado-hero-content">
+                <span class="estado-hero-kicker">Destaque Nacional</span>
+                <h3 class="estado-hero-name">${nome}</h3>
+                <p class="estado-hero-role">${cargo}</p>
+                <div class="estado-hero-actions">
+                    <button class="estado-hero-btn" onclick="abrirPerfil('${id}')">Ver Propostas</button>
+                    <a class="estado-hero-link" href="https://filiacao.missao.org.br/inscricao" target="_blank" rel="noopener noreferrer">Filie-se</a>
+                </div>
+            </div>
+            ${fotoHtml}
+        </div>
+    `;
+}
+
+function renderizarVazioEstado(nacional) {
+    const cand = nacional && nacional.length ? nacional[0] : null;
+    const nome = cand ? escapeHtml(cand.nome || 'Missao') : 'Miss&atilde;o';
+    const id = cand ? (cand.id || (cand.nome || '').toLowerCase().replace(/\s+/g, '-')) : '';
+    const foto = cand && cand.foto ? cand.foto : '';
+    const media = foto
+        ? `<div class="estado-vazio-media" style="background-image:url('${foto}');"></div>`
+        : `<div class="estado-vazio-media estado-vazio-media--empty">${nome}</div>`;
+    const btn = id ? `<button class="estado-vazio-btn" onclick="abrirPerfil('${id}')">Ver propostas nacionais</button>` : '';
+
+    return `
+        <div class="estado-vazio-card">
+            <div class="estado-vazio-content">
+                <h4>Este estado ainda n&atilde;o possui pr&eacute;-candidatos</h4>
+                <p>Conhe&ccedil;a as propostas nacionais e ajude a Miss&atilde;o a crescer na sua regi&atilde;o.</p>
+                <div class="estado-vazio-actions">
+                    ${btn}
+                    <a class="estado-vazio-link" href="https://filiacao.missao.org.br/inscricao" target="_blank" rel="noopener noreferrer">Filie-se</a>
+                </div>
+            </div>
+            ${media}
+        </div>
+    `;
+}
 function montarSelectEstados(geo) {
     const select = document.getElementById('estado-select');
     if (!select || !geo || !geo.features) return;
@@ -254,7 +313,7 @@ function atualizarPainelLateral(cands, nacional) {
 
             const filtrar = (cargo) => {
                const html = cands.filter(c => c.cargo.toLowerCase() === cargo).map(gerarCard).join('');
-               return html || '<p style="font-size:12px; color:#94a3b8; padding:20px; text-align:center;">Nenhum candidato cadastrado.</p>';
+               return html || renderizarVazioEstado(nacional);
             };
     
             document.getElementById('tab-senado').innerHTML = '<div class="secao-titulo">Pré-candidatos à Senador</div>' + filtrar('senador');
