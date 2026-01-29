@@ -348,7 +348,7 @@
 }
 
 .proposal-modal { display: flex; flex-direction: column; gap: 16px; }
-.proposal-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 26px; margin: -22px -26px 0; border-bottom: 1px solid #2f2f2f; position: sticky; top: -22px; background: #1c1b1a; z-index: 5; box-shadow: 0 8px 18px rgba(0,0,0,0.35); background-image: radial-gradient(circle at 15% 20%, rgba(238,187,0,0.12), transparent 45%), radial-gradient(circle at 85% 0%, rgba(238,187,0,0.08), transparent 40%), linear-gradient(120deg, rgba(238,187,0,0.10), transparent 40%), url("../img/texture.png"); background-size: cover, cover, cover, 180px; background-blend-mode: screen, screen, screen, normal; }
+.proposal-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 26px; margin: -22px -26px 0; border-bottom: 1px solid #2f2f2f; position: sticky; top: -22px; background: #1c1b1a; z-index: 5; box-shadow: 0 8px 18px rgba(0,0,0,0.35); }
 .proposal-kicker { display: inline-block; font-size: 10px; letter-spacing: 1.6px; text-transform: uppercase; color: #eebb00; font-weight: 800; }
         .proposal-socials { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 8px 0 2px 0; }
         .proposal-social { display: inline-flex; align-items: center; justify-content: center; height: 26px; font-size: 11px; color: #eebb00; text-decoration: none; border: 1px solid rgba(238,187,0,0.35); padding: 0 10px; border-radius: 999px; letter-spacing: 0.4px; text-transform: uppercase; }
