@@ -1,4 +1,4 @@
-		// 1. CONSTANTES E CONFIGURAÇÕES
+﻿		// 1. CONSTANTES E CONFIGURAÇÕES
         const URL_ESTADOS = 'https://raw.githubusercontent.com/TonyAnarquia/mapa-eleitoral-blog/refs/heads/main/estados.json';
         const URL_PLANILHA = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQWGZKaW2pCrP8sJjN3PHdIXqD0C7qiOwQ1tjpbHqNo2Dr1UZSmXgU2HNuqYD25BE4Q6LVbawsnsicv/pub?output=csv';
         
@@ -111,6 +111,7 @@
         let layersPorSigla = {};
         let estadosIndex = {};
         let modalOpen = false;
+        let fotoModalOpen = false;
         let contagemLayer = null;
         let contagemAtiva = false;
 
@@ -286,9 +287,12 @@ function renderizarHeroInicial(nacional) {
     const nome = escapeHtml(cand.nome || 'Candidato Nacional');
     const cargo = cand.cargo ? escapeHtml(cand.cargo) : 'Pr&eacute;-candidato &agrave; Presid&ecirc;ncia';
     const id = cand.id || (cand.nome || '').toLowerCase().replace(/\s+/g, '-');
-    const foto = (PROPOSTAS_CANDIDATOS[id] && PROPOSTAS_CANDIDATOS[id].foto) || cand.foto || '';
-    const fotoHtml = foto
-        ? `<div class="estado-hero-media" style="background-image:url('${foto}');"></div>`
+    const proposta = buscarPropostas(id, cand);
+    const fotoBase = obterFotoBase(cand, proposta, id);
+    const fotoFallback = obterFotoFallback(cand, proposta);
+    const fotoTag = renderFotoTag(fotoBase, fotoFallback, nome, 'estado-hero-img');
+    const fotoHtml = fotoTag
+        ? `<div class="estado-hero-media">${fotoTag}</div>`
         : `<div class="estado-hero-media estado-hero-media--empty">Miss&atilde;o</div>`;
 
     container.innerHTML = `
@@ -311,9 +315,12 @@ function renderizarVazioEstado(nacional) {
     const cand = nacional && nacional.length ? nacional[0] : null;
     const nome = cand ? escapeHtml(cand.nome || 'Missao') : 'Miss&atilde;o';
     const id = cand ? (cand.id || (cand.nome || '').toLowerCase().replace(/\s+/g, '-')) : '';
-    const foto = (PROPOSTAS_CANDIDATOS[id] && PROPOSTAS_CANDIDATOS[id].foto) || (cand && cand.foto ? cand.foto : '');
-    const media = foto
-        ? `<div class="estado-vazio-media" style="background-image:url('${foto}');"></div>`
+    const proposta = cand ? buscarPropostas(id, cand) : null;
+    const fotoBase = cand ? obterFotoBase(cand, proposta, id) : '';
+    const fotoFallback = cand ? obterFotoFallback(cand, proposta) : '';
+    const fotoTag = renderFotoTag(fotoBase, fotoFallback, nome, 'estado-vazio-img');
+    const media = fotoTag
+        ? `<div class="estado-vazio-media">${fotoTag}</div>`
         : `<div class="estado-vazio-media estado-vazio-media--empty">${nome}</div>`;
     const btn = id ? `<button class="estado-vazio-btn" onclick="abrirPerfil('${id}')">Ver propostas nacionais</button>` : '';
 
@@ -435,14 +442,16 @@ function atualizarPainelLateral(cands, nacional) {
         }
 
         function gerarCard(c) {
-    // Verificamos se c.id existe, se não, usamos o nome do candidato como fallback
-      const idCandidato = c.id || c.nome.toLowerCase().replace(/\s+/g, '-');
+    // Verificamos se c.id existe, se nao, usamos o nome do candidato como fallback
+    const idCandidato = c.id || c.nome.toLowerCase().replace(/\s+/g, '-');
     const proposta = buscarPropostas(idCandidato, c);
-    const fotoCard = (proposta && proposta.foto) || c.foto || (PROPOSTAS_CANDIDATOS[slugify(c.nome)] && PROPOSTAS_CANDIDATOS[slugify(c.nome)].foto) || 'https://via.placeholder.com/64';
-      candidatosIndex[idCandidato] = c;    
+    const fotoBase = obterFotoBase(c, proposta, idCandidato);
+    const fotoFallback = obterFotoFallback(c, proposta);
+    const fotoTag = renderFotoTag(fotoBase, fotoFallback, c.nome, 'cand-foto') || `<img src="https://via.placeholder.com/64" class="cand-foto" alt="${c.nome}"/>`;
+    candidatosIndex[idCandidato] = c;
     return `
     <div class="card-candidato">
-        <img src="${fotoCard}" class="cand-foto" alt="${c.nome}"/>
+        ${fotoTag}
         <div class="cand-info">
             <span class="cand-nome">${c.nome}</span>
             <span class="cand-partido">${c.partido}</span>
@@ -453,8 +462,7 @@ function atualizarPainelLateral(cands, nacional) {
         </div>
     </div>`;
 }
-
-        function gerenciarArrasto() {
+function gerenciarArrasto() {
             if (map.getZoom() <= 4) {
                 map.dragging.disable();
                 map.setView([-15.78, -52], 4, { animate: true });
@@ -488,10 +496,26 @@ function configurarModal() {
     modal.addEventListener('click', function(e) {
         if (e.target === modal) fecharModal();
     });
+    const fotoModal = document.getElementById('modal-foto');
+    if (fotoModal) {
+        fotoModal.addEventListener('click', function(e) {
+            if (e.target === fotoModal) fecharFoto();
+        });
+    }
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') fecharModal();
+        if (e.key === 'Escape') {
+            if (fotoModalOpen) {
+                fecharFoto();
+                return;
+            }
+            fecharModal();
+        }
     });
     window.addEventListener('popstate', function() {
+        if (fotoModalOpen) {
+            fecharFoto();
+            return;
+        }
         if (modalOpen) {
             fecharModal();
         }
@@ -516,6 +540,94 @@ function escapeHtml(valor) {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
+}
+function obterFotoBase(candidato, proposta, id) {
+    const raw = id || (candidato && (candidato.id || candidato.nome)) || (proposta && proposta.nome) || '';
+    const slug = slugify(raw);
+    if (!slug) return '';
+    return `assets/img/candidatos/${slug}`;
+}
+
+function obterFotoFallback(candidato, proposta) {
+    const fallback = (candidato && candidato.foto) || (proposta && proposta.foto) || '';
+    if (fallback && !fallback.startsWith('assets/img/candidatos/')) {
+        return fallback;
+    }
+    return '';
+}
+
+function renderFotoTag(fotoBase, fotoFallback, alt, className) {
+    const safeAlt = escapeHtml(alt || '');
+    const safeFallback = escapeHtml(fotoFallback || '');
+    const safeBase = escapeHtml(fotoBase || '');
+    const attrs = [`alt="${safeAlt}"`, `class="${className}"`, 'loading="lazy"', 'onclick="abrirFoto(this.src)"'];
+
+    if (safeBase) {
+        attrs.push(`src="${safeBase}.png"`);
+        attrs.push(`data-foto-base="${safeBase}"`);
+        if (safeFallback) attrs.push(`data-foto-fallback="${safeFallback}"`);
+        attrs.push('data-foto-step="0"');
+        attrs.push('onerror="trocarFoto(this)"');
+    } else if (safeFallback) {
+        attrs.push(`src="${safeFallback}"`);
+    } else {
+        return '';
+    }
+
+    return `<img ${attrs.join(' ')} />`;
+}
+
+function trocarFoto(img) {
+    if (!img || !img.dataset) return;
+    const base = img.dataset.fotoBase || '';
+    const fallback = img.dataset.fotoFallback || '';
+    const exts = ['.png', '.jpg', '.jpeg'];
+    let step = parseInt(img.dataset.fotoStep || '0', 10);
+    if (Number.isNaN(step)) step = 0;
+    const nextStep = step + 1;
+
+    if (base && nextStep < exts.length) {
+        img.dataset.fotoStep = String(nextStep);
+        img.src = base + exts[nextStep];
+        return;
+    }
+
+    if (fallback && img.src !== fallback) {
+        img.dataset.fotoStep = 'fallback';
+        img.onerror = null;
+        img.src = fallback;
+        return;
+    }
+
+    img.onerror = null;
+}
+
+function abrirFoto(src) {
+    const modal = document.getElementById('modal-foto');
+    const img = document.getElementById('modal-foto-img');
+    if (!modal || !img || !src) return;
+    img.src = src;
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    if (!fotoModalOpen) {
+        history.pushState({ fotoModal: true }, '', window.location.href);
+    }
+    fotoModalOpen = true;
+}
+
+function fecharFoto() {
+    const modal = document.getElementById('modal-foto');
+    const img = document.getElementById('modal-foto-img');
+    if (!modal || !img) return;
+    modal.style.display = 'none';
+    img.src = '';
+    fotoModalOpen = false;
+    if (!modalOpen) {
+        document.body.style.overflow = '';
+    }
+    if (history.state && history.state.fotoModal) {
+        history.replaceState(null, '', window.location.href);
+    }
 }
 function socialIcon(label) {
     const l = (label || '').toString().toLowerCase();
@@ -556,7 +668,8 @@ function renderPropostas(proposta, candidato) {
     const nome = escapeHtml(candidato.nome || proposta.nome || 'Candidato');
     const cargo = candidato.cargo ? escapeHtml(candidato.cargo) : (proposta.cargo || '');
     const partido = candidato.partido ? escapeHtml(candidato.partido) : (proposta.partido || '');
-    const foto = proposta.foto || candidato.foto || '';
+    const fotoBase = obterFotoBase(candidato, proposta, candidato.id);
+    const fotoFallback = obterFotoFallback(candidato, proposta);
     const iniciais = nome.split(' ').filter(Boolean).map(p => p[0]).join('').slice(0, 2);
     const titulo = proposta.titulo || 'Propostas';
 
@@ -564,8 +677,9 @@ function renderPropostas(proposta, candidato) {
         ? `<p class="proposal-role">${cargo}${cargo && partido ? ' | ' : ''}${partido}</p>`
         : '';
 
-    const fotoHtml = foto
-        ? `<img src="${foto}" alt="${nome}" class="proposal-photo" />`
+    const fotoTag = renderFotoTag(fotoBase, fotoFallback, nome, 'proposal-photo');
+    const fotoHtml = fotoTag
+        ? fotoTag
         : `<div class="proposal-photo-fallback">${iniciais || 'RM'}</div>`;
 
     const lista = proposta.propostas.map((item) => {
@@ -658,10 +772,13 @@ async function abrirPerfil(id) {
 }
 function fecharModal() {
     document.getElementById('modal-candidato').style.display = 'none';
-    document.body.style.overflow = '';
+    if (!fotoModalOpen) {
+        document.body.style.overflow = '';
+    }
     document.getElementById('modal-body-content').innerHTML = '';
     modalOpen = false;
     if (history.state && history.state.modal) {
         history.replaceState(null, '', window.location.href);
     }
 }
+

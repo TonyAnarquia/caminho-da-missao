@@ -248,8 +248,9 @@
         .estado-hero-btn { background: #EEBB00; border: none; color: #111; padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; }
         .estado-hero-link { color: #EEBB00; font-size: 12px; text-decoration: none; border-bottom: 1px solid rgba(238,187,0,0.4); padding-bottom: 2px; }
         .estado-hero-link:hover { color: #ffd45a; border-color: rgba(238,187,0,0.7); }
-        .estado-hero-media { width: 96px; height: 96px; border-radius: 50%; background-position: center; background-size: cover; border: 2px solid #EEBB00; }
+        .estado-hero-media { width: 96px; height: 96px; border-radius: 50%; border: 2px solid #EEBB00; overflow: hidden; background: #111; }
         .estado-hero-media--empty { background: #1b1b1b; color: #EEBB00; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; border-style: dashed; }
+        .estado-hero-img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; }
 
         .estado-vazio-card {
             display: flex;
@@ -268,8 +269,9 @@
         .estado-vazio-btn { background: #EEBB00; border: none; color: #111; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; }
         .estado-vazio-link { color: #EEBB00; font-size: 12px; text-decoration: none; border-bottom: 1px solid rgba(238,187,0,0.4); padding-bottom: 2px; }
         .estado-vazio-link:hover { color: #ffd45a; border-color: rgba(238,187,0,0.7); }
-        .estado-vazio-media { width: 88px; height: 88px; border-radius: 12px; background-position: center; background-size: cover; border: 1px solid #2f2f2f; }
+        .estado-vazio-media { width: 88px; height: 88px; border-radius: 12px; border: 1px solid #2f2f2f; overflow: hidden; background: #111; }
         .estado-vazio-media--empty { background: #1b1b1b; color: #EEBB00; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; }
+        .estado-vazio-img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; }
 
         /* Estilos dos Cards */
         .secao-titulo {
@@ -307,6 +309,7 @@
             flex-shrink: 0;
             border: 3px solid #EEBB00;
             background-color: #1a1a1a;
+            cursor: pointer;
         }
         .cand-nome { color: #ffffff; font-weight: 700; }
         .cand-partido { color: #94a3b8; font-size: 13px; }
@@ -415,7 +418,7 @@
 .proposal-role { margin: 0; color: #b6b6b6; font-size: 12px; }
 .proposal-head-photo { display: flex; align-items: center; justify-content: center; }
         .proposal-head-media { display: flex; align-items: center; gap: 10px; }
-.proposal-photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid #eebb00; background: #111; }
+.proposal-photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid #eebb00; background: #111; cursor: pointer; }
 .proposal-photo-fallback { width: 56px; height: 56px; border-radius: 50%; background: #1b1b1b; border: 1px dashed #eebb00; color: #eebb00; display: flex; align-items: center; justify-content: center; font-weight: 800; letter-spacing: 1px; font-size: 12px; }
 .proposal-title { font-size: 12px; font-weight: 800; color: #eebb00; letter-spacing: 0.8px; text-transform: uppercase; }
 .proposal-list { display: flex; flex-direction: column; gap: 0; padding-top: 8px; }
