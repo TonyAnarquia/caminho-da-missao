@@ -434,6 +434,25 @@ function escapeHtml(valor) {
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
 }
+function socialIcon(label) {
+    const l = (label || '').toString().toLowerCase();
+    if (l.includes('instagram')) {
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4V7a4 4 0 014-4zm5 4.5A4.5 4.5 0 1016.5 12 4.5 4.5 0 0012 7.5zm7-1a1 1 0 10-1 1 1 1 0 001-1zm-7 3a2.5 2.5 0 11-2.5 2.5A2.5 2.5 0 0112 9.5z"/></svg>';
+    }
+    if (l === 'x' || l.includes('twitter')) {
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3l7.4 9.5L3.5 21h3.1l5.5-6.6L16.9 21H21l-7.8-10 6.8-8h-3.1l-5.1 6.2L7.9 3H4z"/></svg>';
+    }
+    if (l.includes('youtube')) {
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12s0-4.1-.5-5.8a2.8 2.8 0 00-2-2C17.8 3.7 12 3.7 12 3.7s-5.8 0-7.5.5a2.8 2.8 0 00-2 2C2 7.9 2 12 2 12s0 4.1.5 5.8a2.8 2.8 0 002 2c1.7.5 7.5.5 7.5.5s5.8 0 7.5-.5a2.8 2.8 0 002-2c.5-1.7.5-5.8.5-5.8zm-12 3.2V8.8l5.2 3.2L10 15.2z"/></svg>';
+    }
+    if (l.includes('tiktok')) {
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v10.2a3.8 3.8 0 11-3-3.7V7.6a6.2 6.2 0 106 6V8.6a6.5 6.5 0 003 1V6.8a3.6 3.6 0 01-3-3h-3z"/></svg>';
+    }
+    if (l.includes('facebook')) {
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5V6.9c0-.8.5-1 1-1h2V3h-3c-2.5 0-4 1.5-4 4v1.5H8v3h2V21h3v-9.5h2.4l.6-3H14z"/></svg>';
+    }
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.6 13.4a3 3 0 010-4.2l2.8-2.8a3 3 0 014.2 4.2l-1.4 1.4-.7-.7 1.4-1.4a2 2 0 10-2.8-2.8l-2.8 2.8a2 2 0 102.8 2.8l.7.7-1.4 1.4a3 3 0 01-4.2 0zm2.8 2.1l2.8-2.8a3 3 0 000-4.2l-.7.7a2 2 0 010 2.8l-2.8 2.8a2 2 0 01-2.8-2.8l-.7-.7a3 3 0 004.2 4.2z"/></svg>';
+}
 
 function buscarPropostas(id, candidato) {
     const keys = [];
@@ -480,7 +499,7 @@ function renderPropostas(proposta, candidato) {
 
         const socials = proposta.socials || (proposta.instagram ? [{ label: 'Instagram', url: proposta.instagram }] : []);
     const socialsHtml = socials.length
-        ? `<div class="proposal-socials">` + socials.map(s => `<a class="proposal-social" href="${s.url}" target="_blank" rel="noopener noreferrer">${s.label}</a>`).join('') + `</div>`
+        ? `<div class="proposal-socials proposal-socials--side">` + socials.map(s => `<a class="proposal-social proposal-social--icon" href="${s.url}" target="_blank" rel="noopener noreferrer" aria-label="${s.label}">${socialIcon(s.label)}</a>`).join('') + `</div>`
         : '';
 const link = proposta.instagram
         ? `<a class="proposal-link" href="${proposta.instagram}" target="_blank" rel="noopener noreferrer">Ver propostas no Instagram</a>`
@@ -494,10 +513,11 @@ const link = proposta.instagram
                     <span class="proposal-kicker">Propostas</span>
                     <h2 class="proposal-name">${nome}</h2>
                     ${cabecalho}
-                    ${socialsHtml}
                 </div>
-                <div class="proposal-head-photo">
-                    ${fotoHtml}
+                <div class="proposal-head-media">
+                    <div class="proposal-head-photo">
+                        ${fotoHtml}
+                    </div>
                 </div>
             </div>
             <div class="proposal-title">${titulo}</div>

@@ -350,11 +350,15 @@
 .proposal-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 26px; margin: -22px -26px 0; border-bottom: 1px solid #2f2f2f; position: sticky; top: -22px; background: #242424; z-index: 5; box-shadow: 0 8px 18px rgba(0,0,0,0.35); }
 .proposal-kicker { display: inline-block; font-size: 10px; letter-spacing: 1.6px; text-transform: uppercase; color: #eebb00; font-weight: 800; }
         .proposal-socials { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 8px 0 2px 0; }
+        .proposal-socials--side { flex-direction: column; margin: 0; }
         .proposal-social { display: inline-flex; align-items: center; justify-content: center; height: 26px; font-size: 11px; color: #eebb00; text-decoration: none; border: 1px solid rgba(238,187,0,0.35); padding: 0 10px; border-radius: 999px; letter-spacing: 0.4px; text-transform: uppercase; }
+        .proposal-social--icon { width: 28px; height: 28px; padding: 0; border-radius: 8px; }
+        .proposal-social--icon svg { width: 14px; height: 14px; fill: currentColor; }
         .proposal-social:hover { color: #ffd45a; border-color: rgba(238,187,0,0.7); }
 .proposal-name { margin: 6px 0 4px 0; font-size: 22px; color: #f3f4f6; }
 .proposal-role { margin: 0; color: #b6b6b6; font-size: 12px; }
 .proposal-head-photo { display: flex; align-items: center; justify-content: center; }
+        .proposal-head-media { display: flex; align-items: center; gap: 10px; }
 .proposal-photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid #eebb00; background: #111; }
 .proposal-photo-fallback { width: 56px; height: 56px; border-radius: 50%; background: #1b1b1b; border: 1px dashed #eebb00; color: #eebb00; display: flex; align-items: center; justify-content: center; font-weight: 800; letter-spacing: 1px; font-size: 12px; }
 .proposal-title { font-size: 12px; font-weight: 800; color: #eebb00; letter-spacing: 0.8px; text-transform: uppercase; }
