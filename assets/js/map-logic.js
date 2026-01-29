@@ -214,16 +214,36 @@ function ativarContagem(geo) {
     } else {
         contagemLayer = L.layerGroup().addTo(map);
     }
-    const counts = {};
-    Object.keys(dadosCandidatos).forEach((uf) => {
-        if (uf === 'NACIONAL') return;
-        counts[uf] = (dadosCandidatos[uf] || []).length;
-    });
     if (!geo || !geo.features) return;
+
+    const nameToSigla = {};
+    geo.features.forEach((f) => {
+        const s = f.properties.sigla || f.properties.UF || f.id;
+        const nome = f.properties.nome || f.properties.name || s;
+        if (s && nome) {
+            nameToSigla[slugify(nome)] = s;
+        }
+    });
+
+    const counts = {};
+    Object.keys(dadosCandidatos).forEach((key) => {
+        if (key === 'NACIONAL') return;
+        const raw = (key || '').toString().trim();
+        if (!raw) return;
+        let sigla = raw.toUpperCase();
+        if (sigla.length !== 2) {
+            const mapped = nameToSigla[slugify(raw)];
+            if (!mapped) return;
+            sigla = mapped;
+        }
+        counts[sigla] = (counts[sigla] || 0) + (dadosCandidatos[key] || []).length;
+    });
+
     geo.features.forEach((f) => {
         const s = f.properties.sigla || f.properties.UF || f.id;
         if (!s) return;
         const total = counts[s] || 0;
+        if (total <= 0) return;
         const pos = AJUSTE_SIGLAS[s] || L.geoJSON(f).getBounds().getCenter();
         const marker = L.marker(pos, {
             icon: L.divIcon({
@@ -237,7 +257,6 @@ function ativarContagem(geo) {
         marker.addTo(contagemLayer);
     });
 }
-
 function desativarContagem() {
     contagemAtiva = false;
     if (contagemLayer) contagemLayer.clearLayers();
