@@ -97,6 +97,8 @@
         let geojsonLayer;
         let dadosCandidatos = {};
         let candidatosIndex = {};
+        let layersPorSigla = {};
+        let estadosIndex = {};
 
         const map = L.map('mapa-interativo', {
             zoomSnap: 0.5, 
@@ -115,6 +117,7 @@
             if (e.originalEvent.target.id === 'mapa-interativo') resetMapa();
         });
         map.addControl(new (criarBotaoReset())());
+        configurarModal();
 
         // 4. FUNÇÕES
         function carregarDadosEIniciar() {
@@ -133,6 +136,7 @@
                             dadosCandidatos[uf].push(linha);
                         });
                         renderizarMapa(geo);
+                        montarSelectEstados(geo);
                         renderizarPresidenteInicial();
                     }
                 });
@@ -140,68 +144,107 @@
         }
 
         function renderizarMapa(geo) {
-            geojsonLayer = L.geoJSON(geo, {
-                style: aplicarEstilo,
-                onEachFeature: function(f, layer) {
-                    const s = f.properties.sigla || f.properties.UF || f.id;
-                    const nome = f.properties.nome || f.properties.name || s;
-                    layer.bindTooltip(nome, { direction: 'top', sticky: true });
-                    
-                    layer.on('mouseover', function () {
-                        if (estadoSelecionado !== s) {
-                            layer.setStyle({ color: '#ffffff', weight: 3, fillOpacity: 0.9 });
-                            layer.bringToFront();
-                        }
-                    });
-                    layer.on('mouseout', function () { geojsonLayer.setStyle(aplicarEstilo); });
-
-                    const pos = AJUSTE_SIGLAS[s] || layer.getBounds().getCenter();
-                    L.marker(pos, { 
-                        icon: L.divIcon({ 
-                            className: 'sigla-label', 
-                            html: `<span>${s}</span>`, 
-                            iconSize: [20, 20],
-                            iconAnchor: [10, 10]
-                        }), 
-                        interactive: false 
-                    }).addTo(map);
-
-                    layer.on('click', function(e) {
-                        L.DomEvent.stopPropagation(e);
-                        estadoSelecionado = s;
-                        geojsonLayer.setStyle(aplicarEstilo);
-                        layer.bringToFront();
-                        map.fitBounds(layer.getBounds(), { padding: [20, 20] });
-                        
-                        document.getElementById('nome-estado-selecionado').innerText = nome;
-                        document.getElementById('lista-vazia').style.display = 'none';
-                        document.getElementById('container-abas').style.display = 'block';
-
-                        const cands = dadosCandidatos[s] || [];
-                        const nacional = dadosCandidatos["NACIONAL"] || [];
-                        
-                        if(window.innerWidth < 850) {
-                            document.getElementById('info-container').scrollIntoView({ behavior: 'smooth' });
-                        }
-
-                        atualizarPainelLateral(cands, nacional);
-                    });
+    geojsonLayer = L.geoJSON(geo, {
+        style: aplicarEstilo,
+        onEachFeature: function(f, layer) {
+            const s = f.properties.sigla || f.properties.UF || f.id;
+            const nome = f.properties.nome || f.properties.name || s;
+            layersPorSigla[s] = layer;
+            layer.bindTooltip(nome, { direction: 'top', sticky: true });
+            
+            layer.on('mouseover', function () {
+                if (estadoSelecionado !== s) {
+                    layer.setStyle({ color: '#ffffff', weight: 3, fillOpacity: 0.9 });
+                    layer.bringToFront();
                 }
+            });
+            layer.on('mouseout', function () { geojsonLayer.setStyle(aplicarEstilo); });
+
+            const pos = AJUSTE_SIGLAS[s] || layer.getBounds().getCenter();
+            L.marker(pos, { 
+                icon: L.divIcon({ 
+                    className: 'sigla-label', 
+                    html: `<span>${s}</span>`, 
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 10]
+                }), 
+                interactive: false 
             }).addTo(map);
-        }
 
-        function renderizarPresidenteInicial() {
-            const nacional = dadosCandidatos["NACIONAL"] || [];
-            if (nacional.length > 0) {
-                const html = `
-                    <div class="secao-titulo" style="margin-top:0;">Pré-candidato à Presidência</div>
-                    ${nacional.map(gerarCard).join('')}
-                `;
-                document.getElementById('secao-presidente-inicial').innerHTML = html;
-            }
+            layer.on('click', function(e) {
+                L.DomEvent.stopPropagation(e);
+                selecionarEstado(s, nome, layer);
+            });
         }
+    }).addTo(map);
+}
 
-        function atualizarPainelLateral(cands, nacional) {
+function renderizarPresidenteInicial() {
+    const nacional = dadosCandidatos["NACIONAL"] || [];
+    if (nacional.length > 0) {
+        const html = `
+            <div class="secao-titulo" style="margin-top:0;">Pré-candidato à Presidência</div>
+            ${nacional.map(gerarCard).join('')}
+        `;
+        document.getElementById('secao-presidente-inicial').innerHTML = html;
+    }
+}
+
+function montarSelectEstados(geo) {
+    const select = document.getElementById('estado-select');
+    if (!select || !geo || !geo.features) return;
+
+    const options = [];
+    geo.features.forEach((f) => {
+        const s = f.properties.sigla || f.properties.UF || f.id;
+        const nome = f.properties.nome || f.properties.name || s;
+        if (!s) return;
+        estadosIndex[s] = nome;
+        options.push({ sigla: s, nome: nome });
+    });
+
+    options.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+    select.innerHTML = '<option value="">Selecione um Estado</option>' +
+        options.map(o => `<option value="${o.sigla}">${o.nome} (${o.sigla})</option>`).join('');
+
+    select.onchange = function() {
+        const val = this.value;
+        if (!val) {
+            resetMapa();
+            return;
+        }
+        selecionarEstado(val);
+    };
+}
+
+function selecionarEstado(sigla, nomeFallback, layerFallback) {
+    const layer = layerFallback || layersPorSigla[sigla];
+    if (!layer) return;
+    const nome = nomeFallback || estadosIndex[sigla] || sigla;
+
+    estadoSelecionado = sigla;
+    geojsonLayer.setStyle(aplicarEstilo);
+    layer.bringToFront();
+    map.fitBounds(layer.getBounds(), { padding: [20, 20] });
+
+    document.getElementById('nome-estado-selecionado').innerText = nome;
+    document.getElementById('lista-vazia').style.display = 'none';
+    document.getElementById('container-abas').style.display = 'block';
+
+    const cands = dadosCandidatos[sigla] || [];
+    const nacional = dadosCandidatos["NACIONAL"] || [];
+
+    const select = document.getElementById('estado-select');
+    if (select && select.value !== sigla) select.value = sigla;
+
+    if (window.innerWidth < 850) {
+        document.getElementById('info-container').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    atualizarPainelLateral(cands, nacional);
+}
+
+function atualizarPainelLateral(cands, nacional) {
             document.getElementById('secao-presidencia').innerHTML = nacional.length ? 
                 '<div class="secao-titulo">Pré-candidato a Presidência</div>' + nacional.map(gerarCard).join('') : '';
             
@@ -243,6 +286,8 @@
             document.getElementById('container-abas').style.display = 'none';
             document.getElementById('secao-presidencia').innerHTML = '';
             document.getElementById('secao-governador').innerHTML = '';
+            const select = document.getElementById('estado-select');
+            if (select) select.value = '';
             if (geojsonLayer) geojsonLayer.setStyle(aplicarEstilo);
             map.setView([-15.78, -52], 4);
             gerenciarArrasto();
@@ -284,16 +329,27 @@
         }
 
         function criarBotaoReset() {
-            return L.Control.extend({
-                options: { position: 'bottomleft' },
-                onAdd: function() {
-                    const div = L.DomUtil.create('button', 'leaflet-control-reset');
-                    div.innerHTML = 'Ver Brasil Inteiro';
-                    div.onclick = resetMapa;
-                    return div;
-                }
-            });
+    return L.Control.extend({
+        options: { position: 'bottomleft' },
+        onAdd: function() {
+            const div = L.DomUtil.create('button', 'leaflet-control-reset');
+            div.innerHTML = 'Ver Brasil Inteiro';
+            div.onclick = resetMapa;
+            return div;
         }
+    });
+}
+
+function configurarModal() {
+    const modal = document.getElementById('modal-candidato');
+    if (!modal) return;
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) fecharModal();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') fecharModal();
+    });
+}
 
 function slugify(valor) {
     return (valor || '')
@@ -389,6 +445,7 @@ async function abrirPerfil(id) {
     const proposta = buscarPropostas(id, candidato);
     
     modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
     content.innerHTML = '<div class="proposal-loading">Carregando informações oficiais...</div>';
 
     if (proposta) {
@@ -424,5 +481,6 @@ async function abrirPerfil(id) {
 }
 function fecharModal() {
     document.getElementById('modal-candidato').style.display = 'none';
+    document.body.style.overflow = '';
     document.getElementById('modal-body-content').innerHTML = '';
 }

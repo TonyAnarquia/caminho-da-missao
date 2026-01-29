@@ -124,6 +124,55 @@
             font-weight: 800;
             text-shadow: 0 0 15px rgba(238, 187, 0, 0.3);
         }
+        .estado-selector {
+            margin-top: 18px;
+            background: #1a1a1a;
+            border: 1px solid #2f2f2f;
+            border-radius: 12px;
+            padding: 14px 16px;
+        }
+        .estado-selector label {
+            display: block;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #EEBB00;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .estado-select-wrap { position: relative; }
+        #estado-select {
+            width: 100%;
+            background: #101010;
+            color: #f1f1f1;
+            border: 1px solid #2f2f2f;
+            border-radius: 10px;
+            padding: 10px 34px 10px 12px;
+            font-size: 14px;
+            appearance: none;
+        }
+        #estado-select:focus {
+            outline: none;
+            border-color: #EEBB00;
+            box-shadow: 0 0 0 2px rgba(238, 187, 0, 0.18);
+        }
+        .estado-select-wrap::after {
+            content: "";
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            width: 8px;
+            height: 8px;
+            border-right: 2px solid #EEBB00;
+            border-bottom: 2px solid #EEBB00;
+            transform: translateY(-60%) rotate(45deg);
+            pointer-events: none;
+        }
+        .estado-select-help {
+            margin: 8px 0 0;
+            font-size: 12px;
+            color: #94a3b8;
+        }
 
         /* Estilos dos Cards */
         .secao-titulo {
