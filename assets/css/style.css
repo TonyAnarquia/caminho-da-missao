@@ -310,12 +310,20 @@
 
 /* Caixa de conteudo */
 .modal-container {
-    background: #242424; width: 86%; max-width: 860px; max-height: 82vh;
+    background: #1c1b1a;
+    width: 86%; max-width: 860px; max-height: 82vh;
     border-radius: 14px; border: 1px solid #2f2f2f;
     padding: 22px 26px; position: relative; overflow-y: auto; color: #e5e7eb;
     box-shadow: 0 25px 70px rgba(0,0,0,0.6);
     scrollbar-width: thin;
     scrollbar-color: #eebb00 #1f1f1f;
+    background-image:
+        radial-gradient(circle at 20% 10%, rgba(238,187,0,0.12), transparent 45%),
+        radial-gradient(circle at 80% 0%, rgba(238,187,0,0.08), transparent 40%),
+        linear-gradient(120deg, rgba(238,187,0,0.08), transparent 40%),
+        url('../img/texture.png');
+    background-size: cover, cover, cover, 180px;
+    background-blend-mode: screen, screen, screen, normal;
 }
 .modal-container::before {
     content: "";
