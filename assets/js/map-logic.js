@@ -27,6 +27,7 @@
                 cargo: "Pr&eacute;-candidato &agrave; Presid&ecirc;ncia",
                 partido: "Miss&atilde;o",
                 instagram: "https://www.instagram.com/p/DRCpUvkkTL1",
+                socials: [{ label: "Instagram", url: "https://www.instagram.com/renansantos" }],
                 titulo: "7 propostas da Miss&atilde;o",
                 propostas: [
                     {
@@ -473,7 +474,11 @@ function renderPropostas(proposta, candidato) {
             </div>`;
     }).join('');
 
-    const link = proposta.instagram
+        const socials = proposta.socials || (proposta.instagram ? [{ label: 'Instagram', url: proposta.instagram }] : []);
+    const socialsHtml = socials.length
+        ? `<div class="proposal-socials">` + socials.map(s => `<a class="proposal-social" href="${s.url}" target="_blank" rel="noopener noreferrer">${s.label}</a>`).join('') + `</div>`
+        : '';
+const link = proposta.instagram
         ? `<a class="proposal-link" href="${proposta.instagram}" target="_blank" rel="noopener noreferrer">Ver propostas no Instagram</a>`
         : '';
 
@@ -481,6 +486,7 @@ function renderPropostas(proposta, candidato) {
         <div class="proposal-modal">
             <div class="proposal-head">
                 <div class="proposal-head-text">
+                    ${socialsHtml}
                     <span class="proposal-kicker">Propostas</span>
                     <h2 class="proposal-name">${nome}</h2>
                     ${cabecalho}

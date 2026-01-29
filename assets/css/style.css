@@ -347,8 +347,11 @@
 }
 
 .proposal-modal { display: flex; flex-direction: column; gap: 16px; }
-.proposal-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid #2f2f2f; }
+.proposal-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #2f2f2f; position: sticky; top: 0; background: #242424; z-index: 2; }
 .proposal-kicker { display: inline-block; font-size: 10px; letter-spacing: 1.6px; text-transform: uppercase; color: #eebb00; font-weight: 800; }
+        .proposal-socials { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 2px 0; }
+        .proposal-social { font-size: 11px; color: #eebb00; text-decoration: none; border: 1px solid rgba(238,187,0,0.35); padding: 4px 8px; border-radius: 999px; }
+        .proposal-social:hover { color: #ffd45a; border-color: rgba(238,187,0,0.7); }
 .proposal-name { margin: 6px 0 4px 0; font-size: 22px; color: #f3f4f6; }
 .proposal-role { margin: 0; color: #b6b6b6; font-size: 12px; }
 .proposal-head-photo { display: flex; align-items: center; justify-content: center; }
