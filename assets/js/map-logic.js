@@ -29,8 +29,13 @@
                 instagram: "https://www.instagram.com/p/DRCpUvkkTL1",
                 socials: [
                     { label: "Instagram", url: "https://www.instagram.com/renansantosmbl/" },
-                    { label: "X", url: "https://x.com/RenanSantosMBL" }
+                    { label: "X", url: "https://x.com/RenanSantosMBL" },
+                    { label: "YouTube", url: "https://youtube.com/live/NkcimNg64JQ?feature=share" },
+                    { label: "TikTok", url: "https://tiktok.com/@renansantosmbl" },
+                    { label: "Telegram", url: "https://t.me/RenanSantosMBL" },
+                    { label: "WhatsApp", url: "https://whatsapp.com/channel/0029Val4r3qHrDZXLe3VFm1e" }
                 ],
+
 
                 titulo: "7 propostas da Miss&atilde;o",
                 propostas: [
@@ -478,7 +483,7 @@ function renderPropostas(proposta, candidato) {
     const titulo = proposta.titulo || 'Propostas';
 
     const cabecalho = cargo || partido
-        ? `<p class="proposal-role">${cargo}${cargo && partido ? ' · ' : ''}${partido}</p>`
+        ? `<p class="proposal-role">${cargo}${cargo && partido ? ' | ' : ''}${partido}</p>`
         : '';
 
     const fotoHtml = foto
@@ -511,7 +516,7 @@ const link = proposta.instagram
                 <div class="proposal-head-text">
 
                     <span class="proposal-kicker">Propostas</span>
-                    <h2 class="proposal-name">${nome}</h2>
+                    <div class="proposal-name-row"><h2 class="proposal-name">${nome}</h2>${socialsHtml}</div>
                     ${cabecalho}
                 </div>
                 <div class="proposal-head-media">
