@@ -27,7 +27,11 @@
                 cargo: "Pr&eacute;-candidato &agrave; Presid&ecirc;ncia",
                 partido: "Miss&atilde;o",
                 instagram: "https://www.instagram.com/p/DRCpUvkkTL1",
-                socials: [{ label: "Instagram", url: "https://www.instagram.com/renansantos" }],
+                socials: [
+                    { label: "Instagram", url: "https://www.instagram.com/renansantosmbl/" },
+                    { label: "X", url: "https://x.com/RenanSantosMBL" }
+                ],
+
                 titulo: "7 propostas da Miss&atilde;o",
                 propostas: [
                     {
@@ -486,10 +490,11 @@ const link = proposta.instagram
         <div class="proposal-modal">
             <div class="proposal-head">
                 <div class="proposal-head-text">
-                    ${socialsHtml}
+
                     <span class="proposal-kicker">Propostas</span>
                     <h2 class="proposal-name">${nome}</h2>
                     ${cabecalho}
+                    ${socialsHtml}
                 </div>
                 <div class="proposal-head-photo">
                     ${fotoHtml}
