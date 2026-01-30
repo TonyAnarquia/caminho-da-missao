@@ -2,7 +2,7 @@ backend:
   name: github
   repo: TonyAnarquia/caminho-da-missao
   branch: main
-  base_url: https://netlify-cms-github-oauth-provider-sigma.vercel.app/api
+  base_url: https://netlify-cms-github-oauth-provider-sigma.vercel.app
 
 media_folder: "assets/img/uploads" # Onde as fotos das notícias ficarão
 public_folder: "/assets/img/uploads"
