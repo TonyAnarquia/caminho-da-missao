@@ -443,12 +443,12 @@ function selecionarEstado(sigla, nomeFallback, layerFallback) {
     geojsonLayer.setStyle(aplicarEstilo);
     layer.bringToFront();
     
-    // Calcular padding adaptativo para mobile
+    // Calcular padding adaptativo para mobile - aumentado para melhor visibilidade
     const isMobile = window.innerWidth < 768;
-    const padding = isMobile ? [40, 40] : [20, 20];
+    const padding = isMobile ? [70, 50] : [50, 40];
     
     // Fazer fitBounds com padding maior e máximo de zoom para garantir visualização completa
-    map.fitBounds(layer.getBounds(), { padding: padding, maxZoom: 6 });
+    map.fitBounds(layer.getBounds(), { padding: padding, maxZoom: 5.5 });
 
     // Renderiza o nome do estado com link do Instagram se disponível
     const igUrl = INSTAGRAM_ESTADOS[sigla];
@@ -548,8 +548,10 @@ function atualizarPainelLateral(cands, nacional, sigla = null) {
             // Fazer fitBounds do Brasil inteiro com padding adequado
             if (geojsonLayer) {
                 const isMobile = window.innerWidth < 768;
-                const padding = isMobile ? [50, 50] : [30, 30];
-                map.fitBounds(geojsonLayer.getBounds(), { padding: padding, maxZoom: 4 });
+                // Padding maior para garantir que nada fica cortado
+                // [vertical, horizontal] - aumentado significativamente
+                const padding = isMobile ? [100, 60] : [80, 60];
+                map.fitBounds(geojsonLayer.getBounds(), { padding: padding, maxZoom: 3.5 });
             } else {
                 map.setView([-15.78, -52], 4);
             }
