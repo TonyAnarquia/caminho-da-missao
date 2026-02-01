@@ -522,7 +522,13 @@ function atualizarPainelLateral(cands, nacional, sigla = null) {
             const select = document.getElementById('estado-select');
             if (select) select.value = '';
             if (geojsonLayer) geojsonLayer.setStyle(aplicarEstilo);
-            map.setView([-15.78, -52], 4);
+            
+            // Ajusta zoom baseado no tamanho da tela (mobile vs desktop)
+            const mapContainer = document.getElementById('mapa-interativo');
+            const isMobile = mapContainer && mapContainer.offsetHeight <= 400;
+            const zoomLevel = isMobile ? 3 : 4;
+            
+            map.setView([-15.78, -52], zoomLevel);
             gerenciarArrasto();
         }
 
