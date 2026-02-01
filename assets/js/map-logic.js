@@ -526,7 +526,7 @@ function atualizarPainelLateral(cands, nacional, sigla = null) {
             // Ajusta zoom baseado no tamanho da tela (mobile vs desktop)
             const mapContainer = document.getElementById('mapa-interativo');
             const isMobile = mapContainer && mapContainer.offsetHeight <= 400;
-            const zoomLevel = isMobile ? 3 : 4;
+            const zoomLevel = isMobile ? 2.5 : 4;
             
             map.setView([-15.78, -52], zoomLevel);
             gerenciarArrasto();
