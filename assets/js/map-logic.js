@@ -549,20 +549,20 @@ function atualizarPainelLateral(cands, nacional, sigla = null) {
             if (select) select.value = '';
             if (geojsonLayer) geojsonLayer.setStyle(aplicarEstilo);
             
-            // Fazer fitBounds do Brasil inteiro com padding adequado
-            // Bounds explícitos do Brasil para garantir cobertura completa
-            const brasilBounds = [[-33.5, -73.5], [5.5, -28]];
+            // Fazer fitBounds do Brasil inteiro com padding MUITO maior
+            // Bounds expandidos do Brasil para garantir cobertura completa com folga
+            const brasilBounds = [[-35, -75], [7, -30]];
             
             if (geojsonLayer) {
                 const isMobile = window.innerWidth < 768;
-                // Padding maior para garantir que nada fica cortado
-                const padding = isMobile ? [100, 60] : [80, 60];
-                map.fitBounds(geojsonLayer.getBounds(), { padding: padding, maxZoom: 3.5 });
+                // Padding EXTREMAMENTE maior para garantir que nada fica cortado
+                const padding = isMobile ? [150, 100] : [120, 100];
+                map.fitBounds(geojsonLayer.getBounds(), { padding: padding, maxZoom: 3 });
             } else {
                 // Fallback se geojsonLayer não estiver disponível
                 const isMobile = window.innerWidth < 768;
-                const padding = isMobile ? [100, 60] : [80, 60];
-                map.fitBounds(brasilBounds, { padding: padding, maxZoom: 3.5 });
+                const padding = isMobile ? [150, 100] : [120, 100];
+                map.fitBounds(brasilBounds, { padding: padding, maxZoom: 3 });
             }
             gerenciarArrasto();
         }
