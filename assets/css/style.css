@@ -498,11 +498,15 @@
             }
             .map-info {
                 margin-top: 0;
-                margin-bottom: 20px;
+                margin-bottom: 40px;
                 min-height: auto;
+                display: block;
+                width: 100%;
             }
             .site-footer {
-                margin-top: 40px;
+                margin-top: 0;
+                clear: both;
+                width: 100%;
             }
             .modal-container { padding: 20px; width: 92%; max-height: 86vh; }
             .proposal-head { flex-direction: column; align-items: flex-start; }
