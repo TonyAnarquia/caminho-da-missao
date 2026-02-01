@@ -177,9 +177,7 @@
             if (!mapContainer) return;
             
             // Invalidar o mapa para se redimensionar
-            setTimeout(() => {
-                map.invalidateSize();
-            }, 100);
+            map.invalidateSize();
         }
 
         // 3. INICIALIZAÇÃO
@@ -193,30 +191,9 @@
         map.addControl(new (criarBotaoReset())());
         configurarModal();
 
-        // Observer para detectar mudanças no tamanho do container (mobile)
-        const mapContainer = document.getElementById('mapa-interativo');
-        if (mapContainer && typeof ResizeObserver !== 'undefined') {
-            const resizeObserver = new ResizeObserver(() => {
-                redimensionarMapaResponsivo();
-                // Se o mapa inteiro estiver visível (resetMapa state), refazer fitBounds
-                if (!estadoSelecionado && geojsonLayer) {
-                    const isMobile = window.innerWidth < 768;
-                    const padding = isMobile ? [50, 50] : [30, 30];
-                    map.fitBounds(geojsonLayer.getBounds(), { padding: padding, maxZoom: 4 });
-                }
-            });
-            resizeObserver.observe(mapContainer);
-        }
-
-        // Listener para redimensionamento de janela em mobile
+        // Listener para redimensionamento de janela (rotação de tela no mobile)
         window.addEventListener('resize', () => {
             redimensionarMapaResponsivo();
-            // Se o mapa inteiro estiver visível (resetMapa state), refazer fitBounds
-            if (!estadoSelecionado && geojsonLayer) {
-                const isMobile = window.innerWidth < 768;
-                const padding = isMobile ? [50, 50] : [30, 30];
-                map.fitBounds(geojsonLayer.getBounds(), { padding: padding, maxZoom: 4 });
-            }
         });
 
         // 4. FUNÇÕES
