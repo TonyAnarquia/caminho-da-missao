@@ -205,6 +205,8 @@
                         // Atualiza contador e visibilidade após carregar dados
                         updateCandidateCounter();
                         updateCandidateCounterVisibility();
+                        // Garantir que o header inicial (botão nacional) apareça sem clique
+                        resetMapa();
                     }
                 });
             });
@@ -424,7 +426,13 @@ function selecionarEstado(sigla, nomeFallback, layerFallback) {
     estadoSelecionado = sigla;
     geojsonLayer.setStyle(aplicarEstilo);
     layer.bringToFront();
-    map.fitBounds(layer.getBounds(), { padding: [20, 20] });
+    
+    // Calcular padding adaptativo para mobile
+    const isMobile = window.innerWidth < 768;
+    const padding = isMobile ? [40, 40] : [20, 20];
+    
+    // Fazer fitBounds com padding maior e máximo de zoom para garantir visualização completa
+    map.fitBounds(layer.getBounds(), { padding: padding, maxZoom: 6 });
 
     // Renderiza o nome do estado com link do Instagram se disponível
     const igUrl = INSTAGRAM_ESTADOS[sigla];
