@@ -345,6 +345,10 @@
         .sigla-label { color: #fff !important; font-weight: 900; text-shadow: 2px 2px 4px #000; font-size: 11px; pointer-events: none; }
         .leaflet-control-reset { background: #fff; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-weight: 700; box-shadow: 0 4px 6px rgba(0,0,0,0.1); color: #1e293b; border: none; }
 
+        /* Controles do Leaflet */
+        .leaflet-control { z-index: 400 !important; }
+        .leaflet-control-zoom { z-index: 400 !important; }
+
         /* Contador de candidatos */
         .leaflet-control-candidate-counter {
     display: flex; /* sempre visível */
@@ -361,6 +365,7 @@
     min-width: auto;
     text-align: center;
     font-size: 12px;
+    z-index: 400 !important;
 }
 
 /* Social buttons inside candidate cards */
@@ -474,9 +479,26 @@
         @media (max-width: 900px) { 
             .site-header { flex-direction: column; gap: 15px; padding: 20px; text-align: center; }
             .header-left, .header-center, .header-right { flex: none; width: 100%; justify-content: center; }
-            .map-section { grid-template-columns: 1fr; } 
-            .map-placeholder { height: 400px; position: relative; top: 0; } 
-            #mapa-interativo { height: 400px; }
+            .map-section { 
+                grid-template-columns: 1fr;
+                gap: 20px;
+                min-height: auto;
+            } 
+            .map-placeholder { 
+                height: 400px; 
+                position: relative; 
+                top: 0;
+                display: flex;
+                flex-direction: column;
+            } 
+            #mapa-interativo { 
+                height: 400px;
+                position: relative;
+                z-index: 1;
+            }
+            .map-info {
+                margin-top: 0;
+            }
             .modal-container { padding: 20px; width: 92%; max-height: 86vh; }
             .proposal-head { flex-direction: column; align-items: flex-start; }
             .proposal-name { font-size: 24px; }
