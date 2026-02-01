@@ -528,7 +528,15 @@ function atualizarPainelLateral(cands, nacional, sigla = null) {
             const select = document.getElementById('estado-select');
             if (select) select.value = '';
             if (geojsonLayer) geojsonLayer.setStyle(aplicarEstilo);
-            map.setView([-15.78, -52], 4);
+            
+            // Fazer fitBounds do Brasil inteiro com padding adequado
+            if (geojsonLayer) {
+                const isMobile = window.innerWidth < 768;
+                const padding = isMobile ? [50, 50] : [30, 30];
+                map.fitBounds(geojsonLayer.getBounds(), { padding: padding, maxZoom: 4 });
+            } else {
+                map.setView([-15.78, -52], 4);
+            }
             gerenciarArrasto();
         }
 
