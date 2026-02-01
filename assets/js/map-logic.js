@@ -1,4 +1,4 @@
-﻿		// 1. CONSTANTES E CONFIGURAÇÕES
+﻿﻿		// 1. CONSTANTES E CONFIGURAÇÕES
         const URL_ESTADOS = 'https://raw.githubusercontent.com/TonyAnarquia/mapa-eleitoral-blog/refs/heads/main/estados.json';
         const URL_PLANILHA = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQWGZKaW2pCrP8sJjN3PHdIXqD0C7qiOwQ1tjpbHqNo2Dr1UZSmXgU2HNuqYD25BE4Q6LVbawsnsicv/pub?output=csv';
         
@@ -162,6 +162,8 @@
             }, 0);
             const el = document.getElementById('candidate-counter-number');
             if (el) el.innerText = `${total} PRÉ-CANDIDATOS`;
+            const elMobile = document.getElementById('mobile-candidate-counter');
+            if (elMobile) elMobile.innerText = `${total} PRÉ-CANDIDATOS`;
         }
 
         function updateCandidateCounterVisibility() {
@@ -180,6 +182,12 @@
         });
         map.on('zoomend', updateCandidateCounterVisibility);
         map.addControl(new (criarBotaoReset())());
+
+        // Mobile Controls Events
+        document.getElementById('mobile-zoom-in')?.addEventListener('click', () => map.zoomIn());
+        document.getElementById('mobile-zoom-out')?.addEventListener('click', () => map.zoomOut());
+        document.getElementById('mobile-reset-btn')?.addEventListener('click', resetMapa);
+
         configurarModal();
 
         // 4. FUNÇÕES
@@ -249,7 +257,7 @@
     
     // Ajusta mapa para caber o Brasil inteiro no mobile
     const mapContainer = document.getElementById('mapa-interativo');
-    const isMobile = mapContainer && mapContainer.offsetHeight <= 400;
+    const isMobile = window.innerWidth <= 900;
     if (isMobile && geojsonLayer) {
         const bounds = geojsonLayer.getBounds();
         map.fitBounds(bounds, { padding: [40, 40] });
@@ -533,7 +541,7 @@ function atualizarPainelLateral(cands, nacional, sigla = null) {
             
             // Ajusta zoom baseado no tamanho da tela (mobile vs desktop)
             const mapContainer = document.getElementById('mapa-interativo');
-            const isMobile = mapContainer && mapContainer.offsetHeight <= 400;
+            const isMobile = window.innerWidth <= 900;
             const zoomLevel = isMobile ? 2.1 : 4;
             
             map.setView([-15.78, -52], zoomLevel);
@@ -905,4 +913,3 @@ function fecharModal() {
         history.replaceState(null, '', window.location.href);
     }
 }
-

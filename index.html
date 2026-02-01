@@ -58,6 +58,18 @@
 		<!-- Mapa e Info -->
         <section class="map-section">
             <div class="map-placeholder">
+                <!-- Mobile Only Controls -->
+                <div class="mobile-ui-zoom">
+                    <button id="mobile-zoom-in" aria-label="Zoom In">+</button>
+                    <button id="mobile-zoom-out" aria-label="Zoom Out">-</button>
+                </div>
+                <div class="mobile-ui-counter" id="mobile-candidate-counter">
+                    0 PRÉ-CANDIDATOS
+                </div>
+                <button id="mobile-reset-btn" class="mobile-ui-reset">
+                    Ver Brasil Inteiro
+                </button>
+
                 <div class="map-toolbar">
                     <label for="map-view-select">Mapa</label>
                     <select id="map-view-select">
@@ -133,5 +145,3 @@
     <script src="assets/js/map-logic.js?v=20260131"></script>
 </body>
 </html>
-
-

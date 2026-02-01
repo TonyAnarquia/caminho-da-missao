@@ -158,6 +158,9 @@
         }
         .leaflet-interactive:focus { outline: none !important; }
 
+        /* Mobile UI Hidden on Desktop */
+        .mobile-ui-zoom, .mobile-ui-counter, .mobile-ui-reset { display: none; }
+
         /* Painel de Informações */
         .map-info {
             background: #161616;
@@ -485,16 +488,110 @@
                 min-height: auto;
             } 
             .map-placeholder { 
-                height: 400px; 
-                position: relative; 
+                /* Mobile Frame Style */
+                background-color: #EEBB00;
+                background-image: none;
+                border-radius: 24px; /* rounded-3xl */
+                padding: 50px 4px 50px 4px; /* Thick top/bottom padding */
+                position: relative;
                 top: 0;
-                display: flex;
-                flex-direction: column;
+                height: auto;
+                display: block;
+                border: none;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             } 
             #mapa-interativo { 
-                height: 400px;
-                position: relative;
+                /* Inner Map Area */
+                background-color: #050510; /* Dark blue */
+                background-image: none;
+                border-radius: 16px;
+                width: 100%;
+                aspect-ratio: 1 / 1; /* Square aspect ratio */
+                height: auto !important;
                 z-index: 1;
+            }
+
+            /* Hide Leaflet Controls on Mobile */
+            .leaflet-control-container { display: none !important; }
+
+            /* Mobile UI Elements */
+            .mobile-ui-zoom {
+                display: flex;
+                flex-direction: row;
+                gap: 8px;
+                position: absolute;
+                top: 12px;
+                left: 12px;
+                z-index: 10;
+            }
+            .mobile-ui-zoom button {
+                width: 32px; height: 32px;
+                border-radius: 50%;
+                background: #EEBB00;
+                border: 2px solid #000;
+                color: #000;
+                font-weight: 900;
+                font-size: 18px;
+                display: flex; align-items: center; justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+            
+            .mobile-ui-counter {
+                display: block;
+                position: absolute;
+                top: 18px;
+                right: 18px;
+                color: #000;
+                font-weight: 900;
+                font-size: 13px;
+                z-index: 10;
+                text-transform: uppercase;
+            }
+            
+            .mobile-ui-reset {
+                display: block;
+                position: absolute;
+                bottom: 12px;
+                left: 12px;
+                background: #d97706; /* Darker yellow/orange */
+                color: #000;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 8px;
+                font-weight: 800;
+                font-size: 10px;
+                text-transform: uppercase;
+                z-index: 10;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+
+            /* Reposition Selector */
+            .map-toolbar {
+                top: auto;
+                bottom: 12px;
+                right: 12px;
+                background: #000;
+                border: 1px solid #333;
+                border-radius: 8px;
+                padding: 4px 8px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            }
+            .map-toolbar label {
+                color: #EEBB00;
+                font-size: 9px;
+                margin-bottom: 2px;
+            }
+            #map-view-select {
+                background: #000;
+                color: #fff;
+                border: none;
+                font-size: 11px;
+                padding: 0 16px 0 0;
+                height: auto;
             }
             .map-info {
                 margin-top: 0;
