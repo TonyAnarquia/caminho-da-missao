@@ -130,7 +130,6 @@
         let fotoModalOpen = false;
         let contagemLayer = null;
         let contagemAtiva = false;
-        let ultimaTamanhoMapa = null;
 
         const map = L.map('mapa-interativo', {
             zoomSnap: 0.5, 
@@ -172,14 +171,6 @@
             el.style.display = 'flex';
         }
 
-        function redimensionarMapaResponsivo() {
-            const mapContainer = document.getElementById('mapa-interativo');
-            if (!mapContainer) return;
-            
-            // Invalidar o mapa para se redimensionar
-            map.invalidateSize();
-        }
-
         // 3. INICIALIZAÇÃO
         carregarDadosEIniciar();
 
@@ -190,11 +181,6 @@
         map.on('zoomend', updateCandidateCounterVisibility);
         map.addControl(new (criarBotaoReset())());
         configurarModal();
-
-        // Listener para redimensionamento de janela (rotação de tela no mobile)
-        window.addEventListener('resize', () => {
-            redimensionarMapaResponsivo();
-        });
 
         // 4. FUNÇÕES
         function carregarDadosEIniciar() {
@@ -219,14 +205,8 @@
                         // Atualiza contador e visibilidade após carregar dados
                         updateCandidateCounter();
                         updateCandidateCounterVisibility();
-                        // Redimensionar mapa após carregar
-                        redimensionarMapaResponsivo();
                         // Garantir que o header inicial (botão nacional) apareça sem clique
-                        // Delay maior para garantir que o mapa está totalmente renderizado
-                        setTimeout(() => {
-                            resetMapa();
-                            redimensionarMapaResponsivo();
-                        }, 500);
+                        resetMapa();
                     }
                 });
             });
@@ -446,13 +426,7 @@ function selecionarEstado(sigla, nomeFallback, layerFallback) {
     estadoSelecionado = sigla;
     geojsonLayer.setStyle(aplicarEstilo);
     layer.bringToFront();
-    
-    // Calcular padding adaptativo para mobile - aumentado para melhor visibilidade
-    const isMobile = window.innerWidth < 768;
-    const padding = isMobile ? [70, 50] : [50, 40];
-    
-    // Fazer fitBounds com padding maior e máximo de zoom para garantir visualização completa
-    map.fitBounds(layer.getBounds(), { padding: padding, maxZoom: 5.5 });
+    map.fitBounds(layer.getBounds(), { padding: [20, 20] });
 
     // Renderiza o nome do estado com link do Instagram se disponível
     const igUrl = INSTAGRAM_ESTADOS[sigla];
@@ -548,22 +522,7 @@ function atualizarPainelLateral(cands, nacional, sigla = null) {
             const select = document.getElementById('estado-select');
             if (select) select.value = '';
             if (geojsonLayer) geojsonLayer.setStyle(aplicarEstilo);
-            
-            // Fazer fitBounds do Brasil inteiro com padding adequado
-            // Bounds expandidos do Brasil para garantir cobertura completa com folga
-            const brasilBounds = [[-35, -75], [7, -30]];
-            
-            if (geojsonLayer) {
-                const isMobile = window.innerWidth < 768;
-                // Padding conservador para mobile, maior para desktop
-                const padding = isMobile ? [80, 50] : [100, 80];
-                map.fitBounds(geojsonLayer.getBounds(), { padding: padding, maxZoom: 3 });
-            } else {
-                // Fallback se geojsonLayer não estiver disponível
-                const isMobile = window.innerWidth < 768;
-                const padding = isMobile ? [80, 50] : [100, 80];
-                map.fitBounds(brasilBounds, { padding: padding, maxZoom: 3 });
-            }
+            map.setView([-15.78, -52], 4);
             gerenciarArrasto();
         }
 
