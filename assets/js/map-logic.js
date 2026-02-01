@@ -219,10 +219,14 @@
                         // Atualiza contador e visibilidade após carregar dados
                         updateCandidateCounter();
                         updateCandidateCounterVisibility();
-                        // Garantir que o header inicial (botão nacional) apareça sem clique
-                        resetMapa();
                         // Redimensionar mapa após carregar
-                        setTimeout(() => redimensionarMapaResponsivo(), 300);
+                        redimensionarMapaResponsivo();
+                        // Garantir que o header inicial (botão nacional) apareça sem clique
+                        // Delay maior para garantir que o mapa está totalmente renderizado
+                        setTimeout(() => {
+                            resetMapa();
+                            redimensionarMapaResponsivo();
+                        }, 500);
                     }
                 });
             });
@@ -546,14 +550,19 @@ function atualizarPainelLateral(cands, nacional, sigla = null) {
             if (geojsonLayer) geojsonLayer.setStyle(aplicarEstilo);
             
             // Fazer fitBounds do Brasil inteiro com padding adequado
+            // Bounds explícitos do Brasil para garantir cobertura completa
+            const brasilBounds = [[-33.5, -73.5], [5.5, -28]];
+            
             if (geojsonLayer) {
                 const isMobile = window.innerWidth < 768;
                 // Padding maior para garantir que nada fica cortado
-                // [vertical, horizontal] - aumentado significativamente
                 const padding = isMobile ? [100, 60] : [80, 60];
                 map.fitBounds(geojsonLayer.getBounds(), { padding: padding, maxZoom: 3.5 });
             } else {
-                map.setView([-15.78, -52], 4);
+                // Fallback se geojsonLayer não estiver disponível
+                const isMobile = window.innerWidth < 768;
+                const padding = isMobile ? [100, 60] : [80, 60];
+                map.fitBounds(brasilBounds, { padding: padding, maxZoom: 3.5 });
             }
             gerenciarArrasto();
         }
