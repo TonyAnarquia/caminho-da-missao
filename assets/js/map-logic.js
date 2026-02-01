@@ -246,6 +246,14 @@
             });
         }
     }).addTo(map);
+    
+    // Ajusta mapa para caber o Brasil inteiro no mobile
+    const mapContainer = document.getElementById('mapa-interativo');
+    const isMobile = mapContainer && mapContainer.offsetHeight <= 400;
+    if (isMobile && geojsonLayer) {
+        const bounds = geojsonLayer.getBounds();
+        map.fitBounds(bounds, { padding: [40, 40] });
+    }
 }
 
 function configurarMapaView(geo) {
