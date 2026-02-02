@@ -3,6 +3,10 @@
 <head>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Cache Control: Força o navegador a revalidar o HTML a cada visita -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <!-- Primary Meta Tags -->
     <title>Caminho da Missão - Mapa Interativo de Pré-Candidatos</title>
     <!-- Open Graph / Facebook / WhatsApp -->
@@ -34,7 +38,7 @@
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
 	
     <!-- Seu Estilo Modularizado -->
-    <link rel="stylesheet" href="assets/css/style.css?v=20260131">
+    <link rel="stylesheet" href="assets/css/style.css?v=20260201_FIX_CACHE">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
@@ -142,6 +146,17 @@
 </div>
 
     <!-- Sua Lógica Modularizada -->
-    <script src="assets/js/map-logic.js?v=20260131"></script>
+    <script src="assets/js/map-logic.js?v=20260201_FIX_CACHE"></script>
+
+    <!-- Service Worker Killer: Garante que versões offline antigas sejam removidas -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
+            });
+        }
+    </script>
 </body>
 </html>

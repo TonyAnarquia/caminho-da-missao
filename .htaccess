@@ -1,0 +1,14 @@
+# Configuração de Cache para evitar versões obsoletas
+<IfModule mod_headers.c>
+    # HTML/PHP: Nunca cachear. O navegador deve sempre pedir a versão mais recente ao servidor.
+    <FilesMatch "\.(html|htm|php)$">
+        Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
+    </FilesMatch>
+
+    # Assets (CSS/JS/Imagens): Cache curto ou revalidação, pois usamos ?v= no HTML para versionar.
+    <FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg)$">
+        Header set Cache-Control "public, max-age=600, must-revalidate"
+    </FilesMatch>
+</IfModule>
