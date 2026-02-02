@@ -1,4 +1,4 @@
-﻿﻿﻿﻿		// 1. CONSTANTES E CONFIGURAÇÕES
+﻿﻿﻿﻿﻿﻿		// 1. CONSTANTES E CONFIGURAÇÕES
         const URL_ESTADOS = 'https://raw.githubusercontent.com/TonyAnarquia/mapa-eleitoral-blog/refs/heads/main/estados.json';
         const URL_PLANILHA = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQWGZKaW2pCrP8sJjN3PHdIXqD0C7qiOwQ1tjpbHqNo2Dr1UZSmXgU2HNuqYD25BE4Q6LVbawsnsicv/pub?output=csv';
         
@@ -138,7 +138,14 @@
             maxZoom: 7,
             maxBounds: [[-35, -75], [7, -32]], 
             maxBoundsViscosity: 1.0
-        }).setView([-15.78, -52], 4);
+        });
+
+        if (window.innerWidth <= 900) {
+            map.fitBounds([[-33.75, -73.99], [5.27, -34.79]], { padding: [10, 10] });
+            map.invalidateSize();
+        } else {
+            map.setView([-15.78, -52], 4);
+        }
 
         // Contador de candidatos: controle no canto inferior direito
         const CandidateCounterControl = L.Control.extend({
