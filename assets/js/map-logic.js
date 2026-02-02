@@ -139,10 +139,14 @@
             maxBounds: [[-35, -75], [7, -32]], 
             maxBoundsViscosity: 1.0
         });
-
+        
         if (window.innerWidth <= 900) {
-            map.fitBounds([[-33.75, -73.99], [5.27, -34.79]], { padding: [10, 10] });
-            map.invalidateSize();
+            // Atraso para garantir que o container foi renderizado antes de ajustar o zoom
+            setTimeout(() => {
+                map.invalidateSize(); // Força a atualização do tamanho
+                // Enquadra o Brasil com um padding maior para não colar nas bordas
+                map.fitBounds([[-33.75, -73.99], [5.27, -34.79]], { padding: [20, 20] });
+            }, 200);
         } else {
             map.setView([-15.78, -52], 4);
         }

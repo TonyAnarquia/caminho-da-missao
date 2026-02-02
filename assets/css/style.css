@@ -550,8 +550,8 @@
                 display: block;
             } 
             #mapa-interativo { 
-                border-radius: 30px;
-                height: 550px !important;
+                border-radius: 40px; /* Alinha com o raio da moldura externa */
+                height: 605px !important; /* Aumenta a altura em 10% (550px * 1.1) */
                 display: block !important;
             }
 
