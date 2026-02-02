@@ -1,4 +1,4 @@
-﻿﻿		// 1. CONSTANTES E CONFIGURAÇÕES
+﻿﻿﻿﻿		// 1. CONSTANTES E CONFIGURAÇÕES
         const URL_ESTADOS = 'https://raw.githubusercontent.com/TonyAnarquia/mapa-eleitoral-blog/refs/heads/main/estados.json';
         const URL_PLANILHA = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQWGZKaW2pCrP8sJjN3PHdIXqD0C7qiOwQ1tjpbHqNo2Dr1UZSmXgU2HNuqYD25BE4Q6LVbawsnsicv/pub?output=csv';
         
@@ -134,7 +134,7 @@
         const map = L.map('mapa-interativo', {
             zoomSnap: 0.5, 
             attributionControl: false, 
-            minZoom: 4, 
+            minZoom: window.innerWidth <= 900 ? 2 : 4,
             maxZoom: 7,
             maxBounds: [[-35, -75], [7, -32]], 
             maxBoundsViscosity: 1.0
@@ -256,11 +256,11 @@
     }).addTo(map);
     
     // Ajusta mapa para caber o Brasil inteiro no mobile
-    const mapContainer = document.getElementById('mapa-interativo');
+    map.invalidateSize();
     const isMobile = window.innerWidth <= 900;
     if (isMobile && geojsonLayer) {
         const bounds = geojsonLayer.getBounds();
-        map.fitBounds(bounds, { padding: [40, 40] });
+        map.fitBounds(bounds, { padding: [20, 20] });
     }
 }
 
@@ -540,11 +540,12 @@ function atualizarPainelLateral(cands, nacional, sigla = null) {
             if (geojsonLayer) geojsonLayer.setStyle(aplicarEstilo);
             
             // Ajusta zoom baseado no tamanho da tela (mobile vs desktop)
-            const mapContainer = document.getElementById('mapa-interativo');
             const isMobile = window.innerWidth <= 900;
-            const zoomLevel = isMobile ? 2.1 : 4;
-            
-            map.setView([-15.78, -52], zoomLevel);
+            if (isMobile && geojsonLayer) {
+                map.fitBounds(geojsonLayer.getBounds(), { padding: [20, 20] });
+            } else {
+                map.setView([-15.78, -52], 4);
+            }
             gerenciarArrasto();
         }
 

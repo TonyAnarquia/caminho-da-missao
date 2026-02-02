@@ -551,8 +551,8 @@
             } 
             #mapa-interativo { 
                 border-radius: 30px;
-                aspect-ratio: 1 / 1; /* Square aspect ratio */
-                height: auto !important;
+                height: 550px !important;
+                display: block !important;
             }
 
             .map-toolbar {
