@@ -136,7 +136,7 @@
             attributionControl: false, 
             minZoom: window.innerWidth <= 900 ? 2 : 4,
             maxZoom: 7,
-            maxBounds: [[-35, -75], [7, -32]], 
+            maxBounds: window.innerWidth <= 900 ? [[-45, -90], [15, -20]] : [[-35, -75], [7, -32]], 
             maxBoundsViscosity: 1.0
         });
         
