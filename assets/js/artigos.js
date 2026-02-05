@@ -28,7 +28,7 @@
                     <p>${artigo.resumo || ''}</p>
                     <div class="article-tags">${tags}</div>
                     <div class="article-actions">
-                        <a class="article-link" href="/candidato.html?id=${artigo.candidato_id || ''}">Ver candidato</a>
+                        <a class="article-link" href="/candidato/${artigo.candidato_id || ''}">Ver candidato</a>
                         ${audio}
                     </div>
                 </div>
@@ -75,3 +75,4 @@
             });
         });
 })();
+
