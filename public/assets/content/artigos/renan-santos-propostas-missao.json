@@ -1,0 +1,17 @@
+{
+  "id": "artigo-1",
+  "slug": "renan-santos-propostas-missao",
+  "titulo": "7 propostas da Missao",
+  "resumo": "Resumo das propostas centrais apresentadas por Renan Santos.",
+  "data": "2026-01-29",
+  "candidato_id": "renan-santos",
+  "tema": "Propostas",
+  "tags": ["missao", "propostas", "seguranca"],
+  "imagem": "assets/img/artigos/renan-propostas.jpg",
+  "audio_url": "",
+  "status": "published",
+  "conteudo": [
+    { "tipo": "p", "texto": "A Missao apresenta um conjunto de propostas focadas em seguranca, gestao e desenvolvimento." },
+    { "tipo": "p", "texto": "Este artigo resume os pontos centrais e a visao estrategica do candidato." }
+  ]
+}
