@@ -61,12 +61,20 @@
         if (hero) hero.style.display = 'none';
 
         const tags = (artigo.tags || []).map(t => `<span class="article-tag">${t}</span>`).join('');
-        const audio = artigo.audio_url
+        const audioUrl = artigo.audio_url ? normalizeAsset(artigo.audio_url) : '';
+        const audio = audioUrl
             ? `<div class="article-audio-player">
-                    <span>Audio IA disponivel</span>
-                    <audio controls preload="none" src="${normalizeAsset(artigo.audio_url)}"></audio>
+                    <span>Audio oficial (MP3)</span>
+                    <audio controls preload="none" src="${audioUrl}"></audio>
                </div>`
-            : '';
+            : `<div class="article-audio-player">
+                    <span>Audio IA (leitura automatica)</span>
+                    <div class="article-audio-actions">
+                        <button class="article-audio-btn" data-action="play">Ouvir</button>
+                        <button class="article-audio-btn" data-action="pause">Pausar</button>
+                        <button class="article-audio-btn" data-action="stop">Parar</button>
+                    </div>
+               </div>`;
 
         const conteudo = (artigo.conteudo || []).map(item => {
             if (item.tipo === 'h2') return `<h2>${item.texto}</h2>`;
@@ -97,6 +105,27 @@
                 </div>
             </article>
         `;
+
+        if (!audioUrl && 'speechSynthesis' in window) {
+            const text = [artigo.titulo, artigo.resumo, (artigo.conteudo || []).map(i => i.texto).join(' ')].join(' ');
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'pt-BR';
+            utterance.rate = 1;
+            const buttons = grid.querySelectorAll('.article-audio-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const action = btn.getAttribute('data-action');
+                    if (action === 'play') {
+                        window.speechSynthesis.cancel();
+                        window.speechSynthesis.speak(utterance);
+                    } else if (action === 'pause') {
+                        window.speechSynthesis.pause();
+                    } else if (action === 'stop') {
+                        window.speechSynthesis.cancel();
+                    }
+                });
+            });
+        }
     }
 
     function applyFilters(lista) {

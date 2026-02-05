@@ -546,6 +546,8 @@
         .article-content h3 { color: #f8fafc; font-size: 16px; margin: 12px 0 6px; }
         .article-content blockquote { margin: 10px 0; padding: 10px 14px; border-left: 3px solid #eebb00; background: #1b1b1b; color: #e5e7eb; }
         .article-audio-player { display: flex; flex-direction: column; gap: 8px; background: #1b1b1b; padding: 12px; border-radius: 12px; border: 1px solid #2f2f2f; }
+        .article-audio-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        .article-audio-btn { border: 1px solid #eebb00; background: transparent; color: #eebb00; padding: 6px 12px; border-radius: 999px; font-size: 11px; cursor: pointer; }
         .article-cta { display: flex; justify-content: flex-start; }
         .article-empty { color: #cbd5e1; font-size: 14px; padding: 24px; background: #151515; border-radius: 12px; border: 1px solid #2f2f2f; }
         .candidate-hero { margin-top: 10px; }
