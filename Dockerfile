@@ -14,9 +14,12 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 WORKDIR /app
 RUN apk add --no-cache git unzip
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs --no-scripts
 COPY . .
-RUN composer dump-autoload --optimize
+RUN composer dump-autoload --optimize \
+    && if [ ! -f .env ]; then cp .env.example .env; fi \
+    && php artisan key:generate --force \
+    && php artisan package:discover --ansi
 
 FROM base
 COPY --from=composerbuild /app /app
