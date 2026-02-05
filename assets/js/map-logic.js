@@ -1,4 +1,4 @@
-﻿		// 1. CONSTANTES E CONFIGURAÇÕES
+﻿﻿﻿﻿﻿﻿		// 1. CONSTANTES E CONFIGURAÇÕES
         const URL_ESTADOS = 'https://raw.githubusercontent.com/TonyAnarquia/mapa-eleitoral-blog/refs/heads/main/estados.json';
         const URL_PLANILHA = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQWGZKaW2pCrP8sJjN3PHdIXqD0C7qiOwQ1tjpbHqNo2Dr1UZSmXgU2HNuqYD25BE4Q6LVbawsnsicv/pub?output=csv';
         
@@ -21,6 +21,22 @@
             'RS': '#1e293b', 'RO': '#1e293b', 'RR': '#1e293b', 'SC': '#1e293b',
             'SP': '#1e293b', 'SE': '#1e293b', 'TO': '#1e293b'
         };
+
+        // Instagram dos estados (adicione as URLs conforme necessário)
+        const INSTAGRAM_NACIONAL = 'https://www.instagram.com/partidomissao/';
+        
+        const INSTAGRAM_ESTADOS = {
+            'AC': 'https://www.instagram.com/missaoacre/',              'AL': 'https://www.instagram.com/missaoalagoas/',           'AP': 'https://www.instagram.com/missao.amapa/',            'AM': 'https://www.instagram.com/partidomissaoamazonas/',
+            'BA': 'https://www.instagram.com/partidomissaobahia/',      'CE': 'https://www.instagram.com/missaoceara/',             'DF': 'https://www.instagram.com/missaodistritofederal/',   'ES': 'https://www.instagram.com/missaoespiritosanto/',
+            'GO': 'https://www.instagram.com/partidomissaogoias/',      'MA': 'https://www.instagram.com/partidomissaomaranhao/',   'MT': 'https://www.instagram.com/missaomatogrosso/',        'MS': 'https://www.instagram.com/missaomatogrossodosul/',
+            'MG': 'https://www.instagram.com/missaominasgerais/',       'PA': 'https://www.instagram.com/missao.para/',             'PB': 'https://www.instagram.com/missaoparaiba/',           'PR': 'https://www.instagram.com/missaoparana/',
+            'PE': 'https://www.instagram.com/missaopernambuco/',        'PI': 'https://www.instagram.com/partidomissaopiaui/',      'RJ': 'https://www.instagram.com/missaoriodejaneiro/',      'RN': 'https://www.instagram.com/missaoriograndedonorte/',
+            'RS': 'https://www.instagram.com/partidomissaors/',         'RO': 'https://www.instagram.com/partidomissaorondonia/',   'RR': '',                                                   'SC': 'https://www.instagram.com/missaosantacatarina/',
+            'SP': 'https://www.instagram.com/partidomissaosaopaulo/',   'SE': 'https://www.instagram.com/partidomissaosergipe/',    'TO': ''
+
+            // Adicione mais estados conforme necessário
+        };
+
         const PROPOSTAS_CANDIDATOS = {
             "renan-santos": {
                 nome: "Renan Santos",
@@ -118,20 +134,71 @@
         const map = L.map('mapa-interativo', {
             zoomSnap: 0.5, 
             attributionControl: false, 
-            minZoom: 4, 
+            minZoom: window.innerWidth <= 900 ? 2 : 4,
             maxZoom: 7,
-            maxBounds: [[-35, -75], [7, -32]], 
+            maxBounds: window.innerWidth <= 900 ? [[-45, -90], [15, -20]] : [[-35, -75], [7, -32]], 
             maxBoundsViscosity: 1.0
-        }).setView([-15.78, -52], 4);
+        });
+        
+        if (window.innerWidth <= 900) {
+            // Atraso para garantir que o container foi renderizado antes de ajustar o zoom
+            setTimeout(() => {
+                map.invalidateSize(); // Força a atualização do tamanho
+                // Enquadra o Brasil com um padding maior para não colar nas bordas
+                map.fitBounds([[-33.75, -73.99], [5.27, -34.79]], { padding: [20, 20] });
+            }, 200);
+        } else {
+            map.setView([-15.78, -52], 4);
+        }
+
+        // Contador de candidatos: controle no canto inferior direito
+        const CandidateCounterControl = L.Control.extend({
+            options: { position: 'bottomright' },
+            onAdd: function () {
+                const el = L.DomUtil.create('div', 'leaflet-control-candidate-counter');
+                el.innerHTML = `
+                    <div id="candidate-counter-number" class="candidate-counter-number">0 PRÉ-CANDIDATOS</div>
+                `;
+                L.DomEvent.disableClickPropagation(el);
+                return el;
+            }
+        });
+        const candidateCounterControl = new CandidateCounterControl();
+        map.addControl(candidateCounterControl);
+
+        function updateCandidateCounter() {
+            const total = Object.keys(dadosCandidatos).reduce((sum, k) => {
+                const arr = dadosCandidatos[k];
+                return sum + (Array.isArray(arr) ? arr.length : 0);
+            }, 0);
+            const el = document.getElementById('candidate-counter-number');
+            if (el) el.innerText = `${total} PRÉ-CANDIDATOS`;
+            const elMobile = document.getElementById('mobile-candidate-counter');
+            if (elMobile) elMobile.innerText = `${total} PRÉ-CANDIDATOS`;
+        }
+
+        function updateCandidateCounterVisibility() {
+            const el = document.querySelector('.leaflet-control-candidate-counter');
+            if (!el) return;
+            // Sempre mostrar o contador em qualquer nível de zoom
+            el.style.display = 'flex';
+        }
 
         // 3. INICIALIZAÇÃO
         carregarDadosEIniciar();
 
         map.on('zoomend', gerenciarArrasto);
         map.on('click', (e) => {
-            if (e.originalEvent.target.id === 'mapa-interativo') resetMapa();
+            if (e.originalEvent && e.originalEvent.target && e.originalEvent.target.id === 'mapa-interativo') resetMapa();
         });
+        map.on('zoomend', updateCandidateCounterVisibility);
         map.addControl(new (criarBotaoReset())());
+
+        // Mobile Controls Events
+        document.getElementById('mobile-zoom-in')?.addEventListener('click', () => map.zoomIn());
+        document.getElementById('mobile-zoom-out')?.addEventListener('click', () => map.zoomOut());
+        document.getElementById('mobile-reset-btn')?.addEventListener('click', resetMapa);
+
         configurarModal();
 
         // 4. FUNÇÕES
@@ -154,6 +221,11 @@
                         montarSelectEstados(geo);
                         configurarMapaView(geo);
                         renderizarPresidenteInicial();
+                        // Atualiza contador e visibilidade após carregar dados
+                        updateCandidateCounter();
+                        updateCandidateCounterVisibility();
+                        // Garantir que o header inicial (botão nacional) apareça sem clique
+                        resetMapa();
                     }
                 });
             });
@@ -193,6 +265,14 @@
             });
         }
     }).addTo(map);
+    
+    // Ajusta mapa para caber o Brasil inteiro no mobile
+    map.invalidateSize();
+    const isMobile = window.innerWidth <= 900;
+    if (isMobile && geojsonLayer) {
+        const bounds = geojsonLayer.getBounds();
+        map.fitBounds(bounds, { padding: [20, 20] });
+    }
 }
 
 function configurarMapaView(geo) {
@@ -375,7 +455,20 @@ function selecionarEstado(sigla, nomeFallback, layerFallback) {
     layer.bringToFront();
     map.fitBounds(layer.getBounds(), { padding: [20, 20] });
 
-    document.getElementById('nome-estado-selecionado').innerText = nome;
+    // Renderiza o nome do estado com link do Instagram se disponível
+    const igUrl = INSTAGRAM_ESTADOS[sigla];
+    const igButton = igUrl 
+        ? `<a href="${igUrl}" target="_blank" rel="noopener noreferrer" class="btn-siga-nos">Siga a Missão ${nome}</a>`
+        : '';
+    
+    const estadoHeader = `
+        <div class="estado-header">
+            <h2>${nome}</h2>
+            ${igButton}
+        </div>
+    `;
+    
+    document.getElementById('nome-estado-selecionado').innerHTML = estadoHeader;
     document.getElementById('lista-vazia').style.display = 'none';
     document.getElementById('container-abas').style.display = 'block';
 
@@ -389,10 +482,10 @@ function selecionarEstado(sigla, nomeFallback, layerFallback) {
         document.getElementById('info-container').scrollIntoView({ behavior: 'smooth' });
     }
 
-    atualizarPainelLateral(cands, nacional);
+    atualizarPainelLateral(cands, nacional, sigla);
 }
 
-function atualizarPainelLateral(cands, nacional) {
+function atualizarPainelLateral(cands, nacional, sigla = null) {
             document.getElementById('secao-presidencia').innerHTML = nacional.length ? 
                 '<div class="secao-titulo">Pré-candidato a Presidência</div>' + nacional.map(gerarCard).join('') : '';
             
@@ -407,7 +500,17 @@ function atualizarPainelLateral(cands, nacional) {
     
             document.getElementById('tab-senado').innerHTML = '<div class="secao-titulo">Pré-candidatos à Senador</div>' + filtrar('senador');
             document.getElementById('tab-federal').innerHTML = '<div class="secao-titulo">Pré-candidatos à Deputado Federal</div>' + filtrar('federal');
-            document.getElementById('tab-estadual').innerHTML = '<div class="secao-titulo">Pré-candidatos à Deputado Estadual</div>' + filtrar('estadual');
+            
+            const labelEstadual = sigla === 'DF' ? 'Distrital' : 'Estadual';
+            document.getElementById('tab-estadual').innerHTML = `<div class="secao-titulo">Pré-candidatos à Deputado ${labelEstadual}</div>` + filtrar('estadual');
+            
+            // Atualizar o texto do botão da aba
+            const abas = document.querySelectorAll('.tab-btn');
+            abas.forEach(aba => {
+                if (aba.getAttribute('onclick').includes('tab-estadual')) {
+                    aba.textContent = labelEstadual;
+                }
+            });
         }
 
         function aplicarEstilo(f) {
@@ -429,7 +532,16 @@ function atualizarPainelLateral(cands, nacional) {
 
         function resetMapa() {
             estadoSelecionado = null;
-            document.getElementById('nome-estado-selecionado').innerText = 'Selecione um Estado';
+            
+            // Renderiza header inicial com botão do perfil nacional
+            const estadoHeader = `
+                <div class="estado-header">
+                    <h2>Selecione um Estado</h2>
+                    <a href="${INSTAGRAM_NACIONAL}" target="_blank" rel="noopener noreferrer" class="btn-siga-nos">Siga a Missão</a>
+                </div>
+            `;
+            
+            document.getElementById('nome-estado-selecionado').innerHTML = estadoHeader;
             document.getElementById('lista-vazia').style.display = 'block';
             document.getElementById('container-abas').style.display = 'none';
             document.getElementById('secao-presidencia').innerHTML = '';
@@ -437,7 +549,14 @@ function atualizarPainelLateral(cands, nacional) {
             const select = document.getElementById('estado-select');
             if (select) select.value = '';
             if (geojsonLayer) geojsonLayer.setStyle(aplicarEstilo);
-            map.setView([-15.78, -52], 4);
+            
+            // Ajusta zoom baseado no tamanho da tela (mobile vs desktop)
+            const isMobile = window.innerWidth <= 900;
+            if (isMobile && geojsonLayer) {
+                map.fitBounds(geojsonLayer.getBounds(), { padding: [20, 20] });
+            } else {
+                map.setView([-15.78, -52], 4);
+            }
             gerenciarArrasto();
         }
 
@@ -448,6 +567,31 @@ function atualizarPainelLateral(cands, nacional) {
     const fotoBase = obterFotoBase(c, proposta, idCandidato);
     const fotoFallback = obterFotoFallback(c, proposta);
     const fotoTag = renderFotoTag(fotoBase, fotoFallback, c.nome, 'cand-foto') || `<img src="https://via.placeholder.com/64" class="cand-foto" alt="${c.nome}"/>`;
+    // Monta lista de redes sociais a partir da linha da planilha ou das propostas
+    function gatherSocials(candidate, proposta) {
+        const list = [];
+        const addIf = (label, key) => {
+            const val = (candidate && (candidate[key] || candidate[key.toLowerCase()])) || '';
+            if (val && val.toString().trim()) list.push({ label, url: val.toString().trim() });
+        };
+        addIf('Instagram', 'instagram');
+        addIf('X', 'x');
+        addIf('Twitter', 'twitter');
+        addIf('YouTube', 'youtube');
+        addIf('TikTok', 'tiktok');
+        addIf('Telegram', 'telegram');
+        addIf('WhatsApp', 'whatsapp');
+        addIf('Facebook', 'facebook');
+        addIf('Site', 'site');
+        if (list.length === 0 && proposta && proposta.socials) return proposta.socials;
+        return list;
+    }
+
+    const socials = gatherSocials(c, proposta);
+    const socialsHtml = (socials && socials.length)
+        ? `<div class="card-socials">` + socials.map(s => `<a class="social-btn" href="${s.url}" target="_blank" rel="noopener noreferrer" aria-label="${s.label}">${socialIcon(s.label)}</a>`).join('') + `</div>`
+        : '';
+
     candidatosIndex[idCandidato] = c;
     return `
     <div class="card-candidato">
@@ -456,8 +600,8 @@ function atualizarPainelLateral(cands, nacional) {
             <span class="cand-nome">${c.nome}</span>
             <span class="cand-partido">${c.partido}</span>
             <div class="card-buttons-flex">
-                <a href="${c.instagram}" target="_blank" class="btn-instagram">Instagram</a>
-                <button onclick="abrirPerfil('${idCandidato}')" class="btn-perfil">+ Info</button>
+                ${socialsHtml}
+                <button onclick="abrirPerfil('${idCandidato}')" class="btn-perfil">SOBRE O PRÉ-CANDIDATO</button>
             </div>
         </div>
     </div>`;
@@ -781,4 +925,3 @@ function fecharModal() {
         history.replaceState(null, '', window.location.href);
     }
 }
-
