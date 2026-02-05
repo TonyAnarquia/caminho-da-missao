@@ -3,6 +3,10 @@
 <head>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Cache Control: Força o navegador a revalidar o HTML a cada visita -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <!-- Primary Meta Tags -->
     <title>Caminho da Missão - Mapa Interativo de Pré-Candidatos</title>
     <!-- Open Graph / Facebook / WhatsApp -->
@@ -33,8 +37,8 @@
 
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
 	
-	<!-- Seu Estilo Modularizado -->
-	<link rel="stylesheet" href="assets/css/style.css?v=20260129">
+    <!-- Seu Estilo Modularizado -->
+    <link rel="stylesheet" href="assets/css/style.css?v=20260201_FIX_CACHE">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
@@ -50,7 +54,7 @@
             <div class="header-center">
                 <h1 class="header-title-text">CAMINHO DA MISSÃO</h1>
             </div>
-            <div class="header-right"><a class="btn-filiacao" href="/artigos.html">Artigos</a>
+            <div class="header-right">
                 <a class="btn-filiacao" href="https://filiacao.missao.org.br/inscricao" target="_blank" rel="noopener noreferrer">Filie-se ao partido Missão</a>
             </div>
         </header>
@@ -58,8 +62,20 @@
 		<!-- Mapa e Info -->
         <section class="map-section">
             <div class="map-placeholder">
+                <!-- Mobile Only Controls -->
+                <div class="mobile-ui-zoom">
+                    <button id="mobile-zoom-in" aria-label="Zoom In">+</button>
+                    <button id="mobile-zoom-out" aria-label="Zoom Out">-</button>
+                </div>
+                <div class="mobile-ui-counter" id="mobile-candidate-counter">
+                    0 PRÉ-CANDIDATOS
+                </div>
+                <button id="mobile-reset-btn" class="mobile-ui-reset">
+                    Ver Brasil Inteiro
+                </button>
+
                 <div class="map-toolbar">
-                    <label for="map-view-select">Mapa</label>
+                    <label for="map-view-select">Escolha o Mapa</label>
                     <select id="map-view-select">
                         <option value="padrao">Padr&atilde;o</option>
                         <option value="contagem">Contagem de candidatos</option>
@@ -103,6 +119,7 @@
         <footer class="site-footer">
             <div class="footer-content">
                 <p class="disclaimer"><strong>Aviso Importante:</strong> Projeto independente sem vínculo oficial com o Partido Missão.</p>
+                <p class="footer-external-link"><strong>NOS AJUDE A MANTER O PROJETO DE PÉ: </strong><a href="https://apoia.se/caminho-da-missao" target="_blank" rel="noopener noreferrer">apoia.se/caminho-da-missao</a></p>
                 <p class="footer-external-link">Site oficial: <a href="https://www.missao.org.br" target="_blank" rel="noopener noreferrer">www.missao.org.br</a></p>
                 <p>© 2026 Caminho da Missão</p>
             </div>
@@ -129,9 +146,17 @@
 </div>
 
     <!-- Sua Lógica Modularizada -->
-    <script src="assets/js/map-logic.js?v=20260129"></script>
+    <script src="assets/js/map-logic.js?v=20260201_FIX_CACHE"></script>
+
+    <!-- Service Worker Killer: Garante que versões offline antigas sejam removidas -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
+            });
+        }
+    </script>
 </body>
 </html>
-
-
-
