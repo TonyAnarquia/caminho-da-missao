@@ -1,4 +1,12 @@
 (function() {
+    function normalizeAsset(path) {
+        if (!path) return '';
+        if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('/')) {
+            return path;
+        }
+        return '/' + path.replace(/^\.?\/*/, '');
+    }
+
     const params = new URLSearchParams(window.location.search);
     const pathParts = window.location.pathname.split('/').filter(Boolean);
     const pathId = pathParts[0] === 'candidato' ? pathParts[1] : '';
@@ -9,6 +17,7 @@
     function renderHero(data) {
         if (!hero) return;
         const socials = (data.socials || []).map(s => `<a href="${s.url}" target="_blank" rel="noopener noreferrer" class="candidate-social">${s.label}</a>`).join('');
+        const foto = normalizeAsset(data.foto);
         hero.innerHTML = `
             <div class="candidate-hero-card">
                 <div class="candidate-hero-content">
@@ -19,7 +28,7 @@
                     <div class="candidate-socials">${socials}</div>
                 </div>
                 <div class="candidate-hero-photo">
-                    <img src="${data.foto || ''}" alt="${data.nome}">
+                    <img src="${foto}" alt="${data.nome}">
                 </div>
             </div>
         `;
@@ -29,7 +38,7 @@
         if (!grid) return;
         grid.innerHTML = artigos.map(a => `
             <article class="article-card">
-                <div class="article-thumb" style="background-image:url('${a.imagem || ''}')"></div>
+                <div class="article-thumb" style="background-image:url('${normalizeAsset(a.imagem)}')"></div>
                 <div class="article-body">
                     <div class="article-meta">
                         <span>${a.tema || 'Artigo'}</span>
