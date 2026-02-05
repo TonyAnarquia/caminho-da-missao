@@ -52,7 +52,7 @@
         }
 
         /* Lado Direito: Botão */
-        .header-right { flex: 1; display: flex; justify-content: flex-end; }
+        .header-right { flex: 1; display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
         .btn-filiacao {
             background-color: #EEBB00 !important;
             color: #0a0a0a !important;
@@ -355,6 +355,114 @@
         .footer-external-link a { color: #EEBB00; text-decoration: none; font-weight: 700; }
         .credits { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
 
+        .articles-hero {
+            background: #141414;
+            border: 1px solid #2f2f2f;
+            border-radius: 16px;
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 24px;
+        }
+        .articles-kicker {
+            display: inline-block;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #eebb00;
+            font-weight: 800;
+        }
+        .articles-hero h2 { margin: 8px 0 6px 0; font-size: 24px; }
+        .articles-hero p { margin: 0; color: #cbd5e1; font-size: 13px; }
+        .articles-controls { display: flex; gap: 12px; flex-wrap: wrap; }
+        .articles-controls input,
+        .articles-controls select {
+            background: #101010;
+            color: #f1f1f1;
+            border: 1px solid #2f2f2f;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 13px;
+        }
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+        }
+        .article-card {
+            background: #1a1a1a;
+            border: 1px solid #2f2f2f;
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 320px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.35);
+        }
+        .article-thumb {
+            height: 140px;
+            background-size: cover;
+            background-position: center;
+            background-color: #0f0f0f;
+        }
+        .article-body { padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+        .article-meta { display: flex; justify-content: space-between; color: #94a3b8; font-size: 11px; }
+        .article-body h4 { margin: 0; font-size: 16px; color: #f8fafc; }
+        .article-body p { margin: 0; color: #cbd5e1; font-size: 12px; line-height: 1.6; }
+        .article-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .article-tag {
+            font-size: 10px;
+            color: #eebb00;
+            border: 1px solid rgba(238,187,0,0.35);
+            padding: 2px 8px;
+            border-radius: 999px;
+        }
+        .article-actions { display: flex; gap: 10px; margin-top: 6px; flex-wrap: wrap; }
+        .article-link {
+            color: #eebb00;
+            text-decoration: none;
+            font-size: 12px;
+            border-bottom: 1px solid rgba(238,187,0,0.4);
+        }
+        .article-audio {
+            border: 1px solid #eebb00;
+            background: transparent;
+            color: #eebb00;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        .candidate-hero { margin-top: 10px; }
+        .candidate-hero-card {
+            background: #151515;
+            border: 1px solid #2f2f2f;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .candidate-hero-card h2 { margin: 6px 0; font-size: 26px; }
+        .candidate-hero-card p { margin: 0; color: #cbd5e1; font-size: 13px; }
+        .candidate-kicker { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #eebb00; font-weight: 800; }
+        .candidate-bio { margin-top: 8px !important; color: #94a3b8; }
+        .candidate-socials { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .candidate-social {
+            color: #eebb00;
+            text-decoration: none;
+            font-size: 11px;
+            border: 1px solid rgba(238,187,0,0.35);
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+        .candidate-hero-photo img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #eebb00; }
+        .candidate-articles { margin-top: 20px; }
+        .candidate-articles-head { display: flex; justify-content: space-between; align-items: center; }
+        .candidate-articles-link { color: #eebb00; text-decoration: none; font-size: 12px; }
+
 
         /* Fundo escurecido */
 .modal-overlay {
@@ -452,4 +560,7 @@
             .proposal-item { grid-template-columns: 28px 1fr; }
             .estado-hero-card, .estado-vazio-card { flex-direction: column; align-items: flex-start; }
             .estado-hero-media, .estado-vazio-media { width: 100%; height: 140px; border-radius: 12px; }
+            .articles-hero { flex-direction: column; }
+            .candidate-hero-card { flex-direction: column; align-items: flex-start; }
+            .candidate-hero-photo img { width: 100%; height: 200px; border-radius: 12px; }
         }
