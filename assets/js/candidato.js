@@ -1,6 +1,8 @@
 (function() {
     const params = new URLSearchParams(window.location.search);
-    const id = params.get('id') || 'renan-santos';
+    const pathParts = window.location.pathname.split('/').filter(Boolean);
+    const pathId = pathParts[0] === 'candidato' ? pathParts[1] : '';
+    const id = pathId || params.get('id') || 'renan-santos';
     const hero = document.getElementById('candidate-hero');
     const grid = document.getElementById('candidate-articles-grid');
 
@@ -36,7 +38,7 @@
                     <h4>${a.titulo}</h4>
                     <p>${a.resumo || ''}</p>
                     <div class="article-actions">
-                        <a class="article-link" href="/artigos.html">Ver todos</a>
+                        <a class="article-link" href="/artigos">Ver todos</a>
                     </div>
                 </div>
             </article>
@@ -52,3 +54,8 @@
         renderArticles(relacionados);
     });
 })();
+
+
+
+
+
