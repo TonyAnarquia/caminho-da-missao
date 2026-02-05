@@ -1,0 +1,18 @@
+{
+  "id": "artigo-2",
+  "slug": "missao-origem-e-proposito",
+  "titulo": "Missao: origem e proposito",
+  "resumo": "Visao geral da Missao, valores e objetivos do movimento.",
+  "data": "2026-02-05",
+  "candidato_id": "renan-santos",
+  "tema": "Institucional",
+  "tags": ["missao", "institucional"],
+  "imagem": "assets/img/og-image.png",
+  "audio_url": "",
+  "status": "published",
+  "conteudo": [
+    { "tipo": "p", "texto": "A Missao nasce para organizar liderancas e dar direcao a uma nova geracao politica." },
+    { "tipo": "p", "texto": "O foco e construir propostas claras, com transparencia e compromisso com resultados." },
+    { "tipo": "p", "texto": "Este espaco de artigos serve para registrar ideias, projetos e atualizacoes oficiais." }
+  ]
+}
