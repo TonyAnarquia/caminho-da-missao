@@ -5,8 +5,6 @@ services:
     build: .
     ports:
       - "8081:80"
-    env_file:
-      - .env
     volumes:
       - storage_data:/app/storage
     restart: unless-stopped
