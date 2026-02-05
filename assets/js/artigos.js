@@ -1,4 +1,12 @@
 (function() {
+    function normalizeAsset(path) {
+        if (!path) return '';
+        if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('/')) {
+            return path;
+        }
+        return '/' + path.replace(/^\.?\/*/, '');
+    }
+
     const grid = document.getElementById('articles-grid');
     const search = document.getElementById('article-search');
     const filter = document.getElementById('article-filter');
@@ -18,7 +26,7 @@
             : '';
         return `
             <article class="article-card">
-                <div class="article-thumb" style="background-image:url('${artigo.imagem || ''}')"></div>
+                <div class="article-thumb" style="background-image:url('${normalizeAsset(artigo.imagem)}')"></div>
                 <div class="article-body">
                     <div class="article-meta">
                         <span>${artigo.tema || 'Artigo'}</span>
