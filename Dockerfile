@@ -14,7 +14,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 WORKDIR /app
 RUN apk add --no-cache git unzip
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader || composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader -vvv
 COPY . .
 RUN composer dump-autoload --optimize \
     && if [ ! -f .env ]; then cp .env.example .env; fi \
@@ -23,7 +23,8 @@ RUN composer dump-autoload --optimize \
 FROM base
 COPY --from=composerbuild /app /app
 COPY --from=nodebuild /app/public/build /app/public/build
-RUN ln -s /app/storage/app/public /app/public/storage \
+RUN touch /app/database/database.sqlite \
+    && ln -s /app/storage/app/public /app/public/storage \
     && chown -R application:application /app/storage /app/bootstrap/cache
 
 EXPOSE 80
