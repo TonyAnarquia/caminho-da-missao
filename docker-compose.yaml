@@ -2,7 +2,10 @@ version: "3.9"
 
 services:
   web:
-    build: .
+    build:
+      context: .
+      args:
+        COMPOSER_INSTALL: "0"
     ports:
       - "8081:80"
     environment:

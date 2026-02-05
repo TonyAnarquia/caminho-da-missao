@@ -14,13 +14,21 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 WORKDIR /app
 RUN apk add --no-cache git unzip
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader || composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader -vvv
+ARG COMPOSER_INSTALL=1
+RUN if [ "$COMPOSER_INSTALL" = "1" ]; then \
+        composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader; \
+    else \
+        echo "Skipping composer install for build"; \
+    fi
 COPY . .
-RUN composer dump-autoload --optimize \
+RUN if [ "$COMPOSER_INSTALL" = "1" ]; then \
+        composer dump-autoload --optimize; \
+    fi \
     && if [ ! -f .env ]; then cp .env.example .env; fi \
     && php artisan key:generate --force
 
 FROM base
+COPY . /app
 COPY --from=composerbuild /app /app
 COPY --from=nodebuild /app/public/build /app/public/build
 RUN touch /app/database/database.sqlite \
