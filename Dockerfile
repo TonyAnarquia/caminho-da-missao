@@ -9,12 +9,10 @@ COPY vite.config.js tailwind.config.js postcss.config.js ./
 COPY resources ./resources
 RUN npm ci && npm run build
 
-FROM base AS composerbuild
+FROM composer:2 AS composerbuild
 ENV COMPOSER_ALLOW_SUPERUSER=1
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-RUN apt-get update \
-    && apt-get install -y git unzip \
-    && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+RUN apk add --no-cache git unzip
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 COPY . .
