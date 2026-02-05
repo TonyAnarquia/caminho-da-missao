@@ -17,7 +17,7 @@ services:
       SESSION_DRIVER: file
       QUEUE_CONNECTION: sync
     volumes:
-      - storage_data:/app/storage
+      - storage_data:/app/storage/app/public
     restart: unless-stopped
 
 volumes:
