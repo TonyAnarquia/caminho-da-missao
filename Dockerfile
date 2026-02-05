@@ -26,7 +26,13 @@ COPY --from=composerbuild /app /app
 COPY --from=nodebuild /app/public/build /app/public/build
 COPY docker/entrypoint.sh /opt/docker/bin/entrypoint.d/10-missao.sh
 RUN touch /app/database/database.sqlite \
+    && mkdir -p /app/storage/app/public \
+    /app/storage/framework/cache \
+    /app/storage/framework/sessions \
+    /app/storage/framework/views \
+    /app/storage/logs \
     && ln -s /app/storage/app/public /app/public/storage \
+    && chmod +x /opt/docker/bin/entrypoint.d/10-missao.sh \
     && chown -R application:application /app/storage /app/bootstrap/cache
 
 EXPOSE 80
