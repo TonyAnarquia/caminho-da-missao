@@ -52,7 +52,46 @@
     function renderList(lista) {
         if (!grid) return;
         grid.classList.remove('article-detail');
-        grid.innerHTML = lista.map(renderCard).join('');
+        const mainItems = lista.map(artigo => {
+            const audioBadge = artigo.audio_url ? `<span class="article-row-badge">Audio IA</span>` : '';
+            return `
+                <a class="article-row" href="/artigos/${artigo.slug}">
+                    <div class="article-row-thumb" style="background-image:url('${normalizeAsset(artigo.imagem)}')"></div>
+                    <div class="article-row-body">
+                        <div class="article-row-meta">
+                            <span>${artigo.tema || 'Artigo'}</span>
+                            <span>${artigo.data || ''}</span>
+                        </div>
+                        <h3 class="article-row-title">${artigo.titulo}</h3>
+                        <p class="article-row-summary">${artigo.resumo || ''}</p>
+                        <div class="article-row-actions">
+                            ${audioBadge}
+                            <span class="article-link">Ler artigo</span>
+                        </div>
+                    </div>
+                </a>
+            `;
+        }).join('');
+
+        const maisLidas = lista.slice(0, 5).map((artigo, index) => `
+            <a class="article-link" href="/artigos/${artigo.slug}">${index + 1}. ${artigo.titulo}</a>
+        `).join('');
+
+        grid.innerHTML = `
+            <div class="articles-main">
+                <div class="articles-list">${mainItems}</div>
+            </div>
+            <aside class="articles-side">
+                <div class="articles-box">
+                    <h4>Mais lidas</h4>
+                    <div class="articles-list">${maisLidas}</div>
+                </div>
+                <div class="articles-box">
+                    <h4>Filtros rapidos</h4>
+                    <p style="margin:0;color:#cbd5e1;font-size:12px;">Use a busca e o tema para refinar a lista.</p>
+                </div>
+            </aside>
+        `;
     }
 
     function renderDetail(artigo) {
@@ -143,6 +182,7 @@
     fetch('/assets/content/indices/artigos.json')
         .then(r => r.json())
         .then(lista => {
+            lista = (lista || []).slice().sort((a, b) => (b.data || '').localeCompare(a.data || ''));
             const slug = getSlugFromPath();
             if (slug) {
                 fetch(`/assets/content/artigos/${slug}.json`)
