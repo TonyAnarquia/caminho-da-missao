@@ -4,8 +4,6 @@ services:
   web:
     build:
       context: .
-      args:
-        COMPOSER_INSTALL: "0"
     ports:
       - "8081:80"
     environment:
