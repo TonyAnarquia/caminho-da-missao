@@ -107,11 +107,12 @@
                     <audio controls preload="none" src="${audioUrl}"></audio>
                </div>`
             : `<div class="article-audio-player">
-                    <span>Audio IA (leitura automatica)</span>
-                    <div class="article-audio-actions">
-                        <button class="article-audio-btn" data-action="play">Ouvir</button>
-                        <button class="article-audio-btn" data-action="pause">Pausar</button>
-                        <button class="article-audio-btn" data-action="stop">Parar</button>
+                    <div class="audio-header">Ouvir noticia</div>
+                    <div class="audio-bar">
+                        <button class="audio-play" data-action="play" aria-label="Ouvir">▶</button>
+                        <div class="audio-wave" aria-hidden="true"></div>
+                        <div class="audio-time">--:--</div>
+                        <button class="audio-speed" data-action="speed">1.0x</button>
                     </div>
                </div>`;
 
@@ -149,21 +150,28 @@
             const text = [artigo.titulo, artigo.resumo, (artigo.conteudo || []).map(i => i.texto).join(' ')].join(' ');
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'pt-BR';
-            utterance.rate = 1;
-            const buttons = grid.querySelectorAll('.article-audio-btn');
-            buttons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const action = btn.getAttribute('data-action');
-                    if (action === 'play') {
+            let rate = 1;
+            const playBtn = grid.querySelector('.audio-play');
+            const speedBtn = grid.querySelector('.audio-speed');
+            if (playBtn) {
+                playBtn.addEventListener('click', () => {
+                    const isPlaying = playBtn.classList.toggle('is-playing');
+                    playBtn.textContent = isPlaying ? '❚❚' : '▶';
+                    if (isPlaying) {
                         window.speechSynthesis.cancel();
+                        utterance.rate = rate;
                         window.speechSynthesis.speak(utterance);
-                    } else if (action === 'pause') {
+                    } else {
                         window.speechSynthesis.pause();
-                    } else if (action === 'stop') {
-                        window.speechSynthesis.cancel();
                     }
                 });
-            });
+            }
+            if (speedBtn) {
+                speedBtn.addEventListener('click', () => {
+                    rate = rate >= 1.5 ? 1.0 : rate + 0.25;
+                    speedBtn.textContent = rate.toFixed(2).replace('.00', '') + 'x';
+                });
+            }
         }
     }
 

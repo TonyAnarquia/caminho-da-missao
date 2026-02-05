@@ -561,8 +561,12 @@
         .article-content h3 { color: #f8fafc; font-size: 16px; margin: 12px 0 6px; }
         .article-content blockquote { margin: 10px 0; padding: 10px 14px; border-left: 3px solid #eebb00; background: #1b1b1b; color: #e5e7eb; }
         .article-audio-player { display: flex; flex-direction: column; gap: 8px; background: #1b1b1b; padding: 12px; border-radius: 12px; border: 1px solid #2f2f2f; }
-        .article-audio-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-        .article-audio-btn { border: 1px solid #eebb00; background: transparent; color: #eebb00; padding: 6px 12px; border-radius: 999px; font-size: 11px; cursor: pointer; }
+        .audio-header { font-size: 12px; color: #eebb00; text-transform: uppercase; letter-spacing: 1px; }
+        .audio-bar { display: flex; align-items: center; gap: 12px; }
+        .audio-play { width: 34px; height: 34px; border-radius: 50%; border: none; background: #eebb00; color: #111; font-weight: 900; cursor: pointer; }
+        .audio-wave { flex: 1; height: 18px; border-radius: 999px; background: repeating-linear-gradient(90deg, rgba(238,187,0,0.2) 0 6px, rgba(238,187,0,0.7) 6px 10px); opacity: 0.9; }
+        .audio-time { font-size: 12px; color: #e5e7eb; }
+        .audio-speed { border: 1px solid #eebb00; background: transparent; color: #eebb00; padding: 6px 10px; border-radius: 999px; font-size: 11px; cursor: pointer; }
         .article-cta { display: flex; justify-content: flex-start; }
         .article-empty { color: #cbd5e1; font-size: 14px; padding: 24px; background: #151515; border-radius: 12px; border: 1px solid #2f2f2f; }
         .candidate-hero { margin-top: 10px; }
