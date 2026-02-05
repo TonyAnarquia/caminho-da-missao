@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: TonyAnarquia/caminho-da-missao
+  repo: alibarros94/caminho-da-missao-coolify
   branch: main
   base_url: https://netlify-cms-github-oauth-provider-fawn.vercel.app/api
 
