@@ -46,14 +46,15 @@
     }
 
     Promise.all([
-        fetch(`assets/content/candidatos/${id}.json`).then(r => r.json()),
-        fetch('assets/content/indices/artigos.json').then(r => r.json())
+        fetch(`/assets/content/candidatos/${id}.json`).then(r => r.json()),
+        fetch('/assets/content/indices/artigos.json').then(r => r.json())
     ]).then(([candidato, artigos]) => {
         renderHero(candidato);
         const relacionados = (artigos || []).filter(a => a.candidato_id === id && a.status === 'published');
         renderArticles(relacionados);
     });
 })();
+
 
 
 

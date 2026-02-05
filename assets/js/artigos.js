@@ -53,7 +53,7 @@
         });
     }
 
-    fetch('assets/content/indices/artigos.json')
+    fetch('/assets/content/indices/artigos.json')
         .then(r => r.json())
         .then(lista => {
             const temas = Array.from(new Set(lista.map(a => a.tema).filter(Boolean)));
@@ -75,4 +75,5 @@
             });
         });
 })();
+
 
