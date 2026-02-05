@@ -24,6 +24,7 @@ RUN composer dump-autoload --optimize \
 FROM base
 COPY --from=composerbuild /app /app
 COPY --from=nodebuild /app/public/build /app/public/build
+COPY docker/entrypoint.sh /opt/docker/bin/entrypoint.d/10-missao.sh
 RUN touch /app/database/database.sqlite \
     && ln -s /app/storage/app/public /app/public/storage \
     && chown -R application:application /app/storage /app/bootstrap/cache
