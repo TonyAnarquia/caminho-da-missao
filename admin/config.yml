@@ -1,0 +1,25 @@
+backend:
+  name: github
+  repo: alibarros94/caminho-da-missao-coolify
+  branch: main
+  base_url: https://auth.missao.mbl.yt/api
+
+
+media_folder: "assets/img/uploads" # Onde as fotos das notícias ficarão
+public_folder: "/assets/img/uploads"
+
+collections:
+  - name: "perfil"
+    label: "Perfil de Candidatos"
+    folder: "assets/content/perfil" # Onde os textos serão salvos
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "ID Único (Igual ao da Planilha)", name: "id_planilha", widget: "string"}
+      - {label: "Nome Completo", name: "title", widget: "string"}
+      - {label: "Biografia e Texto", name: "body", widget: "markdown"}
+      - {label: "ID do Vídeo YouTube", name: "youtube_id", widget: "string", required: false, hint: "Apenas o código final do link"}
+      - {label: "Links Adicionais", name: "links", widget: "list", fields: [
+          {label: "Nome do Link", name: "label", widget: "string"},
+          {label: "URL", name: "url", widget: "string"}
+        ]}
