@@ -49,10 +49,44 @@
         `;
     }
 
+    function renderHeroBlock(primary, secondaries) {
+        const secondaryHtml = secondaries.map(item => `
+            <a class="hero-secondary" href="/artigos/${item.slug}">
+                <div class="hero-secondary-thumb" style="background-image:url('${normalizeAsset(item.imagem)}')"></div>
+                <div class="hero-secondary-body">
+                    <span>${item.tema || 'Artigo'}</span>
+                    <h4>${item.titulo}</h4>
+                </div>
+            </a>
+        `).join('');
+
+        return `
+            <div class="articles-hero-grid">
+                <a class="hero-primary" href="/artigos/${primary.slug}">
+                    <div class="hero-primary-thumb" style="background-image:url('${normalizeAsset(primary.imagem)}')"></div>
+                    <div class="hero-primary-body">
+                        <span>${primary.tema || 'Artigo'}</span>
+                        <h3>${primary.titulo}</h3>
+                        <p>${primary.resumo || ''}</p>
+                        <span class="article-link">Ler artigo</span>
+                    </div>
+                </a>
+                <div class="hero-secondary-list">
+                    ${secondaryHtml}
+                </div>
+            </div>
+        `;
+    }
+
     function renderList(lista) {
         if (!grid) return;
         grid.classList.remove('article-detail');
-        const mainItems = lista.map(artigo => {
+
+        const primary = lista[0];
+        const secondaries = lista.slice(1, 3);
+        const rest = lista.slice(3);
+
+        const mainItems = rest.map(artigo => {
             const audioBadge = artigo.audio_url ? `<span class="article-row-badge">Audio IA</span>` : '';
             return `
                 <a class="article-row" href="/artigos/${artigo.slug}">
@@ -74,17 +108,23 @@
         }).join('');
 
         const maisLidas = lista.slice(0, 5).map((artigo, index) => `
-            <a class="article-link" href="/artigos/${artigo.slug}">${index + 1}. ${artigo.titulo}</a>
+            <a class="rank-item" href="/artigos/${artigo.slug}">
+                <span class="rank-number">${index + 1}</span>
+                <span class="rank-title">${artigo.titulo}</span>
+            </a>
         `).join('');
+
+        const heroBlock = primary ? renderHeroBlock(primary, secondaries) : '';
 
         grid.innerHTML = `
             <div class="articles-main">
+                ${heroBlock}
                 <div class="articles-list">${mainItems}</div>
             </div>
             <aside class="articles-side">
                 <div class="articles-box">
                     <h4>Mais lidas</h4>
-                    <div class="articles-list">${maisLidas}</div>
+                    <div class="rank-list">${maisLidas}</div>
                 </div>
                 <div class="articles-box">
                     <h4>Filtros rapidos</h4>
