@@ -11,5 +11,18 @@
     "imagem": "assets/img/artigos/renan-propostas.jpg",
     "audio_url": "",
     "status": "published"
+  },
+  {
+    "id": "artigo-2",
+    "slug": "missao-origem-e-proposito",
+    "titulo": "Missao: origem e proposito",
+    "resumo": "Visao geral da Missao, valores e objetivos do movimento.",
+    "data": "2026-02-05",
+    "candidato_id": "renan-santos",
+    "tema": "Institucional",
+    "tags": ["missao", "institucional"],
+    "imagem": "assets/img/og-image.png",
+    "audio_url": "",
+    "status": "published"
   }
 ]
