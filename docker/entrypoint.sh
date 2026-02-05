@@ -6,6 +6,7 @@ mkdir -p /app/storage/app/public \
     /app/storage/framework/sessions \
     /app/storage/framework/views \
     /app/storage/logs
+mkdir -p /tmp/views
 
 chown -R application:application /app/storage /app/bootstrap/cache || true
 
