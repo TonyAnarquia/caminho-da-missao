@@ -4,7 +4,7 @@ export default function Dashboard({ stats }) {
     return (
         <AdminLayout title="Visão geral">
             <div className="grid gap-4 md:grid-cols-3">
-                <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
+                <div className="ui-card">
                     <div className="text-sm uppercase text-slate-400">
                         Candidatos
                     </div>
@@ -12,7 +12,7 @@ export default function Dashboard({ stats }) {
                         {stats?.candidates ?? 0}
                     </div>
                 </div>
-                <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
+                <div className="ui-card">
                     <div className="text-sm uppercase text-slate-400">
                         Artigos
                     </div>
@@ -20,7 +20,7 @@ export default function Dashboard({ stats }) {
                         {stats?.articles ?? 0}
                     </div>
                 </div>
-                <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
+                <div className="ui-card">
                     <div className="text-sm uppercase text-slate-400">
                         Arquivos
                     </div>

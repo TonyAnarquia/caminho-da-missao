@@ -106,7 +106,7 @@ export default function CandidateForm({ candidate, onSubmit, submitLabel }) {
                     <textarea
                         value={data.summary}
                         onChange={(e) => setData('summary', e.target.value)}
-                        className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-900/80 p-3 text-sm text-slate-100"
+                        className="ui-textarea mt-2"
                         rows={2}
                     />
                     <InputError message={errors.summary} className="mt-1" />
@@ -116,7 +116,7 @@ export default function CandidateForm({ candidate, onSubmit, submitLabel }) {
                     <textarea
                         value={data.bio}
                         onChange={(e) => setData('bio', e.target.value)}
-                        className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-900/80 p-3 text-sm text-slate-100"
+                        className="ui-textarea mt-2"
                         rows={6}
                     />
                     <InputError message={errors.bio} className="mt-1" />
@@ -127,7 +127,7 @@ export default function CandidateForm({ candidate, onSubmit, submitLabel }) {
                         type="file"
                         accept="image/*"
                         onChange={(e) => setData('photo', e.target.files[0])}
-                        className="mt-2 block w-full text-sm text-slate-200"
+                        className="ui-file mt-2"
                     />
                 </div>
                 <div>
@@ -136,13 +136,13 @@ export default function CandidateForm({ candidate, onSubmit, submitLabel }) {
                         type="file"
                         accept="image/*"
                         onChange={(e) => setData('cover', e.target.files[0])}
-                        className="mt-2 block w-full text-sm text-slate-200"
+                        className="ui-file mt-2"
                     />
                 </div>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
-                <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+                <div className="ui-card">
                     <div className="mb-3 text-sm font-semibold text-slate-200">
                         Redes sociais
                     </div>
@@ -167,13 +167,13 @@ export default function CandidateForm({ candidate, onSubmit, submitLabel }) {
                         onClick={() =>
                             setData('social_links', [...data.social_links, { label: '', url: '' }])
                         }
-                        className="text-sm text-amber-400"
+                        className="ui-link"
                     >
                         + Adicionar rede
                     </button>
                 </div>
 
-                <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+                <div className="ui-card">
                     <div className="mb-3 text-sm font-semibold text-slate-200">
                         Links úteis
                     </div>
@@ -196,7 +196,7 @@ export default function CandidateForm({ candidate, onSubmit, submitLabel }) {
                     <button
                         type="button"
                         onClick={() => setData('links', [...data.links, { label: '', url: '' }])}
-                        className="text-sm text-amber-400"
+                        className="ui-link"
                     >
                         + Adicionar link
                     </button>
@@ -209,6 +209,7 @@ export default function CandidateForm({ candidate, onSubmit, submitLabel }) {
                         type="checkbox"
                         checked={data.is_featured}
                         onChange={(e) => setData('is_featured', e.target.checked)}
+                        className="ui-checkbox"
                     />
                     Destaque nacional
                 </label>
@@ -217,6 +218,7 @@ export default function CandidateForm({ candidate, onSubmit, submitLabel }) {
                         type="checkbox"
                         checked={data.is_active}
                         onChange={(e) => setData('is_active', e.target.checked)}
+                        className="ui-checkbox"
                     />
                     Ativo
                 </label>

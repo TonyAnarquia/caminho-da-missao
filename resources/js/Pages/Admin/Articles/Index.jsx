@@ -20,12 +20,12 @@ export default function Index({ articles, filters, canManageAll }) {
                         value={data.search}
                         onChange={(e) => setData('search', e.target.value)}
                         placeholder="Buscar por título"
-                        className="w-64 rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-2 text-sm text-slate-100"
+                        className="ui-input w-64"
                     />
                     <select
                         value={data.status}
                         onChange={(e) => setData('status', e.target.value)}
-                        className="rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-2 text-sm text-slate-100"
+                        className="ui-select w-44"
                     >
                         <option value="">Todos</option>
                         <option value="draft">Rascunhos</option>
@@ -33,7 +33,7 @@ export default function Index({ articles, filters, canManageAll }) {
                     </select>
                     <button
                         type="submit"
-                        className="rounded-lg border border-amber-400 px-4 py-2 text-sm text-amber-200"
+                        className="ui-button-secondary"
                     >
                         Filtrar
                     </button>
@@ -41,7 +41,7 @@ export default function Index({ articles, filters, canManageAll }) {
                 {canManageAll && (
                     <Link
                         href={route('admin.articles.create')}
-                        className="rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-slate-900"
+                        className="ui-button-primary"
                     >
                         Novo artigo
                     </Link>
@@ -52,7 +52,7 @@ export default function Index({ articles, filters, canManageAll }) {
                 {articles.data.map((article) => (
                     <div
                         key={article.id}
-                        className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4"
+                        className="ui-card"
                     >
                         <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                             <div>
@@ -66,7 +66,7 @@ export default function Index({ articles, filters, canManageAll }) {
                             </div>
                             <Link
                                 href={route('admin.articles.edit', article.id)}
-                                className="text-sm text-amber-300"
+                                className="ui-link"
                             >
                                 Editar
                             </Link>

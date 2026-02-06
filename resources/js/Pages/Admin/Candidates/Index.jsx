@@ -19,11 +19,11 @@ export default function Index({ candidates, filters, canManageAll }) {
                         value={data.search}
                         onChange={(e) => setData('search', e.target.value)}
                         placeholder="Buscar por nome, estado, cargo"
-                        className="w-72 rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-2 text-sm text-slate-100"
+                        className="ui-input w-72"
                     />
                     <button
                         type="submit"
-                        className="rounded-lg border border-amber-400 px-4 py-2 text-sm text-amber-200"
+                        className="ui-button-secondary"
                     >
                         Buscar
                     </button>
@@ -31,7 +31,7 @@ export default function Index({ candidates, filters, canManageAll }) {
                 {canManageAll && (
                     <Link
                         href={route('admin.candidates.create')}
-                        className="rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-slate-900"
+                        className="ui-button-primary"
                     >
                         Novo candidato
                     </Link>
@@ -42,7 +42,7 @@ export default function Index({ candidates, filters, canManageAll }) {
                 {candidates.data.map((candidate) => (
                     <div
                         key={candidate.id}
-                        className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4"
+                        className="ui-card"
                     >
                         <div className="flex items-start justify-between gap-4">
                             <div>
@@ -64,7 +64,7 @@ export default function Index({ candidates, filters, canManageAll }) {
                         <div className="mt-4 flex items-center gap-3">
                             <Link
                                 href={route('admin.candidates.edit', candidate.id)}
-                                className="text-sm text-amber-300"
+                                className="ui-link"
                             >
                                 Editar
                             </Link>

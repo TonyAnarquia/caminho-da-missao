@@ -54,7 +54,7 @@ export default function ArticleForm({ article, candidates, onSubmit, submitLabel
                     <select
                         value={data.status}
                         onChange={(e) => setData('status', e.target.value)}
-                        className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-900/80 p-2 text-sm text-slate-100"
+                        className="ui-select mt-2"
                     >
                         <option value="draft">Rascunho</option>
                         <option value="published">Publicado</option>
@@ -73,7 +73,7 @@ export default function ArticleForm({ article, candidates, onSubmit, submitLabel
                     <textarea
                         value={data.excerpt}
                         onChange={(e) => setData('excerpt', e.target.value)}
-                        className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-900/80 p-3 text-sm text-slate-100"
+                        className="ui-textarea mt-2"
                         rows={3}
                     />
                     <InputError message={errors.excerpt} className="mt-1" />
@@ -83,7 +83,7 @@ export default function ArticleForm({ article, candidates, onSubmit, submitLabel
                     <textarea
                         value={data.body}
                         onChange={(e) => setData('body', e.target.value)}
-                        className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-900/80 p-3 text-sm text-slate-100"
+                        className="ui-textarea mt-2"
                         rows={10}
                     />
                     <InputError message={errors.body} className="mt-1" />
@@ -93,7 +93,7 @@ export default function ArticleForm({ article, candidates, onSubmit, submitLabel
                     <select
                         value={data.candidate_id}
                         onChange={(e) => setData('candidate_id', e.target.value)}
-                        className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-900/80 p-2 text-sm text-slate-100"
+                        className="ui-select mt-2"
                     >
                         <option value="">Sem candidato</option>
                         {candidates.map((candidate) => (
@@ -126,7 +126,7 @@ export default function ArticleForm({ article, candidates, onSubmit, submitLabel
                         type="file"
                         accept="image/*"
                         onChange={(e) => setData('cover', e.target.files[0])}
-                        className="mt-2 block w-full text-sm text-slate-200"
+                        className="ui-file mt-2"
                     />
                 </div>
                 <div>
@@ -135,7 +135,7 @@ export default function ArticleForm({ article, candidates, onSubmit, submitLabel
                         type="file"
                         accept="audio/*"
                         onChange={(e) => setData('audio', e.target.files[0])}
-                        className="mt-2 block w-full text-sm text-slate-200"
+                        className="ui-file mt-2"
                     />
                 </div>
             </div>
