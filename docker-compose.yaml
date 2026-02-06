@@ -21,7 +21,9 @@ services:
       LOG_CHANNEL: stderr
     volumes:
       - storage_data:/app/storage/app/public
+      - database_data:/app/database
     restart: unless-stopped
 
 volumes:
   storage_data:
+  database_data:
