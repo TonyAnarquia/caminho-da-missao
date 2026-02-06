@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-slate-950 text-slate-100 antialiased;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-text-fill-color: #e2e8f0;
+    transition: background-color 9999s ease-out 0s;
+    box-shadow: 0 0 0px 1000px rgba(2, 6, 23, 0.9) inset;
+  }
+}
+
+@layer components {
+  .ui-card {
+    @apply rounded-2xl border border-slate-800/70 bg-slate-900/70 p-4 shadow-sm;
+  }
+
+  .ui-label {
+    @apply text-xs font-semibold uppercase tracking-[0.12em] text-slate-400;
+  }
+
+  .ui-input {
+    @apply w-full rounded-xl border border-slate-700/70 bg-slate-950/70 px-4 py-2 text-sm text-slate-100 shadow-sm outline-none transition focus:border-amber-400 focus:ring-amber-400 focus:ring-1;
+  }
+
+  .ui-textarea {
+    @apply w-full rounded-xl border border-slate-700/70 bg-slate-950/70 px-4 py-3 text-sm text-slate-100 shadow-sm outline-none transition focus:border-amber-400 focus:ring-amber-400 focus:ring-1;
+  }
+
+  .ui-select {
+    @apply w-full rounded-xl border border-slate-700/70 bg-slate-950/70 px-4 py-2 text-sm text-slate-100 shadow-sm outline-none transition focus:border-amber-400 focus:ring-amber-400 focus:ring-1;
+  }
+
+  .ui-file {
+    @apply w-full text-sm text-slate-200 file:mr-4 file:rounded-lg file:border-0 file:bg-slate-800 file:px-3 file:py-2 file:text-xs file:font-semibold file:uppercase file:tracking-widest file:text-slate-100 hover:file:bg-slate-700;
+  }
+
+  .ui-checkbox {
+    @apply h-4 w-4 rounded border-slate-600 bg-slate-900 text-amber-400 focus:ring-amber-400;
+  }
+
+  .ui-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold uppercase tracking-widest transition focus:outline-none focus:ring-2 focus:ring-amber-400/60;
+  }
+
+  .ui-button-primary {
+    @apply ui-button bg-amber-400 text-slate-950 hover:bg-amber-300;
+  }
+
+  .ui-button-secondary {
+    @apply ui-button border border-slate-700 bg-slate-900 text-slate-100 hover:bg-slate-800;
+  }
+
+  .ui-button-danger {
+    @apply ui-button bg-red-600 text-white hover:bg-red-500;
+  }
+
+  .ui-link {
+    @apply text-sm font-medium text-amber-300 hover:text-amber-200;
+  }
+}

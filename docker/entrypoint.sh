@@ -1,0 +1,26 @@
+#!/bin/sh
+set -e
+
+mkdir -p /app/storage/app/public \
+    /app/storage/framework/cache \
+    /app/storage/framework/sessions \
+    /app/storage/framework/views \
+    /app/storage/logs
+mkdir -p /app/database
+mkdir -p /tmp/views
+
+if [ ! -f /app/database/database.sqlite ]; then
+    touch /app/database/database.sqlite
+fi
+
+chown -R application:application /app/storage /app/bootstrap/cache /app/database || true
+
+if [ ! -e /app/public/storage ]; then
+    ln -s /app/storage/app/public /app/public/storage || true
+fi
+
+php artisan config:clear >/dev/null 2>&1 || true
+php artisan route:clear >/dev/null 2>&1 || true
+php artisan view:clear >/dev/null 2>&1 || true
+
+php artisan migrate --force --seed >/dev/null 2>&1 || true
