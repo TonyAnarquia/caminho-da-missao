@@ -2,8 +2,3 @@
 .github
 **/*.ps1
 **/*.md
-node_modules
-storage/logs
-storage/framework
-storage/app/public
-public/storage
