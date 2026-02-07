@@ -1,6 +1,6 @@
-﻿﻿﻿﻿﻿﻿		// 1. CONSTANTES E CONFIGURAÇÕES
-        const URL_ESTADOS = 'https://raw.githubusercontent.com/TonyAnarquia/mapa-eleitoral-blog/refs/heads/main/estados.json';
-        const URL_PLANILHA = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQWGZKaW2pCrP8sJjN3PHdIXqD0C7qiOwQ1tjpbHqNo2Dr1UZSmXgU2HNuqYD25BE4Q6LVbawsnsicv/pub?output=csv';
+// 1. CONSTANTES E CONFIGURAÇÕES
+        const URL_ESTADOS = '/assets/data/estados.json';
+        const URL_CANDIDATOS = '/api/candidatos';
         
         const AJUSTE_SIGLAS = {
             'AC': [-9.2, -70.5], 'AL': [-9.65, -36.45], 'AM': [-3.5, -64], 'AP': [1.4, -51.7], 
@@ -37,88 +37,6 @@
             // Adicione mais estados conforme necessário
         };
 
-        const PROPOSTAS_CANDIDATOS = {
-            "renan-santos": {
-                nome: "Renan Santos",
-                cargo: "Pr&eacute;-candidato &agrave; Presid&ecirc;ncia",
-                partido: "Miss&atilde;o",
-                instagram: "https://www.instagram.com/p/DRCpUvkkTL1",
-                foto: "assets/img/candidatos/renan-santos.png",
-                socials: [
-                    { label: "Instagram", url: "https://www.instagram.com/renansantosmbl/" },
-                    { label: "X", url: "https://x.com/RenanSantosMBL" },
-                    { label: "YouTube", url: "https://youtube.com/live/NkcimNg64JQ?feature=share" },
-                    { label: "TikTok", url: "https://tiktok.com/@renansantosmbl" },
-                    { label: "Telegram", url: "https://t.me/RenanSantosMBL" },
-                    { label: "WhatsApp", url: "https://whatsapp.com/channel/0029Val4r3qHrDZXLe3VFm1e" }
-                ],
-
-
-                titulo: "7 propostas da Miss&atilde;o",
-                propostas: [
-                    {
-                        numero: "1",
-                        titulo: "Guerra contra o Crime Organizado",
-                        paragrafos: [
-                            "A Miss&atilde;o reconhece que j&aacute; existe uma guerra acontecendo no Brasil hoje. PCC e Comando Vermelho j&aacute; declaram suas inten&ccedil;&otilde;es de exercer dom&iacute;nio territorial em algumas regi&otilde;es, j&aacute; possuem ex&eacute;rcitos atuando, j&aacute; implementam suas pr&oacute;prias leis e t&ecirc;m at&eacute; suas pr&oacute;prias culturas.",
-                            "O Estado brasileiro finge que n&atilde;o existe, ou que s&atilde;o apenas pequenas gangues em conflito. Est&aacute; na hora de reconhecer que o Brasil n&atilde;o vive um per&iacute;odo de paz. E n&atilde;o vai ser com mais pedidos de 'paz' que vamos parar essa guerra."
-                        ]
-                    },
-                    {
-                        numero: "2",
-                        titulo: "Direito Penal do Inimigo",
-                        paragrafos: [
-                            "Faccionados do Comando Vermelho e Primeiro Comando da Capital n&atilde;o s&atilde;o apenas bandidos comuns; eles exercem poder pol&iacute;tico sobre territ&oacute;rios dominados, amea&ccedil;ando n&atilde;o apenas a popula&ccedil;&atilde;o local, mas a soberania do Estado brasileiro.",
-                            "Portanto eles n&atilde;o devem ter um processo criminal com ampla defesa, diversos ju&iacute;zes, Minist&eacute;rio P&uacute;blico, tr&acirc;nsito em julgado etc.",
-                            "O Estado precisa agir com a maior rapidez poss&iacute;vel. Quebra de sigilos, pris&atilde;o, depoimentos etc, tudo deve ser feito com urg&ecirc;ncia."
-                        ]
-                    },
-                    {
-                        numero: "3",
-                        titulo: "Desfaveliza&ccedil;&atilde;o",
-                        paragrafos: [
-                            "Favelas n&atilde;o s&atilde;o apenas lugares com condi&ccedil;&otilde;es subumanas de vida. Se tornaram QGs de fac&ccedil;&otilde;es, que sequestram os trabalhadores que l&aacute; vivem.",
-                            "Al&eacute;m disso, a cultura que sai desses lugares, os problemas e a falta de perspectiva e de melhora de vida n&atilde;o devem ser romantizados.",
-                            "O Brasil precisa de um gigantesco plano de habita&ccedil;&atilde;o, reurbaniza&ccedil;&atilde;o, educa&ccedil;&atilde;o e emprego para acabar com tudo que a favela representa hoje.",
-                            "E a cadeia de reprodu&ccedil;&atilde;o de desvantagem - fam&iacute;lias sem figura paterna - s&atilde;o o maior alimento para a cria&ccedil;&atilde;o do crime organizado. Isso precisa ser tratado com seriedade para termos menos soldados e uma na&ccedil;&atilde;o menos doente."
-                        ]
-                    },
-                    {
-                        numero: "4",
-                        titulo: "Interiorizar as atividades produtivas",
-                        paragrafos: [
-                            "As regi&otilde;es mais pobres do Brasil s&atilde;o o para&iacute;so de pol&iacute;ticos corruptos, que aproveitam a pobreza das pessoas para comprar votos, desviar recursos e se perpetuarem no poder.",
-                            "Levar atividades produtivas para os interiores, principalmente do Nordeste, e gerar classe m&eacute;dia, quebra o ciclo que alimenta h&aacute; d&eacute;cadas a lideran&ccedil;a dessas pessoas nessa verdadeira escravid&atilde;o moderna."
-                        ]
-                    },
-                    {
-                        numero: "5",
-                        titulo: "Responsabilidade gerencial",
-                        paragrafos: [
-                            "O Brasil precisa mudar o sistema de incentivos que elege seus pol&iacute;ticos. Pol&iacute;ticos que n&atilde;o entregam melhorias claras nos &iacute;ndices de educa&ccedil;&atilde;o, saneamento, sa&uacute;de e seguran&ccedil;a devem perder seus direitos pol&iacute;ticos.",
-                            "O fundo partid&aacute;rio e eleitoral e demais departamentos devem tamb&eacute;m ser destinados apenas a partidos cujos gestores conseguem apresentar melhorias em todos os &iacute;ndices do Brasil."
-                        ]
-                    },
-                    {
-                        numero: "6",
-                        titulo: "Fus&atilde;o de munic&iacute;pios",
-                        paragrafos: [
-                            "Munic&iacute;pios que dependem de verbas federais ou estaduais para pagar suas pr&oacute;prias contas devem deixar de existir e se fundir com outros munic&iacute;pios pr&oacute;ximos. Chega de bancar cidades deficit&aacute;rias.",
-                            "No geral, cidades do Centro-Sul do pa&iacute;s pagam mais do que deveriam em impostos para manter cidades do Centro-Norte e Nordeste vivendo e pedindo mais dinheiro para pagar sal&aacute;rios de pol&iacute;tico. Nada de bom pode vir dessa l&oacute;gica."
-                        ]
-                    },
-                    {
-                        numero: "7",
-                        titulo: "Mutir&atilde;o anti Bolsa-Fam&iacute;lia",
-                        paragrafos: [
-                            "Munic&iacute;pios com mais de 30% da popula&ccedil;&atilde;o recebendo Bolsa-Fam&iacute;lia devem promover mutir&otilde;es de emprego.",
-                            "Pessoas em idade economicamente ativa que se recusarem em trabalhar dever&atilde;o perder o direito de receber Bolsa-Fam&iacute;lia em tr&ecirc;s meses."
-                        ]
-                    }
-                ]
-            }
-        };
-
         // 2. ESTADO DA APLICAÇÃO
         let estadoSelecionado = null;
         let geojsonLayer;
@@ -130,7 +48,70 @@
         let fotoModalOpen = false;
         let contagemLayer = null;
         let contagemAtiva = false;
+        function normalizarSocials(raw) {
+            if (!Array.isArray(raw)) return [];
+            return raw
+                .map((item) => ({
+                    label: (item && item.label) ? item.label.toString().trim() : '',
+                    url: (item && item.url) ? item.url.toString().trim() : ''
+                }))
+                .filter((item) => item.label && item.url);
+        }
 
+        function encontrarSocial(socials, key) {
+            if (!socials || !socials.length) return '';
+            const match = socials.find((s) => s.label.toLowerCase().includes(key));
+            return match ? match.url : '';
+        }
+
+        function normalizarCandidato(raw) {
+            if (!raw) return null;
+            const nome = raw.nome || raw.name || raw.candidato;
+            if (!nome) return null;
+            const cargo = raw.cargo || raw.office || '';
+            const estado = raw.estado || raw.state || raw.uf || '';
+            const partido = raw.partido || raw.party || '';
+            const foto = raw.foto || raw.photo || raw.photo_path || '';
+            const socials = normalizarSocials(raw.socials || raw.social_links || raw.socialLinks || []);
+            const instagram = encontrarSocial(socials, 'instagram');
+
+            return {
+                id: raw.id || raw.slug || slugify(nome),
+                nome,
+                cargo,
+                estado,
+                partido,
+                foto,
+                socials,
+                instagram,
+            };
+        }
+
+        function gatherSocials(candidate, proposta) {
+            if (candidate && Array.isArray(candidate.socials) && candidate.socials.length) {
+                return candidate.socials;
+            }
+            const list = [];
+            const pick = (label, key) => {
+                const val = candidate ? (candidate[key] || candidate[key.toLowerCase()]) : '';
+                if (val && val.toString().trim()) {
+                    list.push({ label, url: val.toString().trim() });
+                }
+            };
+            pick('Instagram', 'instagram');
+            pick('X', 'x');
+            pick('Twitter', 'twitter');
+            pick('YouTube', 'youtube');
+            pick('TikTok', 'tiktok');
+            pick('Telegram', 'telegram');
+            pick('WhatsApp', 'whatsapp');
+            pick('Facebook', 'facebook');
+            pick('Site', 'site');
+            if (list.length === 0 && proposta && Array.isArray(proposta.socials)) {
+                return proposta.socials;
+            }
+            return list;
+        }
         const map = L.map('mapa-interativo', {
             zoomSnap: 0.5, 
             attributionControl: false, 
@@ -205,29 +186,52 @@
         function carregarDadosEIniciar() {
             Promise.all([
                 fetch(URL_ESTADOS).then(r => r.json()),
-                fetch(URL_PLANILHA).then(r => r.text())
+                fetch(URL_CANDIDATOS).then(r => r.json())
             ]).then(res => {
                 const geo = res[0];
-                Papa.parse(res[1], {
-                    header: true,
-                    skipEmptyLines: true,
-                    complete: function(results) {
-                        results.data.forEach(linha => {
-                            const uf = (linha.estado || '').toUpperCase().trim();
-                            if (!dadosCandidatos[uf]) dadosCandidatos[uf] = [];
-                            dadosCandidatos[uf].push(linha);
-                        });
-                        renderizarMapa(geo);
-                        montarSelectEstados(geo);
-                        configurarMapaView(geo);
-                        renderizarPresidenteInicial();
-                        // Atualiza contador e visibilidade após carregar dados
-                        updateCandidateCounter();
-                        updateCandidateCounterVisibility();
-                        // Garantir que o header inicial (botão nacional) apareça sem clique
-                        resetMapa();
-                    }
-                });
+                const nameToSigla = {};
+                if (geo && geo.features) {
+                    geo.features.forEach((f) => {
+                        const s = f.properties.sigla || f.properties.UF || f.id;
+                        const nome = f.properties.nome || f.properties.name || s;
+                        if (s && nome) nameToSigla[slugify(nome)] = s;
+                    });
+                }
+                const lista = Array.isArray(res[1]) ? res[1] : [];
+            lista.forEach(item => {
+                const cand = normalizarCandidato(item);
+                if (!cand) return;
+                const cargoRaw = (cand.cargo || '').toString().toLowerCase();
+                let ufRaw = (cand.estado || '').toString().trim();
+                let uf = ufRaw.toUpperCase();
+                if (uf === 'BR' || uf === 'BRASIL') {
+                    uf = 'NACIONAL';
+                }
+                if (uf && uf.length !== 2) {
+                    const mapped = nameToSigla[slugify(ufRaw)];
+                    if (mapped) uf = mapped;
+                }
+                if (cargoRaw.includes('presid')) {
+                    uf = 'NACIONAL';
+                }
+                if (!uf) uf = 'NACIONAL';
+                if (!dadosCandidatos[uf]) dadosCandidatos[uf] = [];
+                dadosCandidatos[uf].push(cand);
+                candidatosIndex[cand.id] = cand;
+            });
+                renderizarMapa(geo);
+                montarSelectEstados(geo);
+                configurarMapaView(geo);
+                renderizarPresidenteInicial();
+                // Atualiza contador e visibilidade após carregar dados
+                updateCandidateCounter();
+                updateCandidateCounterVisibility();
+                // Garantir que o header inicial (botão nacional) apareça sem clique
+                resetMapa();
+            }).catch(() => {
+                renderizarPresidenteInicial();
+                updateCandidateCounter();
+                updateCandidateCounterVisibility();
             });
         }
 
@@ -560,36 +564,19 @@ function atualizarPainelLateral(cands, nacional, sigla = null) {
             gerenciarArrasto();
         }
 
-        function gerarCard(c) {
-    // Verificamos se c.id existe, se nao, usamos o nome do candidato como fallback
+function gerarCard(c) {
     const idCandidato = c.id || c.nome.toLowerCase().replace(/\s+/g, '-');
     const proposta = buscarPropostas(idCandidato, c);
     const fotoBase = obterFotoBase(c, proposta, idCandidato);
     const fotoFallback = obterFotoFallback(c, proposta);
-    const fotoTag = renderFotoTag(fotoBase, fotoFallback, c.nome, 'cand-foto') || `<img src="https://via.placeholder.com/64" class="cand-foto" alt="${c.nome}"/>`;
-    // Monta lista de redes sociais a partir da linha da planilha ou das propostas
-    function gatherSocials(candidate, proposta) {
-        const list = [];
-        const addIf = (label, key) => {
-            const val = (candidate && (candidate[key] || candidate[key.toLowerCase()])) || '';
-            if (val && val.toString().trim()) list.push({ label, url: val.toString().trim() });
-        };
-        addIf('Instagram', 'instagram');
-        addIf('X', 'x');
-        addIf('Twitter', 'twitter');
-        addIf('YouTube', 'youtube');
-        addIf('TikTok', 'tiktok');
-        addIf('Telegram', 'telegram');
-        addIf('WhatsApp', 'whatsapp');
-        addIf('Facebook', 'facebook');
-        addIf('Site', 'site');
-        if (list.length === 0 && proposta && proposta.socials) return proposta.socials;
-        return list;
-    }
+    const fotoTag = renderFotoTag(fotoBase, fotoFallback, c.nome, 'cand-foto') ||
+        `<img src="/assets/img/og-image.png" class="cand-foto" alt="${c.nome}"/>`;
 
     const socials = gatherSocials(c, proposta);
     const socialsHtml = (socials && socials.length)
-        ? `<div class="card-socials">` + socials.map(s => `<a class="social-btn" href="${s.url}" target="_blank" rel="noopener noreferrer" aria-label="${s.label}">${socialIcon(s.label)}</a>`).join('') + `</div>`
+        ? `<div class="card-socials">` +
+            socials.map(s => `<a class="social-btn" href="${s.url}" target="_blank" rel="noopener noreferrer" aria-label="${s.label}">${socialIcon(s.label)}</a>`).join('') +
+          `</div>`
         : '';
 
     candidatosIndex[idCandidato] = c;
@@ -686,6 +673,10 @@ function escapeHtml(valor) {
         .replace(/'/g, '&#39;');
 }
 function obterFotoBase(candidato, proposta, id) {
+    const fallback = (candidato && candidato.foto) || (proposta && proposta.foto) || '';
+    if (fallback && (fallback.startsWith('/') || fallback.startsWith('http'))) {
+        return '';
+    }
     const raw = id || (candidato && (candidato.id || candidato.nome)) || (proposta && proposta.nome) || '';
     const slug = slugify(raw);
     if (!slug) return '';
@@ -697,7 +688,7 @@ function obterFotoFallback(candidato, proposta) {
     if (fallback && !fallback.startsWith('assets/img/candidatos/')) {
         return fallback;
     }
-    return '';
+    return '/assets/img/og-image.png';
 }
 
 function renderFotoTag(fotoBase, fotoFallback, alt, className) {
@@ -794,16 +785,17 @@ function socialIcon(label) {
 }
 
 function buscarPropostas(id, candidato) {
-    const keys = [];
-    if (id) {
-        keys.push(id);
-        keys.push(slugify(id));
-    }
-    if (candidato && candidato.nome) {
-        keys.push(slugify(candidato.nome));
-    }
-    for (const key of keys) {
-        if (PROPOSTAS_CANDIDATOS[key]) return PROPOSTAS_CANDIDATOS[key];
+    if (!candidato) return null;
+    if (Array.isArray(candidato.propostas)) {
+        return {
+            nome: candidato.nome,
+            cargo: candidato.cargo,
+            partido: candidato.partido,
+            foto: candidato.foto,
+            socials: candidato.socials || [],
+            instagram: candidato.instagram,
+            propostas: candidato.propostas,
+        };
     }
     return null;
 }
@@ -869,6 +861,47 @@ const link = proposta.instagram
         </div>`;
 }
 
+function renderPerfilCandidato(candidato) {
+    const nome = escapeHtml(candidato.nome || 'Candidato');
+    const cargo = candidato.cargo ? escapeHtml(candidato.cargo) : '';
+    const partido = candidato.partido ? escapeHtml(candidato.partido) : '';
+    const header = cargo || partido
+        ? `<div class="proposal-meta">${[cargo, partido].filter(Boolean).join(' � ')}</div>`
+        : '';
+    const fotoBase = obterFotoBase(candidato, null, candidato.id);
+    const fotoFallback = obterFotoFallback(candidato, null);
+    const iniciais = nome.split(' ').filter(Boolean).map(p => p[0]).join('').slice(0, 2);
+    const fotoTag = renderFotoTag(fotoBase, fotoFallback, nome, 'proposal-avatar') ||
+        `<div class="proposal-avatar-fallback">${iniciais}</div>`;
+    const socials = gatherSocials(candidato, null);
+    const socialsHtml = socials.length
+        ? `<div class="proposal-socials proposal-socials--side">` +
+            socials.map(s => `<a class="proposal-social proposal-social--icon" href="${s.url}" target="_blank" rel="noopener noreferrer" aria-label="${s.label}">${socialIcon(s.label)}</a>`).join('') +
+          `</div>`
+        : '';
+    const texto = candidato.bio || candidato.resumo || candidato.summary || '';
+    const corpo = texto
+        ? `<div class="proposal-body">${escapeHtml(texto).replace(/\n/g, '<br>')}</div>`
+        : `<div class="proposal-body"><p>Perfil em atualização.</p></div>`;
+    const links = (candidato.links || [])
+        .map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="proposal-link">Link: ${escapeHtml(l.label || 'Acessar')}</a>`)
+        .join('');
+
+    return `
+        <div class="proposal-modal">
+            <div class="proposal-header">
+                ${fotoTag}
+                <div class="proposal-heading">
+                    <span class="proposal-kicker">Perfil</span>
+                    <div class="proposal-name-row"><h2 class="proposal-name">${nome}</h2>${socialsHtml}</div>
+                    ${header}
+                </div>
+            </div>
+            ${corpo}
+            ${links ? `<div class="proposal-footer">${links}</div>` : ''}
+        </div>`;
+}
+
 async function abrirPerfil(id) {
     const modal = document.getElementById('modal-candidato');
     const content = document.getElementById('modal-body-content');
@@ -889,23 +922,10 @@ async function abrirPerfil(id) {
     }
 
     try {
-        // Busca o arquivo JSON gerado pelo CMS baseado no ID da planilha
-        const response = await fetch(`/assets/content/perfil/${id}.json`);
+        const response = await fetch(`/api/candidatos/${id}`);
         if (!response.ok) throw new Error();
         const dados = await response.json();
-
-        content.innerHTML = `
-            <h2 style="color:#EEBB00; font-size:28px;">${dados.title}</h2>
-            <div style="line-height:1.8; font-size:16px;">${marked.parse(dados.body)}</div>
-            ${dados.youtube_id ? `
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/${dados.youtube_id}" frameborder="0" allowfullscreen></iframe>
-                </div>
-            ` : ''}
-            <div style="margin-top:20px;">
-                ${dados.links ? dados.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" style="color:#EEBB00; margin-right:15px; text-decoration:none;">Link: ${l.label}</a>`).join('') : ''}
-            </div>
-        `;
+        content.innerHTML = renderPerfilCandidato(dados);
     } catch (err) {
         content.innerHTML = `
             <div style="text-align:center; padding:40px;">
@@ -925,3 +945,10 @@ function fecharModal() {
         history.replaceState(null, '', window.location.href);
     }
 }
+
+
+
+
+
+
+
