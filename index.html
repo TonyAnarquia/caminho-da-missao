@@ -38,14 +38,33 @@
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
 	
     <!-- Seu Estilo Modularizado -->
-    <link rel="stylesheet" href="assets/css/style.css?v=20260201_FIX_CACHE">
+    <link rel="stylesheet" href="assets/css/style.css?v=20260208">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
-<body>
+<body data-header="modern" data-page="home">
     <div class="container">
-	
-		<!-- Cabeçalho -->
-        <header class="site-header">
+
+		<!-- Cabeçalho (moderno) -->
+        <header class="site-header site-header--modern">
+            <div class="site-header__top">
+                <nav class="site-nav" aria-label="Navegação principal">
+                    <a class="site-nav__link nav-home" href="/">Início</a>
+                    <a class="site-nav__link nav-artigos" href="/artigos">Artigos</a>
+                </nav>
+                <a class="site-logo" href="/" aria-label="Caminho da Missão">
+                    <img alt="Caminho da Missão" class="site-main-logo" src="https://raw.githubusercontent.com/TonyAnarquia/mapa-eleitoral-blog/refs/heads/main/logo/caminho%20branco.png">
+                    <span>CAMINHO DA MISSÃO</span>
+                </a>
+                <div class="site-cta">
+                    <a class="btn-filiacao" href="https://filiacao.missao.org.br/inscricao" target="_blank" rel="noopener noreferrer">Filie-se ao partido Missão</a>
+                    <button class="site-header__toggle" type="button" aria-expanded="true" aria-label="Alternar menu">Menu</button>
+                </div>
+            </div>
+            <nav class="site-header__themes" id="site-theme-nav" aria-label="Temas"></nav>
+        </header>
+
+        <!-- Cabeçalho (legado) - para reverter rapidamente se necessário -->
+        <header class="site-header site-header--legacy">
             <div class="header-left">
                 <a href="/">
                     <img alt="Caminho da Missão" class="site-main-logo" src="https://raw.githubusercontent.com/TonyAnarquia/mapa-eleitoral-blog/refs/heads/main/logo/caminho%20branco.png">
@@ -75,11 +94,14 @@
                 </button>
 
                 <div class="map-toolbar">
-                    <label for="map-view-select">Escolha o Mapa</label>
-                    <select id="map-view-select">
-                        <option value="padrao">Padr&atilde;o</option>
-                        <option value="contagem">Contagem de candidatos</option>
-                    </select>
+                    <div class="map-toolbar__controls">
+                        <label for="map-view-select">Escolha o Mapa</label>
+                        <select id="map-view-select">
+                            <option value="padrao">Padr&atilde;o</option>
+                            <option value="contagem">Contagem de candidatos</option>
+                        </select>
+                    </div>
+                    <div class="map-count" id="map-count-top">0 PRÉ-CANDIDATOS</div>
                 </div>
                 <div id="mapa-interativo"></div>
             </div>
@@ -146,6 +168,7 @@
 </div>
 
     <!-- Sua Lógica Modularizada -->
+    <script src="/assets/js/site-header.js?v=20260208"></script>
     <script src="assets/js/map-logic.js?v=20260201_FIX_CACHE"></script>
 
     <!-- Service Worker Killer: Garante que versões offline antigas sejam removidas -->

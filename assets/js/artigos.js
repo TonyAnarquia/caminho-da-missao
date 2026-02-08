@@ -19,6 +19,8 @@
     const search = document.getElementById('article-search');
     const filter = document.getElementById('article-filter');
     const hero = document.querySelector('.articles-hero');
+    const params = new URLSearchParams(window.location.search);
+    const temaParam = params.get('tema') || '';
 
     function getSlugFromPath() {
         const parts = window.location.pathname.split('/').filter(Boolean);
@@ -245,6 +247,10 @@
             const temas = Array.from(new Set(lista.map(a => a.tema).filter(Boolean)));
             if (filter) {
                 filter.innerHTML += temas.map(t => `<option value="${t}">${t}</option>`).join('');
+                if (temaParam) {
+                    const match = temas.find(t => t.toLowerCase() === temaParam.toLowerCase());
+                    if (match) filter.value = match;
+                }
             }
             const update = () => renderList(applyFilters(lista));
             if (search) search.addEventListener('input', update);

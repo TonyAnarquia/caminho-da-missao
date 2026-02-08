@@ -3,23 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Candidato - Caminho da Missao</title>
+    <title>Candidato - Caminho da Missão</title>
     <link rel="icon" type="image/png" href="/assets/img/favicon.png">
-    <link rel="stylesheet" href="/assets/css/style.css?v=20260129">
+    <link rel="stylesheet" href="/assets/css/style.css?v=20260208">
 </head>
-<body>
+<body data-header="modern" data-page="candidato">
     <div class="container">
-        <header class="site-header">
+                <header class="site-header site-header--modern">
+            <div class="site-header__top">
+                <nav class="site-nav" aria-label="Navegação principal">
+                    <a class="site-nav__link nav-home" href="/">Início</a>
+                    <a class="site-nav__link nav-artigos" href="/artigos">Artigos</a>
+                </nav>
+                <a class="site-logo" href="/" aria-label="Caminho da Missão">
+                    <img alt="Caminho da Missão" class="site-main-logo" src="https://raw.githubusercontent.com/TonyAnarquia/mapa-eleitoral-blog/refs/heads/main/logo/caminho%20branco.png">
+                    <span>CAMINHO DA MISSÃO</span>
+                </a>
+                <div class="site-cta">
+                    <a class="btn-filiacao" href="https://filiacao.missao.org.br/inscricao" target="_blank" rel="noopener noreferrer">Filie-se ao partido Missão</a>
+                    <button class="site-header__toggle" type="button" aria-expanded="true" aria-label="Alternar menu">Menu</button>
+                </div>
+            </div>
+            <nav class="site-header__themes" id="site-theme-nav" aria-label="Temas"></nav>
+        </header>
+
+        <header class="site-header site-header--legacy">
             <div class="header-left">
                 <a href="/">
-                    <img alt="Caminho da Missao" class="site-main-logo" src="https://raw.githubusercontent.com/TonyAnarquia/mapa-eleitoral-blog/refs/heads/main/logo/caminho%20branco.png">
+                    <img alt="Caminho da Missão" class="site-main-logo" src="https://raw.githubusercontent.com/TonyAnarquia/mapa-eleitoral-blog/refs/heads/main/logo/caminho%20branco.png">
                 </a>
             </div>
             <div class="header-center">
-                <h1 class="header-title-text">CAMINHO DA MISSAO</h1>
+                <h1 class="header-title-text">CAMINHO DA MISSÃO</h1>
             </div>
             <div class="header-right"><a class="btn-filiacao" href="/artigos">Artigos</a>
-                <a class="btn-filiacao" href="https://filiacao.missao.org.br/inscricao" target="_blank" rel="noopener noreferrer">Filie-se ao partido Missao</a>
+                <a class="btn-filiacao" href="https://filiacao.missao.org.br/inscricao" target="_blank" rel="noopener noreferrer">Filie-se ao partido Missão</a>
             </div>
         </header>
 
@@ -34,13 +52,14 @@
 
         <footer class="site-footer">
             <div class="footer-content">
-                <p class="disclaimer"><strong>Aviso Importante:</strong> Projeto independente sem vinculo oficial com o Partido Missao.</p>
+                <p class="disclaimer"><strong>Aviso Importante:</strong> Projeto independente sem vinculo oficial com o Partido Missão.</p>
                 <p class="footer-external-link">Site oficial: <a href="https://www.missao.org.br" target="_blank" rel="noopener noreferrer">www.missao.org.br</a></p>
-                <p>� 2026 Caminho da Missao</p>
+                <p>� 2026 Caminho da Missão</p>
             </div>
         </footer>
     </div>
 
+    <script src="/assets/js/site-header.js?v=20260208"></script>
     <script src="/assets/js/candidato.js?v=20260129"></script>
 </body>
 </html>

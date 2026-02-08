@@ -132,37 +132,20 @@
             map.setView([-15.78, -52], 4);
         }
 
-        // Contador de candidatos: controle no canto inferior direito
-        const CandidateCounterControl = L.Control.extend({
-            options: { position: 'bottomright' },
-            onAdd: function () {
-                const el = L.DomUtil.create('div', 'leaflet-control-candidate-counter');
-                el.innerHTML = `
-                    <div id="candidate-counter-number" class="candidate-counter-number">0 PRÉ-CANDIDATOS</div>
-                `;
-                L.DomEvent.disableClickPropagation(el);
-                return el;
-            }
-        });
-        const candidateCounterControl = new CandidateCounterControl();
-        map.addControl(candidateCounterControl);
-
         function updateCandidateCounter() {
             const total = Object.keys(dadosCandidatos).reduce((sum, k) => {
                 const arr = dadosCandidatos[k];
                 return sum + (Array.isArray(arr) ? arr.length : 0);
             }, 0);
-            const el = document.getElementById('candidate-counter-number');
-            if (el) el.innerText = `${total} PRÉ-CANDIDATOS`;
+            const elTop = document.getElementById('map-count-top');
+            if (elTop) elTop.innerText = `${total} PRÉ-CANDIDATOS`;
             const elMobile = document.getElementById('mobile-candidate-counter');
             if (elMobile) elMobile.innerText = `${total} PRÉ-CANDIDATOS`;
         }
 
         function updateCandidateCounterVisibility() {
-            const el = document.querySelector('.leaflet-control-candidate-counter');
-            if (!el) return;
-            // Sempre mostrar o contador em qualquer nível de zoom
-            el.style.display = 'flex';
+            // contador agora fica na barra superior (map-count-top)
+            return;
         }
 
         // 3. INICIALIZAÇÃO

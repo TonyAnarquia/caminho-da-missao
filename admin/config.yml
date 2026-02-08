@@ -23,3 +23,56 @@ collections:
           {label: "Nome do Link", name: "label", widget: "string"},
           {label: "URL", name: "url", widget: "string"}
         ]}
+  - name: "candidatos"
+    label: "Candidatos (Cards)"
+    folder: "assets/content/candidatos"
+    create: true
+    slug: "{{fields.id}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - {label: "ID (slug)", name: "id", widget: "string", hint: "Ex.: renan-santos"}
+      - {label: "Nome", name: "nome", widget: "string"}
+      - {label: "Cargo", name: "cargo", widget: "string"}
+      - {label: "Partido", name: "partido", widget: "string"}
+      - {label: "Foto", name: "foto", widget: "string", required: false, hint: "Caminho da imagem (ex.: assets/img/candidatos/nome.png)"}
+      - {label: "Bio", name: "bio", widget: "text", required: false}
+      - {label: "Redes sociais", name: "socials", widget: "list", required: false, fields: [
+          {label: "Nome", name: "label", widget: "string"},
+          {label: "URL", name: "url", widget: "string"}
+        ]}
+      - {label: "Status", name: "status", widget: "select", options: ["published", "draft"], default: "published"}
+  - name: "artigos"
+    label: "Artigos"
+    folder: "assets/content/artigos"
+    create: true
+    slug: "{{fields.slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - {label: "ID", name: "id", widget: "string", required: false, hint: "Ex.: artigo-1"}
+      - {label: "Slug", name: "slug", widget: "string", hint: "Ex.: renan-santos-propostas-missao"}
+      - {label: "Titulo", name: "titulo", widget: "string"}
+      - {label: "Resumo", name: "resumo", widget: "text"}
+      - {label: "Data de publicacao", name: "data", widget: "datetime", format: "YYYY-MM-DD", time_format: false}
+      - label: "Candidato"
+        name: "candidato_id"
+        widget: "relation"
+        collection: "candidatos"
+        search_fields: ["nome", "id"]
+        value_field: "id"
+        display_fields: ["nome", "cargo"]
+        required: false
+        hint: "Digite para pesquisar pelo nome"
+      - {label: "Tema", name: "tema", widget: "string", required: false}
+      - {label: "Tags", name: "tags", widget: "list", required: false, field: {label: "Tag", name: "tag", widget: "string"}}
+      - {label: "Imagem", name: "imagem", widget: "image", required: false}
+      - {label: "Audio URL", name: "audio_url", widget: "string", required: false}
+      - {label: "Status", name: "status", widget: "select", options: ["published", "draft"], default: "published"}
+      - label: "Conteudo"
+        name: "conteudo"
+        widget: "list"
+        required: false
+        fields:
+          - {label: "Tipo", name: "tipo", widget: "select", options: ["p", "h2", "h3", "quote"], default: "p"}
+          - {label: "Texto", name: "texto", widget: "text"}
